@@ -1,0 +1,684 @@
+{
+  "template_settings": {
+    "default_template": "PASAPORTE-VENEZUELA.psd",
+    "output_format": "PNG",
+    "output_quality": 300,
+    "output_dpi": 300
+  },
+  "field_mapping": {
+    "nombre": {
+      "layer_name": "NOMBRES",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0.9,
+      "position": {
+        "x": 335,
+        "y": 917,
+        "ancho": 134,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    },
+    "apellido": {
+      "layer_name": "APELLIDOS",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 335,
+        "y": 873,
+        "ancho": 245,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    },
+    "fecha_nacimiento": {
+      "layer_name": "FECHA.NACI",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "letter_spacing": 3.5,
+      "stretch_to_fit": false,
+      "position": {
+        "x": 336,
+        "y": 1013,
+        "ancho": 185,
+        "alto": 17,
+        "alignment": "top_left"
+      },
+      "date_format": "DD / MMM / MMM / YYYY",
+      "contenedores_individuales": {
+        "dia": {
+          "x": 0,
+          "y": 0,
+          "ancho": 25,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "mes_es": {
+          "x": 33,
+          "y": 0,
+          "ancho": 35,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "mes_en": {
+          "x": 76,
+          "y": 0,
+          "ancho": 35,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "año": {
+          "x": 119,
+          "y": 0,
+          "ancho": 40,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "separador1": {
+          "x": 25,
+          "y": 0,
+          "ancho": 8,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#0000FF",
+          "grosor_borde": 2
+        },
+        "separador2": {
+          "x": 68,
+          "y": 0,
+          "ancho": 8,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#0000FF",
+          "grosor_borde": 2
+        },
+        "separador3": {
+          "x": 111,
+          "y": 0,
+          "ancho": 8,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#0000FF",
+          "grosor_borde": 2
+        }
+      }
+    },
+    "numero_documento": {
+      "layer_name": "CEDULA",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 605,
+        "y": 965,
+        "ancho": 88,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    },
+    "fecha_emision": {
+      "layer_name": "FECHA.EMISION",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "letter_spacing": 3.5,
+      "stretch_to_fit": false,
+      "position": {
+        "x": 336,
+        "y": 1059,
+        "ancho": 185,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -3,
+        "alignment": "top_left"
+      },
+      "date_format": "DD / MMM / MMM / YYYY",
+      "contenedores_individuales": {
+        "dia": {
+          "x": 0,
+          "y": 0,
+          "ancho": 25,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "mes_es": {
+          "x": 33,
+          "y": 0,
+          "ancho": 35,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "mes_en": {
+          "x": 76,
+          "y": 0,
+          "ancho": 35,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "año": {
+          "x": 119,
+          "y": 0,
+          "ancho": 40,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "separador1": {
+          "x": 25,
+          "y": 0,
+          "ancho": 8,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#0000FF",
+          "grosor_borde": 2
+        },
+        "separador2": {
+          "x": 68,
+          "y": 0,
+          "ancho": 8,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#0000FF",
+          "grosor_borde": 2
+        },
+        "separador3": {
+          "x": 111,
+          "y": 0,
+          "ancho": 8,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#0000FF",
+          "grosor_borde": 2
+        }
+      }
+    },
+    "fecha_vencimiento": {
+      "layer_name": "FECHA.VENCIMIENTO",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "letter_spacing": 3.5,
+      "stretch_to_fit": false,
+      "position": {
+        "x": 336,
+        "y": 1107,
+        "ancho": 185,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      },
+      "date_format": "DD / MMM / MMM / YYYY",
+      "contenedores_individuales": {
+        "dia": {
+          "x": 0,
+          "y": 0,
+          "ancho": 25,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "mes_es": {
+          "x": 33,
+          "y": 0,
+          "ancho": 35,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "mes_en": {
+          "x": 76,
+          "y": 0,
+          "ancho": 35,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "año": {
+          "x": 119,
+          "y": 0,
+          "ancho": 40,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#FF0000",
+          "grosor_borde": 2
+        },
+        "separador1": {
+          "x": 25,
+          "y": 0,
+          "ancho": 8,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#0000FF",
+          "grosor_borde": 2
+        },
+        "separador2": {
+          "x": 68,
+          "y": 0,
+          "ancho": 8,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#0000FF",
+          "grosor_borde": 2
+        },
+        "separador3": {
+          "x": 111,
+          "y": 0,
+          "ancho": 8,
+          "alto": 17,
+          "font_size": 12,
+          "font_color": "#000000",
+          "bold_thickness": 0,
+          "letter_spacing": 0,
+          "color_borde": "#0000FF",
+          "grosor_borde": 2
+        }
+      }
+    },
+    "sexo": {
+      "layer_name": "SEXO",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 605,
+        "y": 1013,
+        "ancho": 15,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    },
+    "nacionalidad": {
+      "layer_name": "NACIONALIDAD",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 334,
+        "y": 964,
+        "ancho": 140,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    },
+    "lugar_nacimiento": {
+      "layer_name": "LUGAR.NACI",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 605,
+        "y": 1061,
+        "ancho": 172,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    },
+    "numero_pasaporte": {
+      "layer_name": "N°PASAPORTE",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 676,
+        "y": 832,
+        "ancho": 98,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    },
+    "pais": {
+      "layer_name": "PAIS",
+      "font_size": 12,
+      "render_size_pt": 12,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 452,
+        "y": 832,
+        "ancho": 42,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    },
+    "tipo_documento": {
+      "layer_name": "TIPO",
+      "font_size": 17,
+      "render_size_pt": 17,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 335,
+        "y": 832,
+        "ancho": 12,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    },
+    "numero_pasaporte_vertical1": {
+      "layer_name": "N°PASAPORTE1",
+      "font_size": 67.2,
+      "render_size_pt": 67.2,
+      "font_color": "#8B4513",
+      "bold_thickness": 1,
+      "letter_spacing": 0,
+      "scale_x": 1.0,
+      "scale_y": 1.0,
+      "stretch_to_fit": false,
+      "position": {
+        "x": 53,
+        "y": 135,
+        "ancho": 72,
+        "alto": 439,
+        "offset_x": 2,
+        "offset_y": 0,
+        "alignment": "bottom_center"
+      },
+      "rotation": 90
+    },
+    "numero_pasaporte_vertical2": {
+      "layer_name": "N°PASAPORTE2",
+      "font_size": 18.5,
+      "render_size_pt": 18.5,
+      "font_color": "#000000",
+      "bold_thickness": 1.2,
+      "letter_spacing": 3,
+      "scale_x": 1.0,
+      "scale_y": 1.0,
+      "position": {
+        "x": 229,
+        "y": 277,
+        "ancho": 25,
+        "alto": 176,
+        "offset_x": 4,
+        "offset_y": -2,
+        "alignment": "bottom_center"
+      },
+      "rotation": 90
+    },
+    "codigo_mrz_linea1": {
+      "layer_name": "LETRA.FINAL1",
+      "font_size": 26.5,
+      "render_size_pt": 26.5,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 44,
+        "y": 1261,
+        "ancho": 960,
+        "alto": 24,
+        "offset_x": 0,
+        "offset_y": 0,
+        "alignment": "top_left"
+      }
+    },
+    "codigo_mrz_linea2": {
+      "layer_name": "LETRA.FINAL2",
+      "font_size": 26.5,
+      "render_size_pt": 26.5,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 44,
+        "y": 1308,
+        "ancho": 960,
+        "alto": 25,
+        "offset_x": 0,
+        "offset_y": 0,
+        "alignment": "top_left"
+      }
+    },
+    "codigo_barras": {
+      "layer_name": "CODIGO1",
+      "font_size": 17,
+      "render_size_pt": 17,
+      "font_color": "#404040",
+      "bold_thickness": 1.5,
+      "letter_spacing": -2,
+      "blur_radius": 0.8,
+      "blur_padding": {
+        "normal": 6,
+        "hyphen": 8
+      },
+      "position": {
+        "x": 879,
+        "y": 984,
+        "ancho": 106,
+        "alto": 23,
+        "offset_x": 5,
+        "offset_y": -8,
+        "alignment": "top_left"
+      }
+    },
+    "firma_texto": {
+      "layer_name": "LETRA.FIRMA",
+      "font_size": 25,
+      "render_size_pt": 25,
+      "font_color": "#444549",
+      "bold_thickness": 1,
+      "position": {
+        "x": 337,
+        "y": 1164,
+        "ancho": 200,
+        "alto": 60,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "center"
+      }
+    },
+    "code": {
+      "layer_name": "CODE",
+      "font_size": 20,
+      "render_size_pt": 20,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 879,
+        "y": 984,
+        "ancho": 106,
+        "alto": 23,
+        "offset_x": -6,
+        "offset_y": -15,
+        "alignment": "top_left"
+      }
+    },
+    "ruta_foto": {
+      "layer_name": "FOTO",
+      "size": {
+        "width": 300,
+        "height": 350
+      },
+      "position": {
+        "x": 25,
+        "y": 866
+      },
+      "crop_mode": "center"
+    },
+    "pais_emisor": {
+      "layer_name": "PAIS",
+      "font_size": 17,
+      "render_size_pt": 17,
+      "font_color": "#000000",
+      "bold_thickness": 0,
+      "position": {
+        "x": 452,
+        "y": 832,
+        "ancho": 42,
+        "alto": 17,
+        "offset_x": 0,
+        "offset_y": -4,
+        "alignment": "top_left"
+      }
+    }
+  },
+  "fonts": {
+    "default": "Arial",
+    "custom_fonts": [
+      "BrittanySignature.ttf",
+      "Creattion Demo.otf",
+      "OCR-B10PitchBT Regular.otf",
+      "Pasaport Numbers Front-Regular.ttf"
+    ],
+    "font_mapping": {
+      "NOMBRES": "Arial",
+      "APELLIDOS": "Arial",
+      "FECHA.NACI": "Arial",
+      "CEDULA": "Arial",
+      "FECHA.EMISION": "Arial",
+      "FECHA.VENCIMIENTO": "Arial",
+      "SEXO": "Arial",
+      "NACIONALIDAD": "Arial",
+      "LUGAR.NACI": "Arial",
+      "N°PASAPORTE": "Arial",
+      "PAIS": "Arial",
+      "TIPO": "Arial",
+      "N°PASAPORTE1": "Pasaport Numbers Front-Regular.ttf",
+      "N°PASAPORTE2": "OCR-B10PitchBT Regular.otf",
+      "LETRA.FINAL1": "OCR-B10PitchBT Regular.otf",
+      "LETRA.FINAL2": "OCR-B10PitchBT Regular.otf",
+      "CODIGO1": "Arial",
+      "CODE": "Arial",
+      "LETRA.FIRMA": "BrittanySignature.ttf"
+    }
+  },
+  "validation": {
+    "required_fields": [
+      "nombre",
+      "apellido",
+      "fecha_nacimiento",
+      "numero_documento",
+      "ruta_foto"
+    ],
+    "optional_fields": [
+      "fecha_emision",
+      "fecha_vencimiento",
+      "sexo",
+      "nacionalidad",
+      "lugar_nacimiento",
+      "numero_pasaporte",
+      "pais",
+      "tipo_documento",
+      "codigo_barras",
+      "code",
+      "firma_texto",
+      "codigo_mrz_linea1",
+      "codigo_mrz_linea2",
+      "numero_pasaporte_vertical1",
+      "numero_pasaporte_vertical2"
+    ],
+    "photo_formats": [
+      "jpg",
+      "jpeg",
+      "png"
+    ],
+    "max_photo_size_mb": 5
+  }
+}
