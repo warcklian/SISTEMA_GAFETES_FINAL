@@ -1,3 +1,23 @@
+## Actualización 2025-10-06: Rutas relativas, Fuentes locales y Fechas
+
+### Rutas relativas
+- El motor visual `SCRIPTS/script_maestro_integrado.py` calcula `base_path` en tiempo de ejecución desde el directorio del proyecto actual.
+- Recursos consumidos desde el proyecto:
+  - `CONFIG/config.json`
+  - `TEMPLATE/Fuentes_Base/`
+  - `TEMPLATE/PASAPORTE-VENEZUELA-CLEAN.png`
+- Beneficio: portabilidad inmediata al clonar el repositorio en otro equipo.
+
+### Fuentes locales (sin instalación del sistema)
+- El validador de fuentes prioriza archivos en `TEMPLATE/Fuentes_Base`.
+- Búsqueda case-insensitive por nombre (ej.: `White Sign (DemoVersion).otf`).
+- Se limpia el estado interno antes de verificar para evitar falsos negativos.
+
+### Normalización de fechas en `procesador_xlsx.py`
+- Soportados y normalizados a `YYYY-MM-DD`:
+  - `YYYY-MM-DD[ HH:MM:SS]` (ej.: `1998-09-04 00:00:00` → `1998-09-04`)
+  - `MM/DD/YYYY` con comas/puntos o texto adicional (ej.: `03/29/1981.` → `1981-03-29`)
+- El selector de archivos Excel muestra `*.xlsx` y `*.xls` y recuerda la última carpeta usada en `OUTPUT/logs/ultima_ubicacion_excel.json`.
 # Sistema de Generación Masiva de Pasaportes Venezolanos
 
 ## 📋 Resumen del Sistema
