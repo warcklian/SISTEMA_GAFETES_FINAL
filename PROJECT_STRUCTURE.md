@@ -9,9 +9,9 @@ Este documento describe la estructura completa del proyecto, la función de cada
 
 ### **🏗️ ARCHIVOS PRINCIPALES DE PRODUCCIÓN**
 
-#### **`generador_pasaportes_masivo.py`** (2,646 líneas)
+#### **`generador_pasaportes_masivo.py`**
 - **Función**: Sistema principal de producción para generación masiva de pasaportes
-- **Dependencias**: `script_maestro_integrado.py`, `CONFIG/config.json`
+- **Dependencias**: `SCRIPTS/script_maestro_integrado.py`, `CONFIG/config.json`
 - **Características**:
   - Procesamiento masivo de datos CSV/Excel
   - Gestión de memoria optimizada (REGLA 15)
@@ -21,7 +21,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
   - Asociación automática de imágenes por edad/género
 - **Salidas**: Pasaportes visuales (PNG) + datos procesados (JSON/Excel)
 
-#### **`SCRIPTS/script_maestro_integrado.py`** (1,928 líneas)
+#### **`SCRIPTS/script_maestro_integrado.py`**
 - **Función**: Motor de renderizado de pasaportes visuales
 - **Dependencias**: `CONFIG/config.json`, fuentes en `TEMPLATE/`
 - **Características**:
@@ -41,7 +41,15 @@ Este documento describe la estructura completa del proyecto, la función de cada
   - Configuración de imágenes
   - Mapeo de fuentes especializadas
 - **Usado por**: `script_maestro_integrado.py`, `test_pasaportes_config.py`
+### **Rutas relativas actualizadas (2025-10-06)**
+- El motor visual calcula `base_path` como el directorio del proyecto actual y consume:
+  - `CONFIG/config.json`
+  - `TEMPLATE/Fuentes_Base/`
+  - `TEMPLATE/PASAPORTE-VENEZUELA-CLEAN.png`
+- Reemplaza rutas absolutas antiguas, mejorando la portabilidad.
 
+### **Fuentes locales (2025-10-06)**
+- El validador de fuentes prioriza `TEMPLATE/Fuentes_Base` y realiza búsqueda case-insensitive.
 ---
 
 ### **🧪 ARCHIVOS DE PRUEBA Y DESARROLLO**

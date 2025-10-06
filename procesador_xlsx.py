@@ -13,6 +13,8 @@ from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import argparse
+import re
+import json
 
 # =============================================================================
 # CONFIGURACIÓN GLOBAL - MODIFICAR AQUÍ LOS VALORES DESEADOS
@@ -38,9 +40,12 @@ MODO_DIVISION = True
 class ProcesadorXLSX:
     def __init__(self, base_path=None):
         """Inicializa el procesador de archivos Excel"""
-        self.base_path = Path(base_path) if base_path else Path('/media/warcklian/DATA_500GB/CODE/SISTEMA_PASAPORTES_FINAL')
+        # Usar ruta base del proyecto (directorio del script) si no se especifica
+        self.base_path = Path(base_path) if base_path else Path(__file__).resolve().parent
         self.data_path = self.base_path / 'DATA'
         self.output_path = self.base_path / 'OUTPUT' / 'pasaportes_generados'
+        self.logs_path = self.base_path / 'OUTPUT' / 'logs'
+        self.ultima_ubicacion_file = self.logs_path / 'ultima_ubicacion_excel.json'
         
         # Crear directorios necesarios
         self._crear_directorios()
@@ -50,6 +55,7 @@ class ProcesadorXLSX:
         try:
             self.output_path.mkdir(parents=True, exist_ok=True)
             self.data_path.mkdir(parents=True, exist_ok=True)
+            self.logs_path.mkdir(parents=True, exist_ok=True)
         except Exception as e:
             print(f"❌ Error creando directorios: {e}")
             raise
@@ -59,12 +65,36 @@ class ProcesadorXLSX:
         root = tk.Tk()
         root.withdraw()  # Ocultar la ventana principal
         
+        # Cargar última ubicación usada si existe
+        initial_dir = str(self.data_path)
+        try:
+            if self.ultima_ubicacion_file.exists():
+                with open(self.ultima_ubicacion_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    last_dir = data.get('last_dir')
+                    if last_dir and Path(last_dir).exists():
+                        initial_dir = last_dir
+        except Exception:
+            pass
+
         archivo_path = filedialog.askopenfilename(
             title="Seleccionar archivo Excel con datos de pasaportes",
-            filetypes=[("Archivos Excel", "*.xlsx"), ("Todos los archivos", "*.*")],
-            initialdir=str(self.data_path)
+            filetypes=[
+                ("Archivos Excel", ("*.xlsx", "*.xls", "*.XLSX", "*.XLS")),
+                ("Todos los archivos", "*.*"),
+            ],
+            initialdir=initial_dir
         )
         
+        # Guardar última ubicación usada
+        try:
+            if archivo_path:
+                seleccion_dir = str(Path(archivo_path).parent)
+                with open(self.ultima_ubicacion_file, 'w', encoding='utf-8') as f:
+                    json.dump({"last_dir": seleccion_dir}, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
         root.destroy()
         return archivo_path
     
@@ -75,13 +105,63 @@ class ProcesadorXLSX:
             cols_fecha = [c for c in df.columns if 'FECHA' in c.upper()]
             for c in cols_fecha:
                 if c in df:
-                    df[c] = df[c].astype(str).str.strip()
-                    # Si viene como 'YYYY-MM-DD HH:MM:SS', tomar solo la parte de la fecha
-                    df[c] = df[c].str.split().str[0]
-                    # Asegurar formato YYYY-MM-DD
+                    # Convertir a string, limpiar espacios y normalizar a YYYY-MM-DD
+                    df[c] = (
+                        df[c]
+                        .astype(str)
+                        .apply(self._parse_fecha_a_yyyy_mm_dd)
+                    )
             return df
         except Exception:
             return df
+
+    def _parse_fecha_a_yyyy_mm_dd(self, valor: str) -> str:
+        """Normaliza una fecha a formato YYYY-MM-DD si detecta patrones comunes.
+
+        Soporta:
+        - "YYYY-MM-DD" (con o sin hora al final)
+        - "MM/DD/YYYY" (con posibles signos de puntuación como coma o punto)
+        - Cadenas con texto adicional; se extrae el primer patrón de fecha válido
+        """
+        if valor is None:
+            return ""
+        s = str(valor).strip()
+        if not s or s == "nan":
+            return ""
+
+        # Eliminar caracteres de puntuación comunes adyacentes a la fecha
+        # y reducir espacios múltiples
+        s = re.sub(r"[\t\r\n]+", " ", s)
+        s = s.replace("\u200b", "").strip()  # zero-width space si aparece
+
+        # Si incluye hora, separar por espacio y analizar la parte inicial primero
+        primera_parte = s.split(" ")[0]
+
+        # 1) Buscar patrón YYYY-MM-DD en toda la cadena
+        m = re.search(r"(\d{4})-(\d{1,2})-(\d{1,2})", s)
+        if m:
+            y, mo, d = m.groups()
+            return f"{y}-{int(mo):02d}-{int(d):02d}"
+
+        # 2) Buscar patrón MM/DD/YYYY (puede venir con coma o punto después)
+        m = re.search(r"(\d{1,2})/(\d{1,2})/(\d{4})", s)
+        if m:
+            mo, d, y = m.groups()
+            return f"{y}-{int(mo):02d}-{int(d):02d}"
+
+        # 3) Intentar con la primera parte limpia (por si viene como 'YYYY-MM-DD,' o '03/29/1981.')
+        parte_limpia = primera_parte.rstrip(",.;:")
+        m = re.match(r"^(\d{4})-(\d{1,2})-(\d{1,2})$", parte_limpia)
+        if m:
+            y, mo, d = m.groups()
+            return f"{y}-{int(mo):02d}-{int(d):02d}"
+        m = re.match(r"^(\d{1,2})/(\d{1,2})/(\d{4})$", parte_limpia)
+        if m:
+            mo, d, y = m.groups()
+            return f"{y}-{int(mo):02d}-{int(d):02d}"
+
+        # Si no se reconoce, devolver valor original sin cambiar
+        return s
     
     def _validar_columnas_requeridas(self, df: pd.DataFrame) -> bool:
         """Valida que el DataFrame tenga las columnas requeridas"""

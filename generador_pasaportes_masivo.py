@@ -148,7 +148,7 @@ except Exception as e:
     ScriptMaestroIntegrado = None
 
 class ValidadorFuentes:
-    """Validador de fuentes instaladas en el sistema"""
+    """Validador de fuentes disponibles (sistema o rutas locales del proyecto)"""
     
     def __init__(self):
         self.fuentes_requeridas = [
@@ -180,10 +180,17 @@ class ValidadorFuentes:
         
         self.fuentes_disponibles = []
         self.fuentes_faltantes = []
+        # Ruta local del proyecto donde están las fuentes incluidas
+        self.fuentes_base_path = (Path(__file__).parent / 'TEMPLATE' / 'Fuentes_Base').resolve()
+        self._indice_fuentes_local = None  # cache para búsqueda rápida por nombre (case-insensitive)
     
     def verificar_fuentes(self):
-        """Verifica si todas las fuentes requeridas están disponibles"""
-        print("🔍 Verificando fuentes instaladas...")
+        """Verifica si todas las fuentes requeridas están disponibles (sistema o locales)."""
+        print("🔍 Verificando fuentes disponibles...")
+        # Limpiar estado previo por reusabilidad
+        self.fuentes_disponibles = []
+        self.fuentes_faltantes = []
+        self._construir_indice_local_si_hace_falta()
         
         for fuente in self.fuentes_requeridas:
             if self._verificar_fuente_individual(fuente):
@@ -194,35 +201,63 @@ class ValidadorFuentes:
         return len(self.fuentes_faltantes) == 0
     
     def _verificar_fuente_individual(self, nombre_fuente):
-        """Verifica si una fuente específica está disponible"""
+        """Verifica si una fuente específica está disponible en el sistema o localmente."""
+        from PIL import ImageFont
+        
+        # 1) Intentar cargar desde el sistema por nombre
         try:
-            from PIL import ImageFont
-            
-            # Intentar cargar la fuente desde el sistema
-            font = ImageFont.truetype(nombre_fuente, 12)
+            ImageFont.truetype(nombre_fuente, 12)
             print(f"   ✅ {nombre_fuente}")
             return True
         except Exception:
-            # Si no está en el sistema, intentar desde rutas locales
-            try:
-                rutas_locales = [
-                    "/media/warcklian/DATA_500GB/CODE/SISTEMA_PASAPORTES_FINAL/TEMPLATE/Fuentes_Base/",
-                    "/media/warcklian/DATA_500GB/CODE/SISTEMA_PASAPORTES_FINAL/TEMPLATE/Mas_Fuentes/",
-                    "/media/warcklian/DATA_500GB/CODE/Plantillas_PSD_Automatizar/TEMPLATE/Fuentes_Base/"
-                ]
-                
-                for ruta in rutas_locales:
-                    ruta_completa = os.path.join(ruta, nombre_fuente)
-                    if os.path.exists(ruta_completa):
-                        font = ImageFont.truetype(ruta_completa, 12)
-                        print(f"   ✅ {nombre_fuente} (desde {ruta})")
-                        return True
-                
-                print(f"   ❌ {nombre_fuente}")
-                return False
-            except Exception:
-                print(f"   ❌ {nombre_fuente}")
-                return False
+            pass
+        
+        # 2) Intentar desde carpeta local del proyecto (búsqueda case-insensitive)
+        try:
+            ruta_local = self._resolver_ruta_local_fuente(nombre_fuente)
+            if ruta_local and ruta_local.exists():
+                ImageFont.truetype(str(ruta_local), 12)
+                print(f"   ✅ {nombre_fuente} (local: {ruta_local.name})")
+                return True
+        except Exception:
+            pass
+        
+        # 3) Rutas de compatibilidad (antiguas) como fallback
+        try:
+            rutas_locales = [
+                str(self.fuentes_base_path),
+                str(Path(__file__).parent / 'TEMPLATE' / 'Mas_Fuentes'),
+            ]
+            for ruta in rutas_locales:
+                ruta_completa = os.path.join(ruta, nombre_fuente)
+                if os.path.exists(ruta_completa):
+                    ImageFont.truetype(ruta_completa, 12)
+                    print(f"   ✅ {nombre_fuente} (compat: {ruta})")
+                    return True
+        except Exception:
+            pass
+        
+        print(f"   ❌ {nombre_fuente}")
+        return False
+
+    def _construir_indice_local_si_hace_falta(self):
+        if self._indice_fuentes_local is not None:
+            return
+        self._indice_fuentes_local = {}
+        try:
+            if self.fuentes_base_path.exists():
+                for p in self.fuentes_base_path.iterdir():
+                    if p.is_file():
+                        self._indice_fuentes_local[p.name.lower()] = p
+        except Exception:
+            self._indice_fuentes_local = {}
+
+    def _resolver_ruta_local_fuente(self, nombre_fuente):
+        """Devuelve la ruta en `TEMPLATE/Fuentes_Base` que coincide con el nombre (case-insensitive)."""
+        self._construir_indice_local_si_hace_falta()
+        if not self._indice_fuentes_local:
+            return None
+        return self._indice_fuentes_local.get(nombre_fuente.lower())
     
     def mostrar_estado_fuentes(self):
         """Muestra el estado de las fuentes"""

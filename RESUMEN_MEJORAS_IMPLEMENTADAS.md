@@ -1,3 +1,28 @@
+## 2025-10-06
+
+### Mejoras de fuentes y rutas (Generación Masiva)
+- Validador de fuentes actualizado para priorizar rutas locales del proyecto en `TEMPLATE/Fuentes_Base` con búsqueda case-insensitive.
+- Limpieza de estado interno antes de cada verificación de fuentes para evitar resultados inconsistentes entre ejecuciones.
+- Resultado: eliminación de la dependencia estricta de fuentes instaladas en el sistema; se cargan desde el repositorio y se reutilizan.
+
+### Rutas relativas del motor visual
+- `SCRIPTS/script_maestro_integrado.py` ahora usa rutas relativas al proyecto actual:
+  - `CONFIG/config.json`
+  - `TEMPLATE/Fuentes_Base/`
+  - `TEMPLATE/PASAPORTE-VENEZUELA-CLEAN.png`
+- Se elimina el uso de rutas absolutas antiguas apuntando a `SISTEMA_PASAPORTES_FINAL`.
+- Impacto: portabilidad inmediata del proyecto en cualquier equipo tras clonarlo.
+
+### Procesador de Excel (normalización de fechas y selector)
+- Normalización de fechas ampliada para reconocer:
+  - `YYYY-MM-DD[ HH:MM:SS]`
+  - `MM/DD/YYYY` con puntuación/comas o texto adicional
+  - Salida unificada a `YYYY-MM-DD`.
+- Selector de archivos ajustado para mostrar `*.xlsx` y `*.xls` (mayús/minúsc) y recordar la última carpeta seleccionada en `OUTPUT/logs/ultima_ubicacion_excel.json`.
+
+### Resultado
+- Generación masiva completada 50/50 sin omisiones.
+- Sistema nuevamente funcional end-to-end con mayor robustez y portabilidad.
 # 🎉 RESUMEN DE MEJORAS IMPLEMENTADAS - VERSIÓN 2.1 COMPLETA
 
 ## ✅ Sistema de Generación Masiva de Pasaportes Venezolanos - VERSIÓN MULTI-OPCIÓN

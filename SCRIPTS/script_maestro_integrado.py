@@ -28,9 +28,12 @@ except Exception:
 class ScriptMaestroIntegrado:
     def __init__(self, config_path=None):
         """Inicializa el script maestro con configuración"""
-        self.config_path = config_path or '/media/warcklian/DATA_500GB/CODE/SISTEMA_PASAPORTES_FINAL/CONFIG/config.json'
+        # Base del proyecto: carpeta padre de SCRIPTS/
+        self.base_path = Path(__file__).resolve().parent.parent
+        # Ruta de configuración por defecto dentro del proyecto actual
+        self.config_path = config_path or str(self.base_path / 'CONFIG' / 'config.json')
         self.config = self.cargar_configuracion()
-        self.base_path = Path('/media/warcklian/DATA_500GB/CODE/SISTEMA_PASAPORTES_FINAL')
+        # Directorios de fuentes y plantilla dentro del proyecto actual
         self.fuentes_dir = self.base_path / 'TEMPLATE' / 'Fuentes_Base'
         self.plantilla_clean_path = self.base_path / 'TEMPLATE' / 'PASAPORTE-VENEZUELA-CLEAN.png'
         

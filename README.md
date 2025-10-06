@@ -696,3 +696,10 @@ Para problemas técnicos, verificar:
 - ✅ Integración de todas las funcionalidades
 - ✅ Procesamiento completo desde imágenes originales
 - ✅ Escala de grises tono 217 extraída de plantilla real
+
+## ℹ️ Notas importantes (2025-10-06)
+
+- Fuentes: ya no es obligatorio tenerlas instaladas en el sistema; el motor valida y carga primero desde `TEMPLATE/Fuentes_Base` (búsqueda por nombre case-insensitive).
+- Rutas relativas: el motor visual ahora usa `CONFIG/config.json` y `TEMPLATE/` del proyecto actual (sin rutas absolutas antiguas). Esto mejora la portabilidad al clonar el repositorio en otro equipo.
+- Procesador XLSX: el selector de archivos recuerda la última carpeta usada (`OUTPUT/logs/ultima_ubicacion_excel.json`) y el filtro muestra `*.xlsx` y `*.xls`.
+- Fechas: se normalizan `YYYY-MM-DD[ HH:MM:SS]` y `MM/DD/YYYY` (con puntuación/ruido) a `YYYY-MM-DD`.
