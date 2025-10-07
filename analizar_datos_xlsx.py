@@ -15,21 +15,21 @@ def analizar_excel():
         # Leer el archivo Excel
         df = pd.read_excel(excel_path)
         
-        print("📊 ANÁLISIS DEL ARCHIVO EXCEL")
+        print(" ANÁLISIS DEL ARCHIVO EXCEL")
         print("=" * 50)
-        print(f"📁 Archivo: {excel_path}")
-        print(f"📏 Dimensiones: {df.shape[0]} filas x {df.shape[1]} columnas")
-        print(f"📋 Columnas disponibles: {list(df.columns)}")
-        print("\n📝 Primeras 5 filas:")
+        print(f" Archivo: {excel_path}")
+        print(f" Dimensiones: {df.shape[0]} filas x {df.shape[1]} columnas")
+        print(f" Columnas disponibles: {list(df.columns)}")
+        print("\n Primeras 5 filas:")
         print(df.head())
         
-        print("\n📊 Información de tipos de datos:")
+        print("\n Información de tipos de datos:")
         print(df.dtypes)
         
-        print("\n📈 Estadísticas descriptivas:")
+        print("\n Estadísticas descriptivas:")
         print(df.describe(include='all'))
         
-        print("\n🔍 Valores únicos por columna:")
+        print("\n Valores únicos por columna:")
         for col in df.columns:
             unique_count = df[col].nunique()
             print(f"   {col}: {unique_count} valores únicos")
@@ -37,7 +37,7 @@ def analizar_excel():
                 print(f"      Valores: {df[col].unique()}")
         
         # Verificar si hay valores nulos
-        print("\n❓ Valores nulos por columna:")
+        print("\n Valores nulos por columna:")
         null_counts = df.isnull().sum()
         for col, count in null_counts.items():
             if count > 0:
@@ -46,7 +46,7 @@ def analizar_excel():
         return df
         
     except Exception as e:
-        print(f"❌ Error al leer el archivo Excel: {e}")
+        print(f" Error al leer el archivo Excel: {e}")
         return None
 
 if __name__ == "__main__":

@@ -60,11 +60,11 @@ def main():
     # Buscar una imagen de prueba
     candidatos = list(imagenes_ok_dir.rglob("*.png")) + list(imagenes_ok_dir.rglob("*.jpg")) + list(imagenes_ok_dir.rglob("*.jpeg"))
     if not candidatos:
-        print(f"❌ No se encontraron imágenes en {imagenes_ok_dir}")
+        print(f" No se encontraron imágenes en {imagenes_ok_dir}")
         return 1
     ruta_foto = str(candidatos[0])
 
-    print("🧪 Benchmark de rendimiento (por pasaporte)")
+    print(" Benchmark de rendimiento (por pasaporte)")
     print("Imagen de prueba:", Path(ruta_foto).name)
 
     maestro = ScriptMaestroIntegrado()
@@ -75,7 +75,7 @@ def main():
     # Medir etapas
     resultado, t_rembg = medir(maestro.remover_fondo_rembg, ruta_foto, repeticiones=3)
     if resultado is None:
-        print("❌ rembg falló, abortando benchmark")
+        print(" rembg falló, abortando benchmark")
         return 1
 
     img_sin_fondo = resultado
@@ -111,11 +111,11 @@ def main():
     # Memoria
     proceso = psutil.Process()
     rss_mb = bytes_a_mb(proceso.memory_info().rss)
-    print(f"\n🧠 Memoria RSS proceso: {rss_mb:.1f} MB")
+    print(f"\n Memoria RSS proceso: {rss_mb:.1f} MB")
 
     # Salida válida
     ok = resultado is not None and isinstance(resultado, Image.Image)
-    print("\n✔️ Salida válida:", ok)
+    print("\n️ Salida válida:", ok)
     return 0 if ok else 2
 
 

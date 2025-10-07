@@ -13,33 +13,33 @@ from pathlib import Path
 
 def ejecutar_comando(comando, descripcion):
     """Ejecuta un comando y muestra el resultado"""
-    print(f"🔧 {descripcion}...")
+    print(f" {descripcion}...")
     try:
         resultado = subprocess.run(comando, shell=True, capture_output=True, text=True)
         if resultado.returncode == 0:
-            print(f"   ✅ {descripcion} completado")
+            print(f"    {descripcion} completado")
             return True
         else:
-            print(f"   ❌ Error en {descripcion}: {resultado.stderr}")
+            print(f"    Error en {descripcion}: {resultado.stderr}")
             return False
     except Exception as e:
-        print(f"   ❌ Error ejecutando {descripcion}: {e}")
+        print(f"    Error ejecutando {descripcion}: {e}")
         return False
 
 def verificar_python():
     """Verifica que Python 3.8+ esté instalado"""
-    print("🐍 Verificando Python...")
+    print(" Verificando Python...")
     version = sys.version_info
     if version.major == 3 and version.minor >= 8:
-        print(f"   ✅ Python {version.major}.{version.minor}.{version.micro} (OK)")
+        print(f"    Python {version.major}.{version.minor}.{version.micro} (OK)")
         return True
     else:
-        print(f"   ❌ Python {version.major}.{version.minor}.{version.micro} (requerido 3.8+)")
+        print(f"    Python {version.major}.{version.minor}.{version.micro} (requerido 3.8+)")
         return False
 
 def instalar_dependencias_sistema():
     """Instala dependencias del sistema operativo"""
-    print("🖥️ Instalando dependencias del sistema...")
+    print("️ Instalando dependencias del sistema...")
     
     sistema = platform.system().lower()
     
@@ -56,23 +56,23 @@ def instalar_dependencias_sistema():
             "brew install cmake"
         ]
     elif sistema == "windows":
-        print("   ⚠️ En Windows, instala manualmente:")
+        print("   ️ En Windows, instala manualmente:")
         print("   - Python 3.8+ desde python.org")
         print("   - Visual Studio Build Tools")
         return True
     else:
-        print(f"   ⚠️ Sistema operativo no reconocido: {sistema}")
+        print(f"   ️ Sistema operativo no reconocido: {sistema}")
         return True
     
     for comando in comandos:
         if not ejecutar_comando(comando, f"Ejecutando: {comando}"):
-            print(f"   ⚠️ Error en comando: {comando}")
+            print(f"   ️ Error en comando: {comando}")
     
     return True
 
 def instalar_python_deps():
     """Instala dependencias de Python"""
-    print("📦 Instalando dependencias de Python...")
+    print(" Instalando dependencias de Python...")
     
     # Actualizar pip
     ejecutar_comando("python3 -m pip install --upgrade pip", "Actualizando pip")
@@ -81,38 +81,38 @@ def instalar_python_deps():
     if Path("requirements.txt").exists():
         ejecutar_comando("python3 -m pip install -r requirements.txt", "Instalando dependencias")
     else:
-        print("   ❌ No se encontró requirements.txt")
+        print("    No se encontró requirements.txt")
         return False
     
     return True
 
 def verificar_gpu():
     """Verifica si hay GPU disponible"""
-    print("🎮 Verificando GPU...")
+    print(" Verificando GPU...")
     
     try:
         import torch
         if torch.cuda.is_available():
             num_gpus = torch.cuda.device_count()
-            print(f"   ✅ {num_gpus} GPU(s) NVIDIA detectada(s)")
+            print(f"    {num_gpus} GPU(s) NVIDIA detectada(s)")
             for i in range(num_gpus):
                 gpu_name = torch.cuda.get_device_name(i)
                 gpu_memory = torch.cuda.get_device_properties(i).total_memory / (1024**3)
                 print(f"      GPU {i}: {gpu_name} ({gpu_memory:.1f} GB)")
             return True
         else:
-            print("   ⚠️ No se detectó GPU NVIDIA (usará CPU)")
+            print("   ️ No se detectó GPU NVIDIA (usará CPU)")
             return True
     except ImportError:
-        print("   ⚠️ PyTorch no instalado aún")
+        print("   ️ PyTorch no instalado aún")
         return True
     except Exception as e:
-        print(f"   ⚠️ Error verificando GPU: {e}")
+        print(f"   ️ Error verificando GPU: {e}")
         return True
 
 def crear_estructura_directorios():
     """Crea la estructura de directorios necesaria"""
-    print("📁 Creando estructura de directorios...")
+    print(" Creando estructura de directorios...")
     
     directorios = [
         "DATA",
@@ -132,19 +132,19 @@ def crear_estructura_directorios():
     for directorio in directorios:
         try:
             Path(directorio).mkdir(parents=True, exist_ok=True)
-            print(f"   ✅ {directorio}")
+            print(f"    {directorio}")
         except Exception as e:
-            print(f"   ❌ Error creando {directorio}: {e}")
+            print(f"    Error creando {directorio}: {e}")
     
     return True
 
 def instalar_fuentes():
     """Instala las fuentes del sistema"""
-    print("🔤 Instalando fuentes...")
+    print(" Instalando fuentes...")
     
     fuentes_path = Path("TEMPLATE/Fuentes_Base")
     if not fuentes_path.exists():
-        print("   ⚠️ No se encontró carpeta de fuentes")
+        print("   ️ No se encontró carpeta de fuentes")
         return True
     
     sistema = platform.system().lower()
@@ -173,11 +173,11 @@ def instalar_fuentes():
 
 def crear_archivo_config():
     """Crea archivo de configuración por defecto"""
-    print("⚙️ Creando configuración por defecto...")
+    print("️ Creando configuración por defecto...")
     
     config_path = Path("CONFIG/config.json")
     if config_path.exists():
-        print("   ✅ Archivo de configuración ya existe")
+        print("    Archivo de configuración ya existe")
         return True
     
     config_default = {
@@ -223,15 +223,15 @@ def crear_archivo_config():
         import json
         with open(config_path, 'w') as f:
             json.dump(config_default, f, indent=2)
-        print("   ✅ Archivo de configuración creado")
+        print("    Archivo de configuración creado")
         return True
     except Exception as e:
-        print(f"   ❌ Error creando configuración: {e}")
+        print(f"    Error creando configuración: {e}")
         return False
 
 def verificar_instalacion():
     """Verifica que la instalación sea correcta"""
-    print("🔍 Verificando instalación...")
+    print(" Verificando instalación...")
     
     verificaciones = []
     
@@ -243,7 +243,7 @@ def verificar_instalacion():
         import torch, cv2, numpy, pandas, PIL, psutil, mediapipe
         verificaciones.append(("Dependencias Python", True))
     except ImportError as e:
-        print(f"   ❌ Dependencia faltante: {e}")
+        print(f"    Dependencia faltante: {e}")
         verificaciones.append(("Dependencias Python", False))
     
     # Verificar GPU
@@ -260,21 +260,21 @@ def verificar_instalacion():
     verificaciones.append(("Archivos principales", archivos_ok))
     
     # Mostrar resultados
-    print("\n📊 RESUMEN DE VERIFICACIÓN:")
+    print("\n RESUMEN DE VERIFICACIÓN:")
     for nombre, estado in verificaciones:
-        estado_texto = "✅" if estado else "❌"
+        estado_texto = "" if estado else ""
         print(f"   {estado_texto} {nombre}")
     
     return all(estado for _, estado in verificaciones)
 
 def main():
     """Función principal de instalación"""
-    print("🚀 INSTALADOR COMPLETO DEL SISTEMA DE PASAPORTES")
+    print(" INSTALADOR COMPLETO DEL SISTEMA DE PASAPORTES")
     print("=" * 60)
     
     # Verificar que estamos en el directorio correcto
     if not Path("generador_pasaportes_masivo.py").exists():
-        print("❌ Error: Ejecuta este script desde el directorio del proyecto")
+        print(" Error: Ejecuta este script desde el directorio del proyecto")
         print("   cd SISTEMA_GAFETES_FINAL")
         print("   python3 instalar_completo.py")
         return False
@@ -290,21 +290,21 @@ def main():
     ]
     
     for nombre, funcion in pasos:
-        print(f"\n📋 {nombre}")
+        print(f"\n {nombre}")
         print("-" * 40)
         
         if not funcion():
-            print(f"\n❌ Error en: {nombre}")
-            print("🔧 Revisa los errores arriba y ejecuta nuevamente")
+            print(f"\n Error en: {nombre}")
+            print(" Revisa los errores arriba y ejecuta nuevamente")
             return False
     
-    print("\n🎉 ¡INSTALACIÓN COMPLETADA EXITOSAMENTE!")
+    print("\n ¡INSTALACIÓN COMPLETADA EXITOSAMENTE!")
     print("=" * 60)
-    print("📋 PRÓXIMOS PASOS:")
+    print(" PRÓXIMOS PASOS:")
     print("1. Coloca tu archivo Excel en DATA/")
     print("2. Coloca imágenes en DATA/Imagenes_Mujeres/ y DATA/Imagenes_Hombres/")
     print("3. Ejecuta: python3 generador_pasaportes_masivo.py")
-    print("\n📚 Para más información, lee README.md")
+    print("\n Para más información, lee README.md")
     
     return True
 
@@ -313,8 +313,8 @@ if __name__ == "__main__":
         exito = main()
         sys.exit(0 if exito else 1)
     except KeyboardInterrupt:
-        print("\n\n⚠️ Instalación interrumpida por el usuario")
+        print("\n\n️ Instalación interrumpida por el usuario")
         sys.exit(1)
     except Exception as e:
-        print(f"\n❌ Error inesperado: {e}")
+        print(f"\n Error inesperado: {e}")
         sys.exit(1)

@@ -11,18 +11,18 @@ from pathlib import Path
 
 def verificar_python():
     """Verifica la versión de Python"""
-    print("🐍 Verificando Python...")
+    print(" Verificando Python...")
     version = sys.version_info
     if version.major >= 3 and version.minor >= 8:
-        print(f"✅ Python {version.major}.{version.minor}.{version.micro} - OK")
+        print(f" Python {version.major}.{version.minor}.{version.micro} - OK")
         return True
     else:
-        print(f"❌ Python {version.major}.{version.minor}.{version.micro} - Se requiere Python 3.8+")
+        print(f" Python {version.major}.{version.minor}.{version.micro} - Se requiere Python 3.8+")
         return False
 
 def verificar_dependencias():
     """Verifica que las dependencias estén instaladas"""
-    print("📦 Verificando dependencias...")
+    print(" Verificando dependencias...")
     
     dependencias = [
         "PIL",
@@ -39,31 +39,31 @@ def verificar_dependencias():
         try:
             if dep == "PIL":
                 import PIL
-                print(f"   ✅ {dep} - {PIL.__version__}")
+                print(f"    {dep} - {PIL.__version__}")
             elif dep == "cv2":
                 import cv2
-                print(f"   ✅ {dep} - {cv2.__version__}")
+                print(f"    {dep} - {cv2.__version__}")
             elif dep == "numpy":
                 import numpy
-                print(f"   ✅ {dep} - {numpy.__version__}")
+                print(f"    {dep} - {numpy.__version__}")
             elif dep == "pandas":
                 import pandas
-                print(f"   ✅ {dep} - {pandas.__version__}")
+                print(f"    {dep} - {pandas.__version__}")
             elif dep == "mediapipe":
                 import mediapipe
-                print(f"   ✅ {dep} - {mediapipe.__version__}")
+                print(f"    {dep} - {mediapipe.__version__}")
             elif dep == "rembg":
                 import rembg
-                print(f"   ✅ {dep} - {rembg.__version__}")
+                print(f"    {dep} - {rembg.__version__}")
         except ImportError:
-            print(f"   ❌ {dep} - NO INSTALADO")
+            print(f"    {dep} - NO INSTALADO")
             todas_ok = False
     
     return todas_ok
 
 def verificar_archivos():
     """Verifica que todos los archivos necesarios estén presentes"""
-    print("📁 Verificando archivos del sistema...")
+    print(" Verificando archivos del sistema...")
     
     archivos_requeridos = [
         "SCRIPTS/script_maestro_integrado.py",
@@ -81,16 +81,16 @@ def verificar_archivos():
     
     for archivo in archivos_requeridos:
         if Path(archivo).exists():
-            print(f"   ✅ {archivo}")
+            print(f"    {archivo}")
         else:
-            print(f"   ❌ {archivo} - FALTANTE")
+            print(f"    {archivo} - FALTANTE")
             todas_ok = False
     
     return todas_ok
 
 def verificar_directorios():
     """Verifica que los directorios necesarios existan"""
-    print("📂 Verificando directorios...")
+    print(" Verificando directorios...")
     
     directorios_requeridos = [
         "SCRIPTS",
@@ -105,16 +105,16 @@ def verificar_directorios():
     
     for directorio in directorios_requeridos:
         if Path(directorio).exists():
-            print(f"   ✅ {directorio}/")
+            print(f"    {directorio}/")
         else:
-            print(f"   ❌ {directorio}/ - FALTANTE")
+            print(f"    {directorio}/ - FALTANTE")
             todas_ok = False
     
     return todas_ok
 
 def probar_importacion():
     """Prueba la importación del script maestro"""
-    print("🔧 Probando importación del script maestro...")
+    print(" Probando importación del script maestro...")
     
     try:
         # Agregar SCRIPTS al path
@@ -122,24 +122,24 @@ def probar_importacion():
         
         # Intentar importar
         from script_maestro_integrado import ScriptMaestroIntegrado
-        print("   ✅ Script maestro importado correctamente")
+        print("    Script maestro importado correctamente")
         
         # Intentar inicializar
         maestro = ScriptMaestroIntegrado()
-        print("   ✅ Script maestro inicializado correctamente")
+        print("    Script maestro inicializado correctamente")
         
         return True
         
     except ImportError as e:
-        print(f"   ❌ Error importando: {e}")
+        print(f"    Error importando: {e}")
         return False
     except Exception as e:
-        print(f"   ❌ Error inicializando: {e}")
+        print(f"    Error inicializando: {e}")
         return False
 
 def probar_configuracion():
     """Prueba la carga de configuración"""
-    print("⚙️ Probando configuración...")
+    print("️ Probando configuración...")
     
     try:
         import json
@@ -149,7 +149,7 @@ def probar_configuracion():
         with open(config_path, 'r', encoding='utf-8') as f:
             config = json.load(f)
         
-        print("   ✅ Configuración cargada correctamente")
+        print("    Configuración cargada correctamente")
         
         # Verificar campos importantes
         campos_requeridos = [
@@ -166,19 +166,19 @@ def probar_configuracion():
                 if parte in valor:
                     valor = valor[parte]
                 else:
-                    print(f"   ❌ Campo faltante: {campo}")
+                    print(f"    Campo faltante: {campo}")
                     return False
         
-        print("   ✅ Campos de configuración verificados")
+        print("    Campos de configuración verificados")
         return True
         
     except Exception as e:
-        print(f"   ❌ Error en configuración: {e}")
+        print(f"    Error en configuración: {e}")
         return False
 
 def probar_plantilla():
     """Prueba la carga de la plantilla"""
-    print("🖼️ Probando plantilla base...")
+    print("️ Probando plantilla base...")
     
     try:
         from PIL import Image
@@ -186,21 +186,21 @@ def probar_plantilla():
         plantilla_path = "Plantillas_analisis/PASAPORTE-VENEZUELA-CLEAN.png"
         
         if not Path(plantilla_path).exists():
-            print(f"   ❌ Plantilla no encontrada: {plantilla_path}")
+            print(f"    Plantilla no encontrada: {plantilla_path}")
             return False
         
         img = Image.open(plantilla_path)
-        print(f"   ✅ Plantilla cargada: {img.width}x{img.height}")
+        print(f"    Plantilla cargada: {img.width}x{img.height}")
         
         return True
         
     except Exception as e:
-        print(f"   ❌ Error cargando plantilla: {e}")
+        print(f"    Error cargando plantilla: {e}")
         return False
 
 def probar_fuentes():
     """Prueba la carga de fuentes"""
-    print("🔤 Probando fuentes...")
+    print(" Probando fuentes...")
     
     try:
         from PIL import ImageFont
@@ -220,23 +220,23 @@ def probar_fuentes():
             if fuente_path.exists():
                 try:
                     font = ImageFont.truetype(str(fuente_path), 20)
-                    print(f"   ✅ {fuente}")
+                    print(f"    {fuente}")
                 except Exception as e:
-                    print(f"   ❌ {fuente} - Error cargando: {e}")
+                    print(f"    {fuente} - Error cargando: {e}")
                     todas_ok = False
             else:
-                print(f"   ❌ {fuente} - Archivo no encontrado")
+                print(f"    {fuente} - Archivo no encontrado")
                 todas_ok = False
         
         return todas_ok
         
     except Exception as e:
-        print(f"   ❌ Error probando fuentes: {e}")
+        print(f"    Error probando fuentes: {e}")
         return False
 
 def main():
     """Función principal de prueba"""
-    print("🧪 PRUEBA COMPLETA DEL SISTEMA DE PASAPORTES")
+    print(" PRUEBA COMPLETA DEL SISTEMA DE PASAPORTES")
     print("=" * 60)
     
     # Cambiar al directorio del script
@@ -257,36 +257,36 @@ def main():
     resultados = []
     
     for nombre, funcion in pruebas:
-        print(f"\n🔍 {nombre}:")
+        print(f"\n {nombre}:")
         try:
             resultado = funcion()
             resultados.append((nombre, resultado))
         except Exception as e:
-            print(f"   ❌ Error inesperado: {e}")
+            print(f"    Error inesperado: {e}")
             resultados.append((nombre, False))
     
     # Resumen final
-    print("\n📊 RESUMEN DE PRUEBAS:")
+    print("\n RESUMEN DE PRUEBAS:")
     print("=" * 30)
     
     exitosos = 0
     total = len(resultados)
     
     for nombre, resultado in resultados:
-        estado = "✅ PASS" if resultado else "❌ FAIL"
+        estado = " PASS" if resultado else " FAIL"
         print(f"   {estado} - {nombre}")
         if resultado:
             exitosos += 1
     
-    print(f"\n🎯 Resultado: {exitosos}/{total} pruebas exitosas")
+    print(f"\n Resultado: {exitosos}/{total} pruebas exitosas")
     
     if exitosos == total:
-        print("🎉 ¡SISTEMA COMPLETAMENTE FUNCIONAL!")
-        print("📋 Puedes ejecutar: python3 SCRIPTS/script_maestro_integrado.py")
+        print(" ¡SISTEMA COMPLETAMENTE FUNCIONAL!")
+        print(" Puedes ejecutar: python3 SCRIPTS/script_maestro_integrado.py")
         return True
     else:
-        print("❌ Sistema con problemas")
-        print("📋 Ejecutar: python3 instalar.py para corregir")
+        print(" Sistema con problemas")
+        print(" Ejecutar: python3 instalar.py para corregir")
         return False
 
 if __name__ == "__main__":
@@ -294,8 +294,8 @@ if __name__ == "__main__":
         exito = main()
         sys.exit(0 if exito else 1)
     except KeyboardInterrupt:
-        print("\n⚠️  Prueba cancelada por el usuario")
+        print("\n️  Prueba cancelada por el usuario")
         sys.exit(1)
     except Exception as e:
-        print(f"\n❌ Error inesperado: {e}")
+        print(f"\n Error inesperado: {e}")
         sys.exit(1)

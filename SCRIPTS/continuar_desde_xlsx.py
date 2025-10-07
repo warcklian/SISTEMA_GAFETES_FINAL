@@ -65,9 +65,9 @@ def main():
     backup_path = xlsx_path.with_name(xlsx_path.stem + f"_BACK_{ts_backup}.xlsx")
     try:
         df.to_excel(backup_path, index=False)
-        print(f"🛡️ Backup creado: {backup_path.name}")
+        print(f"️ Backup creado: {backup_path.name}")
     except Exception as e:
-        print(f"⚠️ No se pudo crear backup previo: {e}")
+        print(f"️ No se pudo crear backup previo: {e}")
 
     # Determinar pendientes: sin pasaporte_visual
     col_pv = "pasaporte_visual" if "pasaporte_visual" in df.columns else None
@@ -80,10 +80,10 @@ def main():
         return
 
     if not pendientes_idx:
-        print(f"✅ El archivo está completo. No hay registros pendientes: {xlsx_path.name}")
+        print(f" El archivo está completo. No hay registros pendientes: {xlsx_path.name}")
         return
 
-    print(f"📌 Registros pendientes: {len(pendientes_idx)}")
+    print(f" Registros pendientes: {len(pendientes_idx)}")
 
     generados = 0
     omitidos = 0
@@ -154,7 +154,7 @@ def main():
             try:
                 df.to_excel(xlsx_path, index=False)
             except Exception as e:
-                print(f"⚠️ No se pudo guardar progreso en XLSX: {e}")
+                print(f"️ No se pudo guardar progreso en XLSX: {e}")
         else:
             df.loc[i, "estado"] = "omitido"
             df.loc[i, "motivo_no_generado"] = "Error generando pasaporte visual"
@@ -163,16 +163,16 @@ def main():
             try:
                 df.to_excel(xlsx_path, index=False)
             except Exception as e:
-                print(f"⚠️ No se pudo guardar progreso en XLSX: {e}")
+                print(f"️ No se pudo guardar progreso en XLSX: {e}")
 
     # Guardar al final sobre el mismo archivo
     try:
         df.to_excel(xlsx_path, index=False)
     except Exception as e:
-        print(f"⚠️ No se pudo escribir XLSX final: {e}")
+        print(f"️ No se pudo escribir XLSX final: {e}")
 
-    print(f"✅ Continuación completada. Generados: {generados}, Omitidos: {omitidos}")
-    print(f"📄 XLSX actualizado en sitio: {xlsx_path.name}")
+    print(f" Continuación completada. Generados: {generados}, Omitidos: {omitidos}")
+    print(f" XLSX actualizado en sitio: {xlsx_path.name}")
 
 
 if __name__ == "__main__":

@@ -1,11 +1,11 @@
-# 📋 Datos de Ejemplo para el Sistema de Pasaportes
+#  Datos de Ejemplo para el Sistema de Pasaportes
 
-## 🎯 Información del Pasaporte
+##  Información del Pasaporte
 - **Número de Pasaporte:** 108641398
 - **Tipo de Documento:** P (Pasaporte)
 - **País Emisor:** VEN (Venezuela)
 
-## 👤 Información Personal
+##  Información Personal
 - **Nombre:** LA MASCARA
 - **Apellido:** PLANTILLAS VIRTUALES
 - **Fecha de Nacimiento:** 14 / Ago / Ago / 1997
@@ -14,34 +14,34 @@
 - **Nacionalidad:** VENEZOLANA
 - **Lugar de Nacimiento:** MARACAIBO VEN
 
-## 📅 Fechas del Documento
+##  Fechas del Documento
 - **Fecha de Emisión:** 12 / Mar / Mar / 2020
 - **Fecha de Vencimiento:** 01 / Mar / Mar / 2025
 
-## 🔤 Códigos MRZ
+##  Códigos MRZ
 - **Línea 1:** P<VENVARGARCIAGONZALEZ<<MARCOS<<<<<<<<<<<<<<<
 - **Línea 2:** 1086413983VEN9708141M2503011<<<<<<<<<<<<<<<6
 
-## ✍️ Firma
+## ️ Firma
 - **Texto de Firma:** Firma Digital
 
-## 📸 Imágenes
+##  Imágenes
 - **Formato:** PNG, JPG, JPEG
 - **Ubicación:** DATA/Imagenes_OK/
 - **Procesamiento:** IA elimina fondo → escala de grises tono 217
 
-## 🎨 Características Técnicas
+##  Características Técnicas
 - **Resolución:** 300 DPI
 - **Dimensiones:** 1060x1414 píxeles
 - **Formato de salida:** PNG de alta calidad
 - **Escala de grises:** Tono 217 (extraído de plantilla real)
 
-## 🔧 Configuración
+##  Configuración
 - **Archivo de configuración:** CONFIG/config.json
 - **Plantilla base:** Plantillas_analisis/PASAPORTE-VENEZUELA-CLEAN.png
 - **Fuentes especializadas:** TEMPLATE/Fuentes Extras/
 
-## 📁 Estructura de Directorios
+##  Estructura de Directorios
 ```
 SISTEMA_PASAPORTES_FINAL/
 ├── SCRIPTS/script_maestro_integrado.py
@@ -57,7 +57,7 @@ SISTEMA_PASAPORTES_FINAL/
 └── README.md
 ```
 
-## 🚀 Comandos de Uso
+##  Comandos de Uso
 ```bash
 # Instalación automática
 python3 instalar.py
@@ -72,7 +72,7 @@ python3 SCRIPTS/script_maestro_integrado.py
 python3 ejemplo_uso.py
 ```
 
-## 📊 Procesamiento de Imágenes
+##  Procesamiento de Imágenes
 1. **Carga imagen original**
 2. **IA elimina fondo** (rembg)
 3. **Suaviza bordes** (erosión + feather)
@@ -82,7 +82,7 @@ python3 ejemplo_uso.py
 7. **Inserta en plantilla**
 8. **Agrega todos los textos y elementos**
 
-## 🎯 Resultados Esperados
+##  Resultados Esperados
 - **Archivo principal:** `gafete_integrado_imagen_original.png`
 - **Con rectángulos:** `gafete_integrado_imagen_original_con_rectangulos.png`
 - **Ubicación:** `OUTPUT/plantillas_integradas/`

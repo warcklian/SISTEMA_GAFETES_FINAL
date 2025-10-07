@@ -59,8 +59,8 @@ def actualizar_estructura_fechas():
     with open(config_path, 'w', encoding='utf-8') as f:
         json.dump(config, f, indent=2, ensure_ascii=False)
     
-    print("✅ Estructura actualizada para todos los contenedores de fechas")
-    print("📋 Campos actualizados:")
+    print(" Estructura actualizada para todos los contenedores de fechas")
+    print(" Campos actualizados:")
     for campo in campos_fecha:
         print(f"   • {campo}")
         contenedores = config['field_mapping'][campo].get('contenedores_individuales', {})

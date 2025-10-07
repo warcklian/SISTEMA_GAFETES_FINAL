@@ -71,9 +71,9 @@ class ScriptMaestroIntegrado:
         # Activar OpenCL en OpenCV si está disponible (mejor uso GPU/driver)
         try:
             cv2.ocl.setUseOpenCL(True)
-            print(f"   ⚙️ OpenCL habilitado en OpenCV: {cv2.ocl.useOpenCL()}")
+            print(f"   ️ OpenCL habilitado en OpenCV: {cv2.ocl.useOpenCL()}")
         except Exception as e:
-            print(f"   ⚠️ No se pudo habilitar OpenCL en OpenCV: {e}")
+            print(f"   ️ No se pudo habilitar OpenCL en OpenCV: {e}")
 
         # Inicializar MediaPipe Face Mesh con preferencia GPU (controlado por env MEDIAPIPE_GPU)
         self.mp_face_mesh = mp.solutions.face_mesh
@@ -88,7 +88,7 @@ class ScriptMaestroIntegrado:
         self.ort_session = None
         self.ort_input_name = None
         self.ort_input_size = (640, 640)
-        print(f"   ⚠️ ONNX Runtime deshabilitado (usando OpenCV)")
+        print(f"   ️ ONNX Runtime deshabilitado (usando OpenCV)")
 
         # Inicializar sesión persistente de rembg con preferencia CUDA
         self.rembg_session = None
@@ -101,14 +101,14 @@ class ScriptMaestroIntegrado:
                 rembg_providers = ['CPUExecutionProvider']
             # Modelos posibles: 'u2net', 'u2net_human_seg', 'isnet-anime', etc. Usar el estándar u2net_human_seg
             self.rembg_session = new_session('u2net_human_seg', providers=rembg_providers)
-            print(f"   🧠 rembg sesión inicializada ({rembg_providers})")
+            print(f"    rembg sesión inicializada ({rembg_providers})")
         except Exception as e:
             self.rembg_session = None
-            print(f"   ⚠️ No se pudo inicializar sesión rembg: {e}")
+            print(f"   ️ No se pudo inicializar sesión rembg: {e}")
         
     def _precargar_fuentes_comunes(self):
         """OPTIMIZACIÓN: Precarga las fuentes más comunes para evitar recargar"""
-        print("🔄 Precargando fuentes comunes...")
+        print(" Precargando fuentes comunes...")
         
         # Tamaños comunes que se usan frecuentemente
         tamanos_comunes = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40, 48, 60, 72, 90]
@@ -131,7 +131,7 @@ class ScriptMaestroIntegrado:
                 except Exception:
                     pass  # Si falla, se carga bajo demanda
         
-        print(f"✅ {len(self.font_cache)} fuentes precargadas")
+        print(f" {len(self.font_cache)} fuentes precargadas")
 
     def _cargar_fuente_optimizada(self, font_name, font_size_pt, dpi=96):
         """OPTIMIZACIÓN: Carga fuente con cache para evitar recargar"""
@@ -227,10 +227,10 @@ class ScriptMaestroIntegrado:
             with open(self.config_path, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except FileNotFoundError:
-            print(f"❌ Error: No se encontró el archivo de configuración: {self.config_path}")
+            print(f" Error: No se encontró el archivo de configuración: {self.config_path}")
             sys.exit(1)
         except json.JSONDecodeError as e:
-            print(f"❌ Error en el archivo de configuración: {e}")
+            print(f" Error en el archivo de configuración: {e}")
             sys.exit(1)
     
     def cargar_plantilla_clean(self):
@@ -245,14 +245,14 @@ class ScriptMaestroIntegrado:
                 img = Image.open(self.plantilla_clean_path)
                 # Guardar en cache para reutilización (SIN COPY para mantener la misma instancia)
                 self.plantilla_cache = img
-                print(f"✅ Plantilla limpia cargada y cacheada: {self.plantilla_clean_path}")
-                print(f"📐 Dimensiones: {img.width}x{img.height}")
+                print(f" Plantilla limpia cargada y cacheada: {self.plantilla_clean_path}")
+                print(f" Dimensiones: {img.width}x{img.height}")
                 return img
             else:
-                print(f"❌ No se encontró la plantilla limpia: {self.plantilla_clean_path}")
+                print(f" No se encontró la plantilla limpia: {self.plantilla_clean_path}")
                 return None
         except Exception as e:
-            print(f"❌ Error al cargar plantilla limpia: {e}")
+            print(f" Error al cargar plantilla limpia: {e}")
             return None
     
     def puntos_a_pixeles(self, puntos, dpi=96):
@@ -270,9 +270,9 @@ class ScriptMaestroIntegrado:
             # Solo mostrar mensaje si no está en cache (primera carga)
             cache_key = f"{font_name}_{self.puntos_a_pixeles(font_size_pt, dpi)}"
             if cache_key not in self.font_cache:
-                print(f"   ✅ Fuente {font_name} cargada: {font_size_pt} pt (DPI {dpi})")
+                print(f"    Fuente {font_name} cargada: {font_size_pt} pt (DPI {dpi})")
         else:
-            print(f"   ❌ No se pudo cargar fuente {font_name}")
+            print(f"    No se pudo cargar fuente {font_name}")
         
         return font
     
@@ -366,7 +366,7 @@ class ScriptMaestroIntegrado:
             
             return img_pil
         except Exception as e:
-            print(f"   ❌ Error rembg: {e}")
+            print(f"    Error rembg: {e}")
             return None
     
     def refinar_contorno(self, img):
@@ -392,7 +392,7 @@ class ScriptMaestroIntegrado:
             
             return img_refinada
         except Exception as e:
-            print(f"   ❌ Error refinando: {e}")
+            print(f"    Error refinando: {e}")
             return img
     
     def calcular_distancia_al_borde(self, mask, x, y):
@@ -473,7 +473,7 @@ class ScriptMaestroIntegrado:
                     return face
             except Exception as e:
                 # ONNX falló, continuar con MediaPipe
-                print(f"   ⚠️ Fallback a MediaPipe (ONNX no decodificado): {e}")
+                print(f"   ️ Fallback a MediaPipe (ONNX no decodificado): {e}")
 
         # 2) MediaPipe Face Mesh
         try:
@@ -495,7 +495,7 @@ class ScriptMaestroIntegrado:
             img_scaled = img.resize((new_w, new_h), Image.Resampling.LANCZOS)
             return img_scaled
         except Exception as e:
-            print(f"   ❌ Error detectando cara: {e}")
+            print(f"    Error detectando cara: {e}")
             return self._escalar_simple(img)
     
     def _escalar_simple(self, img):
@@ -511,12 +511,12 @@ class ScriptMaestroIntegrado:
             img_scaled = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
             return img_scaled
         except Exception as e:
-            print(f"   ❌ Error en escalado simple: {e}")
+            print(f"    Error en escalado simple: {e}")
             return img
     
     def aplicar_efectos_imagen(self, img):
         """Aplica efectos de integración con el fondo a la imagen con escala de grises tono 217"""
-        print("   🎨 Aplicando efectos de integración con fondo y escala de grises tono 217...")
+        print("    Aplicando efectos de integración con fondo y escala de grises tono 217...")
         
         # Asegurar que la imagen esté en RGBA para preservar transparencia
         if img.mode != 'RGBA':
@@ -560,12 +560,12 @@ class ScriptMaestroIntegrado:
         # Aplicar blur sutil
         img_final = img_final.filter(ImageFilter.GaussianBlur(radius=0.5))
         
-        print("   ✅ Efectos aplicados: escala de grises tono 217, transparencia gradual, blur sutil")
+        print("    Efectos aplicados: escala de grises tono 217, transparencia gradual, blur sutil")
         return img_final
     
     def integrar_solo_contorno_persona(self, img):
         """Integra solo el contorno de la persona, eliminando fondo y marco"""
-        print("   🎯 Procesando imagen para mostrar solo contorno de la persona...")
+        print("    Procesando imagen para mostrar solo contorno de la persona...")
         
         # Asegurar que la imagen esté en RGBA
         if img.mode != 'RGBA':
@@ -621,7 +621,7 @@ class ScriptMaestroIntegrado:
         # Convertir de vuelta a imagen
         img_final = Image.fromarray(result, 'RGBA')
         
-        print("   ✅ Contorno de persona procesado: fondo eliminado, solo contorno visible")
+        print("    Contorno de persona procesado: fondo eliminado, solo contorno visible")
         return img_final
     
     def calcular_distancia_al_borde_simple(self, mask, x, y):
@@ -728,11 +728,11 @@ class ScriptMaestroIntegrado:
             # Pegar en lienzo
             canvas.paste(img_cropped, (paste_x, paste_y), img_cropped)
             
-            print(f"   ✂️ Imagen recortada con Face Mesh: {img.size} → {target_width}x{target_height}")
+            print(f"   ️ Imagen recortada con Face Mesh: {img.size} → {target_width}x{target_height}")
             return canvas
             
         except Exception as e:
-            print(f"   ❌ Error recortando con Face Mesh: {e}")
+            print(f"    Error recortando con Face Mesh: {e}")
             return self._recortar_simple(img, target_width, target_height)
     
     def _recortar_simple(self, img, target_width, target_height):
@@ -754,15 +754,15 @@ class ScriptMaestroIntegrado:
             
             canvas.paste(img_scaled, (paste_x, paste_y), img_scaled)
             
-            print(f"   ✂️ Imagen recortada (método simple): {current_width}x{current_height} → {target_width}x{target_height}")
+            print(f"   ️ Imagen recortada (método simple): {current_width}x{current_height} → {target_width}x{target_height}")
             return canvas
         except Exception as e:
-            print(f"   ❌ Error en recorte simple: {e}")
+            print(f"    Error en recorte simple: {e}")
             return img
     
     def crear_marco_semitransparente(self, img, target_width, target_height):
         """Crea un marco semi-transparente DENTRO de las dimensiones existentes"""
-        print("   🖼️ Creando marco semi-transparente dentro del contenedor...")
+        print("   ️ Creando marco semi-transparente dentro del contenedor...")
         
         # Crear una copia de la imagen para trabajar
         img_con_marco = img.copy()
@@ -781,23 +781,23 @@ class ScriptMaestroIntegrado:
         draw.rectangle([2, 2, target_width-3, target_height-3], 
                       outline=marco_color_interior, width=1)
         
-        print("   ✅ Marco semi-transparente creado dentro del contenedor")
+        print("    Marco semi-transparente creado dentro del contenedor")
         return img_con_marco
     
     def insertar_imagen_con_efectos(self, img_base, ruta_foto):
         """Inserta la imagen con procesamiento completo desde imagen original"""
-        print(f"   📸 Procesando imagen original: {ruta_foto}")
+        print(f"    Procesando imagen original: {ruta_foto}")
         
         # Procesar imagen desde cero (eliminar fondo, refinar, detectar cara, escalar)
         img_procesada = self.procesar_imagen_desde_cero(ruta_foto)
         if img_procesada is None:
-            print("❌ Error procesando imagen original")
+            print(" Error procesando imagen original")
             return img_base
         
         # Obtener configuración de la foto
         foto_config = self.config['field_mapping'].get('ruta_foto')
         if not foto_config:
-            print("   ❌ Error: Configuración de foto no encontrada")
+            print("    Error: Configuración de foto no encontrada")
             return img_base
         
         # Obtener dimensiones y posición
@@ -821,18 +821,18 @@ class ScriptMaestroIntegrado:
         # Pegar imagen en la plantilla
         img_base.paste(img_con_marco, (pos_x, pos_y), img_con_marco)
         
-        print(f"   ✅ Imagen procesada e insertada en posición ({pos_x}, {pos_y}) con dimensiones {target_width}x{target_height}")
-        print(f"   🎯 Procesamiento completo: IA elimina fondo → suaviza bordes → escalado → escala de grises tono 217")
+        print(f"    Imagen procesada e insertada en posición ({pos_x}, {pos_y}) con dimensiones {target_width}x{target_height}")
+        print(f"    Procesamiento completo: IA elimina fondo → suaviza bordes → escalado → escala de grises tono 217")
         return img_base
     
     def insertar_numero_pasaporte1(self, img_base, numero_pasaporte="108641398"):
         """Inserta el número de pasaporte N°PASAPORTE1 con configuración final"""
-        print(f"   🔢 Insertando N°PASAPORTE1: {numero_pasaporte}")
+        print(f"    Insertando N°PASAPORTE1: {numero_pasaporte}")
         
         # Obtener configuración del campo N°PASAPORTE1
         field_config = self.config['field_mapping'].get('numero_pasaporte_vertical1')
         if not field_config:
-            print("   ❌ Error: Configuración para 'numero_pasaporte_vertical1' no encontrada")
+            print("    Error: Configuración para 'numero_pasaporte_vertical1' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -887,9 +887,9 @@ class ScriptMaestroIntegrado:
                 
                 # Redimensionar la imagen
                 temp_text_layer = temp_text_layer.resize((new_width, new_height), Image.Resampling.LANCZOS)
-                print(f"   🔧 Stretch to fit aplicado: {current_height}px -> {new_height}px (factor: {scale_factor:.3f})")
+                print(f"    Stretch to fit aplicado: {current_height}px -> {new_height}px (factor: {scale_factor:.3f})")
             else:
-                print(f"   ✅ Texto ya cabe en el contenedor: {current_height}px <= {target_height}px")
+                print(f"    Texto ya cabe en el contenedor: {current_height}px <= {target_height}px")
         
         # Aplicar escalado si es necesario
         if scale_x != 1.0 or scale_y != 1.0:
@@ -899,7 +899,7 @@ class ScriptMaestroIntegrado:
             
             # Redimensionar la imagen
             temp_text_layer = temp_text_layer.resize((new_width, new_height), Image.Resampling.LANCZOS)
-            print(f"   🔧 Escalado aplicado: {scale_x}x{scale_y} -> {new_width}x{new_height}")
+            print(f"    Escalado aplicado: {scale_x}x{scale_y} -> {new_width}x{new_height}")
         
         # Rotar la imagen del texto 90 grados anti-horario
         rotated_text_layer = temp_text_layer.rotate(rotation, expand=1, resample=Image.Resampling.BICUBIC)
@@ -931,7 +931,7 @@ class ScriptMaestroIntegrado:
                 # Mover a la siguiente posición con espaciado (verticalmente hacia abajo)
                 current_y += rotated_char.height + int(letter_spacing)
             
-            print(f"   🔧 Espaciado aplicado: {letter_spacing}px entre letras")
+            print(f"    Espaciado aplicado: {letter_spacing}px entre letras")
             return img_base
         
         # Posicionar según alineación - INDEPENDIENTE DEL CONTENEDOR
@@ -951,21 +951,21 @@ class ScriptMaestroIntegrado:
         # Pegar el texto rotado en la plantilla
         img_base.paste(rotated_text_layer, (paste_x, paste_y), rotated_text_layer)
         
-        print(f"   ✅ N°PASAPORTE1 insertado en posición ({paste_x}, {paste_y}) con rotación {rotation}°")
-        print(f"   📏 Escalado: {scale_x}x{scale_y}, Espaciado: {letter_spacing}px, Grosor: {thickness}")
+        print(f"    N°PASAPORTE1 insertado en posición ({paste_x}, {paste_y}) con rotación {rotation}°")
+        print(f"    Escalado: {scale_x}x{scale_y}, Espaciado: {letter_spacing}px, Grosor: {thickness}")
         
-        print(f"   📏 Tamaño: {font_size_pt} pt, grosor: {thickness}, independiente del contenedor")
+        print(f"    Tamaño: {font_size_pt} pt, grosor: {thickness}, independiente del contenedor")
         
         return img_base
     
     def insertar_numero_pasaporte2(self, img_base, numero_pasaporte="108641398"):
         """Inserta el número de pasaporte N°PASAPORTE2 con configuración final"""
-        print(f"   🔢 Insertando N°PASAPORTE2: {numero_pasaporte}")
+        print(f"    Insertando N°PASAPORTE2: {numero_pasaporte}")
         
         # Obtener configuración del campo N°PASAPORTE2
         field_config = self.config['field_mapping'].get('numero_pasaporte_vertical2')
         if not field_config:
-            print("   ❌ Error: Configuración para 'numero_pasaporte_vertical2' no encontrada")
+            print("    Error: Configuración para 'numero_pasaporte_vertical2' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1011,7 +1011,7 @@ class ScriptMaestroIntegrado:
             
             # Redimensionar la imagen
             temp_text_layer = temp_text_layer.resize((new_width, new_height), Image.Resampling.LANCZOS)
-            print(f"   🔧 Escalado aplicado: {scale_x}x{scale_y} -> {new_width}x{new_height}")
+            print(f"    Escalado aplicado: {scale_x}x{scale_y} -> {new_width}x{new_height}")
         
         # Rotar la imagen del texto 90 grados anti-horario
         rotated_text_layer = temp_text_layer.rotate(rotation, expand=1, resample=Image.Resampling.BICUBIC)
@@ -1043,7 +1043,7 @@ class ScriptMaestroIntegrado:
         #         # Mover a la siguiente posición con espaciado (verticalmente hacia abajo)
         #         current_y += rotated_char.height + int(letter_spacing)
         #     
-        #     print(f"   🔧 Espaciado aplicado: {letter_spacing}px entre letras")
+        #     print(f"    Espaciado aplicado: {letter_spacing}px entre letras")
         #     return img_base
         
         # Posicionar según alineación - INDEPENDIENTE DEL CONTENEDOR
@@ -1063,20 +1063,20 @@ class ScriptMaestroIntegrado:
         # Pegar el texto rotado en la plantilla
         img_base.paste(rotated_text_layer, (paste_x, paste_y), rotated_text_layer)
         
-        print(f"   ✅ N°PASAPORTE2 insertado en posición ({paste_x}, {paste_y}) con rotación {rotation}°")
-        print(f"   📏 Escalado: {scale_x}x{scale_y}, Grosor: {thickness}")
-        print(f"   📏 Tamaño: {font_size_pt} pt, grosor: {thickness}, independiente del contenedor")
+        print(f"    N°PASAPORTE2 insertado en posición ({paste_x}, {paste_y}) con rotación {rotation}°")
+        print(f"    Escalado: {scale_x}x{scale_y}, Grosor: {thickness}")
+        print(f"    Tamaño: {font_size_pt} pt, grosor: {thickness}, independiente del contenedor")
         
         return img_base
     
     def insertar_tipo_documento(self, img_base, tipo_documento="P"):
         """Inserta el tipo de documento TIPO usando configuración JSON"""
-        print(f"   📝 Insertando TIPO: {tipo_documento}")
+        print(f"    Insertando TIPO: {tipo_documento}")
         
         # Obtener configuración del campo TIPO
         field_config = self.config['field_mapping'].get('tipo_documento')
         if not field_config:
-            print("   ❌ Error: Configuración para 'tipo_documento' no encontrada")
+            print("    Error: Configuración para 'tipo_documento' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1101,8 +1101,8 @@ class ScriptMaestroIntegrado:
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        print(f"   📏 Dimensiones del texto: {text_width}x{text_height}")
-        print(f"   📏 Dimensiones del rectángulo: {ancho}x{alto}")
+        print(f"    Dimensiones del texto: {text_width}x{text_height}")
+        print(f"    Dimensiones del rectángulo: {ancho}x{alto}")
         
         # Usar configuración del JSON para posicionamiento
         offset_x = pos.get('offset_x', 0)
@@ -1121,19 +1121,19 @@ class ScriptMaestroIntegrado:
         thickness = field_config.get('bold_thickness', 0.7)
         self.simular_negritas(draw, left_x, top_y, tipo_documento, font, font_color, thickness=thickness)
         
-        print(f"   ✅ TIPO insertado en posición ({left_x}, {top_y})")
-        print(f"   📏 Tamaño: {font_size_pt_conf} pt, fuente: Arial, alineado a la izquierda (top-left)")
+        print(f"    TIPO insertado en posición ({left_x}, {top_y})")
+        print(f"    Tamaño: {font_size_pt_conf} pt, fuente: Arial, alineado a la izquierda (top-left)")
         
         return img_base
     
     def insertar_pais_emisor(self, img_base, pais="VEN"):
         """Inserta el país emisor PAÍS usando configuración JSON"""
-        print(f"   🌍 Insertando PAÍS: {pais}")
+        print(f"    Insertando PAÍS: {pais}")
         
         # Obtener configuración del campo PAÍS
         field_config = self.config['field_mapping'].get('pais_emisor')
         if not field_config:
-            print("   ❌ Error: Configuración para 'pais_emisor' no encontrada")
+            print("    Error: Configuración para 'pais_emisor' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1158,8 +1158,8 @@ class ScriptMaestroIntegrado:
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        print(f"   📏 Dimensiones del texto: {text_width}x{text_height}")
-        print(f"   📏 Dimensiones del rectángulo: {ancho}x{alto}")
+        print(f"    Dimensiones del texto: {text_width}x{text_height}")
+        print(f"    Dimensiones del rectángulo: {ancho}x{alto}")
         
         # Usar configuración del JSON para posicionamiento
         left_x, top_y = self.calcular_posicion_desde_json(pos)
@@ -1168,19 +1168,19 @@ class ScriptMaestroIntegrado:
         thickness = field_config.get('bold_thickness', 0)
         self.simular_negritas(draw, left_x, top_y, pais, font, font_color, thickness=thickness)
         
-        print(f"   ✅ PAÍS insertado en posición ({left_x}, {top_y})")
-        print(f"   📏 Tamaño: {font_size_pt_conf} pt, fuente: Arial, alineado a la izquierda (top-left)")
+        print(f"    PAÍS insertado en posición ({left_x}, {top_y})")
+        print(f"    Tamaño: {font_size_pt_conf} pt, fuente: Arial, alineado a la izquierda (top-left)")
         
         return img_base
     
     def insertar_texto_estandar(self, img_base, campo, texto, font_size_pt=63.32):
         """Inserta texto con configuración estándar (Arial, tamaño en puntos)"""
-        print(f"   📝 Insertando {campo}: {texto}")
+        print(f"    Insertando {campo}: {texto}")
         
         # Obtener configuración del campo
         field_config = self.config['field_mapping'].get(campo)
         if not field_config:
-            print(f"   ❌ Error: Configuración para '{campo}' no encontrada")
+            print(f"    Error: Configuración para '{campo}' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1204,8 +1204,8 @@ class ScriptMaestroIntegrado:
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        print(f"   📏 Dimensiones del texto: {text_width}x{text_height}")
-        print(f"   📏 Dimensiones del rectángulo: {ancho}x{alto}")
+        print(f"    Dimensiones del texto: {text_width}x{text_height}")
+        print(f"    Dimensiones del rectángulo: {ancho}x{alto}")
         
         # Usar configuración del JSON para posicionamiento
         left_x, top_y = self.calcular_posicion_desde_json(pos)
@@ -1223,8 +1223,8 @@ class ScriptMaestroIntegrado:
             # Dibujo normal sin espaciado ni difuminado
             self.simular_negritas(draw, left_x, top_y, texto, font, font_color, thickness=thickness)
         
-        print(f"   ✅ {campo} insertado en posición ({left_x}, {top_y})")
-        print(f"   📏 Tamaño: {font_size_pt} pt, fuente: Arial (top-left)")
+        print(f"    {campo} insertado en posición ({left_x}, {top_y})")
+        print(f"    Tamaño: {font_size_pt} pt, fuente: Arial (top-left)")
         
         return img_base
     
@@ -1232,7 +1232,7 @@ class ScriptMaestroIntegrado:
         """Inserta el nombre alineado a la izquierda como los otros textos"""
         field_config = self.config['field_mapping'].get('nombre')
         if not field_config:
-            print("   ❌ Error: Configuración para 'nombre' no encontrada")
+            print("    Error: Configuración para 'nombre' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1252,10 +1252,10 @@ class ScriptMaestroIntegrado:
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        print(f"   📝 Insertando nombre: {texto}")
-        print(f"   ✅ Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
-        print(f"   📏 Dimensiones del texto: {text_width}x{text_height}")
-        print(f"   📏 Dimensiones del rectángulo: {ancho}x{alto}")
+        print(f"    Insertando nombre: {texto}")
+        print(f"    Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
+        print(f"    Dimensiones del texto: {text_width}x{text_height}")
+        print(f"    Dimensiones del rectángulo: {ancho}x{alto}")
         
         # Usar configuración del JSON para posicionamiento
         left_x, top_y = self.calcular_posicion_desde_json(pos)
@@ -1265,8 +1265,8 @@ class ScriptMaestroIntegrado:
         thickness = field_config.get('bold_thickness', 0.7)
         self.simular_negritas(draw, left_x, top_y, texto, font, font_color, thickness=thickness)
         
-        print(f"   ✅ nombre insertado en posición ({left_x}, {top_y})")
-        print(f"   📏 Tamaño: {font_size_pt} pt, fuente: {font_name}, top-left")
+        print(f"    nombre insertado en posición ({left_x}, {top_y})")
+        print(f"    Tamaño: {font_size_pt} pt, fuente: {font_name}, top-left")
         
         return img_base
     
@@ -1274,7 +1274,7 @@ class ScriptMaestroIntegrado:
         """Inserta texto alineado a la izquierda del marco interno del contenedor"""
         field_config = self.config['field_mapping'].get(campo)
         if not field_config:
-            print(f"   ❌ Error: Configuración para '{campo}' no encontrada")
+            print(f"    Error: Configuración para '{campo}' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1294,10 +1294,10 @@ class ScriptMaestroIntegrado:
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        print(f"   📝 Insertando {campo}: {texto}")
-        print(f"   ✅ Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
-        print(f"   📏 Dimensiones del texto: {text_width}x{text_height}")
-        print(f"   📏 Dimensiones del rectángulo: {ancho}x{alto}")
+        print(f"    Insertando {campo}: {texto}")
+        print(f"    Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
+        print(f"    Dimensiones del texto: {text_width}x{text_height}")
+        print(f"    Dimensiones del rectángulo: {ancho}x{alto}")
         
         # Verificar si tiene estiramiento para ajustar al contenedor
         stretch_to_fit = field_config.get('stretch_to_fit', False)
@@ -1329,7 +1329,7 @@ class ScriptMaestroIntegrado:
                 # Ajustar el ancho del contenedor principal
                 ancho = ancho_total
                 
-                print(f"   🔧 Contenedores individuales:")
+                print(f"    Contenedores individuales:")
                 print(f"      Día: {dia} ({contenedores['dia']['ancho']}px)")
                 print(f"      Mes ES: {mes_es} ({contenedores['mes_es']['ancho']}px)")
                 print(f"      Mes EN: {mes_en} ({contenedores['mes_en']['ancho']}px)")
@@ -1342,7 +1342,7 @@ class ScriptMaestroIntegrado:
                 # Si no se puede dividir, usar ancho estándar
                 ancho_estandar = 200
                 ancho = ancho_estandar
-                print(f"   🔧 Formato no reconocido, usando ancho estándar: {ancho_estandar}px")
+                print(f"    Formato no reconocido, usando ancho estándar: {ancho_estandar}px")
         
         # RENDERIZAR FECHAS CON CONTENEDORES INDIVIDUALES
         if campo in ['fecha_nacimiento', 'fecha_emision', 'fecha_vencimiento'] and len(texto.split('/')) == 4:
@@ -1351,7 +1351,7 @@ class ScriptMaestroIntegrado:
         if stretch_to_fit:
             # Calcular el factor de escalado SOLO horizontal para ajustar al ancho del contenedor
             scale_factor = fit_width / text_width if text_width > 0 else 1.0
-            print(f"   🔧 Estirando SOLO horizontalmente: {text_width}px -> {fit_width}px (factor: {scale_factor:.3f})")
+            print(f"    Estirando SOLO horizontalmente: {text_width}px -> {fit_width}px (factor: {scale_factor:.3f})")
             
             # Crear una capa temporal con el ancho estirado pero altura original
             padding = field_config.get('stretch_padding', 10)  # Padding desde JSON
@@ -1380,7 +1380,7 @@ class ScriptMaestroIntegrado:
             # Pegar la capa escalada en la imagen base
             img_base.paste(scaled_layer, (left_x, top_y), scaled_layer)
             
-            print(f"   ✅ Texto estirado SOLO horizontalmente: {final_width}x{final_height} (altura original mantenida)")
+            print(f"    Texto estirado SOLO horizontalmente: {final_width}x{final_height} (altura original mantenida)")
         else:
             # Verificar si tiene escalado manual (como N°PASAPORTE1 y N°PASAPORTE2)
             scale_x = field_config.get('scale_x', 1.0)
@@ -1408,7 +1408,7 @@ class ScriptMaestroIntegrado:
                 # Pegar la capa escalada en la imagen base
                 img_base.paste(scaled_layer, (left_x, top_y), scaled_layer)
                 
-                print(f"   🔧 Escalado manual aplicado: {scale_x}x{scale_y} -> {temp_width}x{temp_height}")
+                print(f"    Escalado manual aplicado: {scale_x}x{scale_y} -> {temp_width}x{temp_height}")
             else:
                 # Usar configuración del JSON para posicionamiento
                 left_x, top_y = self.calcular_posicion_desde_json(pos)
@@ -1427,8 +1427,8 @@ class ScriptMaestroIntegrado:
                     # Dibujo normal sin espaciado ni difuminado
                     self.simular_negritas(draw, left_x, top_y, texto, font, font_color, thickness=thickness)
         
-        print(f"   ✅ {campo} insertado en posición ({left_x}, {top_y})")
-        print(f"   📏 Tamaño: {font_size_pt} pt, fuente: {font_name}, top-left")
+        print(f"    {campo} insertado en posición ({left_x}, {top_y})")
+        print(f"    Tamaño: {font_size_pt} pt, fuente: {font_name}, top-left")
         
         return img_base
     
@@ -1438,7 +1438,7 @@ class ScriptMaestroIntegrado:
             # Dividir la fecha en elementos
             partes = texto.split('/')
             if len(partes) != 4:
-                print(f"   ❌ Formato de fecha inválido: {texto}")
+                print(f"    Formato de fecha inválido: {texto}")
                 return img_base
             
             dia, mes_es, mes_en, año = partes
@@ -1546,7 +1546,7 @@ class ScriptMaestroIntegrado:
                     draw.rectangle([final_x, final_y, final_x + ancho_contenedor-1, final_y + alto_contenedor-1], 
                                  outline=color_borde, width=grosor_borde)
                 
-                print(f"   📝 {elemento.capitalize()}: '{texto_elemento}' en posición ({text_x_absoluto}, {text_y_absoluto}) - contenedor {ancho_contenedor}x{alto_contenedor}px")
+                print(f"    {elemento.capitalize()}: '{texto_elemento}' en posición ({text_x_absoluto}, {text_y_absoluto}) - contenedor {ancho_contenedor}x{alto_contenedor}px")
                 
                 # Agregar separador si no es el último elemento
                 if i < len(elementos) - 1:
@@ -1590,20 +1590,20 @@ class ScriptMaestroIntegrado:
                         draw.rectangle([separador_final_x, separador_final_y, separador_final_x + separador_ancho-1, separador_final_y + separador_alto-1], 
                                      outline=separador_color, width=separador_grosor)
                     
-                    print(f"   📝 {separador_key.capitalize()}: '/' en posición ({sep_text_x_absoluto}, {sep_text_y_absoluto}) - contenedor {separador_ancho}x{separador_alto}px")
+                    print(f"    {separador_key.capitalize()}: '/' en posición ({sep_text_x_absoluto}, {sep_text_y_absoluto}) - contenedor {separador_ancho}x{separador_alto}px")
             
-            print(f"   ✅ Fecha con contenedores individuales insertada en posición ({x}, {y})")
+            print(f"    Fecha con contenedores individuales insertada en posición ({x}, {y})")
             return img_base
             
         except Exception as e:
-            print(f"   ❌ Error insertando fecha con contenedores individuales: {e}")
+            print(f"    Error insertando fecha con contenedores individuales: {e}")
             return img_base
     
     def insertar_code_negritas(self, img_base, texto, font_size_pt=16):
         """Inserta el campo code en negritas"""
         field_config = self.config['field_mapping'].get('code')
         if not field_config:
-            print("   ❌ Error: Configuración para 'code' no encontrada")
+            print("    Error: Configuración para 'code' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1623,10 +1623,10 @@ class ScriptMaestroIntegrado:
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        print(f"   📝 Insertando code: {texto}")
-        print(f"   ✅ Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
-        print(f"   📏 Dimensiones del texto: {text_width}x{text_height}")
-        print(f"   📏 Dimensiones del rectángulo: {ancho}x{alto}")
+        print(f"    Insertando code: {texto}")
+        print(f"    Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
+        print(f"    Dimensiones del texto: {text_width}x{text_height}")
+        print(f"    Dimensiones del rectángulo: {ancho}x{alto}")
         
         # Crear una imagen temporal para el texto con negritas más compacto y alto
         temp_text_layer = Image.new('RGBA', (text_width + 12, text_height + 20), (0, 0, 0, 0))
@@ -1642,19 +1642,19 @@ class ScriptMaestroIntegrado:
         # Pegar el texto con negritas en la plantilla
         img_base.paste(temp_text_layer, (left_x, top_y), temp_text_layer)
         
-        print(f"   ✅ code insertado en posición ({left_x}, {top_y})")
-        print(f"   📏 Tamaño: {font_size_pt} pt, fuente: {font_name}, negritas, color gris opaco, formato compacto y alto, top-left")
+        print(f"    code insertado en posición ({left_x}, {top_y})")
+        print(f"    Tamaño: {font_size_pt} pt, fuente: {font_name}, negritas, color gris opaco, formato compacto y alto, top-left")
         
         return img_base
     
     def insertar_firma_texto(self, img_base, texto_firma="Firma Digital", fuente_personalizada=None):
         """Inserta el texto de firma usando configuración JSON - más grande, negritas y centrada"""
-        print(f"   ✍️ Insertando firma: {texto_firma}")
+        print(f"   ️ Insertando firma: {texto_firma}")
         
         # Obtener configuración del campo firma_texto
         field_config = self.config['field_mapping'].get('firma_texto')
         if not field_config:
-            print("   ❌ Error: Configuración para 'firma_texto' no encontrada")
+            print("    Error: Configuración para 'firma_texto' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1678,10 +1678,10 @@ class ScriptMaestroIntegrado:
             try:
                 font = self.obtener_fuente(candidato, font_size_pt)
                 fuente_a_usar = candidato
-                print(f"   ✅ Fuente de firma aprobada (whitelist): {candidato}")
+                print(f"    Fuente de firma aprobada (whitelist): {candidato}")
                 break
             except Exception as e:
-                print(f"   ⚠️ Fuente no disponible o no válida para firma: {candidato} ({e})")
+                print(f"   ️ Fuente no disponible o no válida para firma: {candidato} ({e})")
                 continue
         
         # Fallback final a BrittanySignature si nada cargó
@@ -1689,9 +1689,9 @@ class ScriptMaestroIntegrado:
             try:
                 fuente_a_usar = "BrittanySignature.ttf"
                 font = self.obtener_fuente(fuente_a_usar, font_size_pt)
-                print(f"   ✅ Fallback a {fuente_a_usar}")
+                print(f"    Fallback a {fuente_a_usar}")
             except Exception as e:
-                print(f"   ❌ No se pudo cargar ninguna fuente manuscrita ni BrittanySignature: {e}")
+                print(f"    No se pudo cargar ninguna fuente manuscrita ni BrittanySignature: {e}")
                 # No usar Arial para firmas; abortar inserción de firma para evitar aspecto artificial
                 return img_base
         
@@ -1700,8 +1700,8 @@ class ScriptMaestroIntegrado:
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        print(f"   📏 Dimensiones del texto: {text_width}x{text_height}")
-        print(f"   📏 Dimensiones del rectángulo: {ancho}x{alto}")
+        print(f"    Dimensiones del texto: {text_width}x{text_height}")
+        print(f"    Dimensiones del rectángulo: {ancho}x{alto}")
         
         # Crear una imagen temporal para el texto con negritas suaves
         # Usar padding mínimo para maximizar área útil
@@ -1726,7 +1726,7 @@ class ScriptMaestroIntegrado:
             new_w = max(1, int(temp_text_layer.width * target_scale))
             new_h = max(1, int(temp_text_layer.height * target_scale))
             temp_text_layer = temp_text_layer.resize((new_w, new_h), Image.Resampling.LANCZOS)
-            print(f"   🔧 Firma escalada para encajar: {new_w}x{new_h} (cont: {ancho}x{alto})")
+            print(f"    Firma escalada para encajar: {new_w}x{new_h} (cont: {ancho}x{alto})")
         
         # Calcular posición centrada en el rectángulo
         center_x = x + (ancho - temp_text_layer.width) // 2
@@ -1742,8 +1742,8 @@ class ScriptMaestroIntegrado:
         # Pegar el texto con negritas suaves en la plantilla
         img_base.paste(temp_text_layer, (center_x, center_y), temp_text_layer)
         
-        print(f"   ✅ firma_texto insertado en posición centrada ({center_x}, {center_y})")
-        print(f"   📏 Tamaño base: {font_size_pt} pt, fuente: {fuente_a_usar}, color: {color_suave}")
+        print(f"    firma_texto insertado en posición centrada ({center_x}, {center_y})")
+        print(f"    Tamaño base: {font_size_pt} pt, fuente: {fuente_a_usar}, color: {color_suave}")
         
         return img_base
     
@@ -1842,12 +1842,12 @@ class ScriptMaestroIntegrado:
 
     def insertar_letra_final1(self, img_base, texto_letra_final1="P<VENVARGARCIAGONZALEZ<<MARCOS<<<<<<<<<<<<<<<", font_size_pt=106.8):
         """Inserta el texto de letra final1 usando la fuente OCR-B10PitchBT Regular.otf"""
-        print(f"   🔤 Insertando LETRA.FINAL1: {texto_letra_final1}")
+        print(f"    Insertando LETRA.FINAL1: {texto_letra_final1}")
         
         # Obtener configuración del campo codigo_mrz_linea1
         field_config = self.config['field_mapping'].get('codigo_mrz_linea1')
         if not field_config:
-            print("   ❌ Error: Configuración para 'codigo_mrz_linea1' no encontrada")
+            print("    Error: Configuración para 'codigo_mrz_linea1' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1862,10 +1862,10 @@ class ScriptMaestroIntegrado:
         font_name = self.config['fonts']['font_mapping'].get(layer_name, "OCR-B10PitchBT Regular.otf")
         try:
             font = self.obtener_fuente(font_name, font_size_pt)
-            print(f"   ✅ Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
+            print(f"    Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
         except Exception as e:
-            print(f"   ⚠️ Error al cargar {font_name}: {e}")
-            print("   🔄 Usando fuente Arial como respaldo")
+            print(f"   ️ Error al cargar {font_name}: {e}")
+            print("    Usando fuente Arial como respaldo")
             font = self.obtener_fuente("Arial", font_size_pt)
         
         # Obtener dimensiones del texto
@@ -1873,8 +1873,8 @@ class ScriptMaestroIntegrado:
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        print(f"   📏 Dimensiones del texto: {text_width}x{text_height}")
-        print(f"   📏 Dimensiones del rectángulo: {ancho}x{alto}")
+        print(f"    Dimensiones del texto: {text_width}x{text_height}")
+        print(f"    Dimensiones del rectángulo: {ancho}x{alto}")
         
         # Crear objeto de dibujo
         draw = ImageDraw.Draw(img_base)
@@ -1886,19 +1886,19 @@ class ScriptMaestroIntegrado:
         # Dibujar el texto
         draw.text((left_x, top_y), texto_letra_final1, font=font, fill=font_color)
         
-        print(f"   ✅ LETRA.FINAL1 insertado en posición ({left_x}, {top_y})")
-        print(f"   📏 Tamaño: {font_size_pt} pt, fuente: OCR-B10PitchBT Regular.otf, color: {font_color}")
+        print(f"    LETRA.FINAL1 insertado en posición ({left_x}, {top_y})")
+        print(f"    Tamaño: {font_size_pt} pt, fuente: OCR-B10PitchBT Regular.otf, color: {font_color}")
         
         return img_base
     
     def insertar_letra_final2(self, img_base, texto_letra_final2="1086413983VEN9708141M2503011<<<<<<<<<<<<<<<6", font_size_pt=106.8):
         """Inserta el texto de letra final2 usando la fuente OCR-B10PitchBT Regular.otf"""
-        print(f"   🔤 Insertando LETRA.FINAL2: {texto_letra_final2}")
+        print(f"    Insertando LETRA.FINAL2: {texto_letra_final2}")
         
         # Obtener configuración del campo codigo_mrz_linea2
         field_config = self.config['field_mapping'].get('codigo_mrz_linea2')
         if not field_config:
-            print("   ❌ Error: Configuración para 'codigo_mrz_linea2' no encontrada")
+            print("    Error: Configuración para 'codigo_mrz_linea2' no encontrada")
             return img_base
         
         pos = field_config['position']
@@ -1913,10 +1913,10 @@ class ScriptMaestroIntegrado:
         font_name = self.config['fonts']['font_mapping'].get(layer_name, "OCR-B10PitchBT Regular.otf")
         try:
             font = self.obtener_fuente(font_name, font_size_pt)
-            print(f"   ✅ Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
+            print(f"    Fuente {font_name} cargada: {font_size_pt} pt = {self.puntos_a_pixeles(font_size_pt)} px (DPI 96)")
         except Exception as e:
-            print(f"   ⚠️ Error al cargar {font_name}: {e}")
-            print("   🔄 Usando fuente Arial como respaldo")
+            print(f"   ️ Error al cargar {font_name}: {e}")
+            print("    Usando fuente Arial como respaldo")
             font = self.obtener_fuente("Arial", font_size_pt)
         
         # Obtener dimensiones del texto
@@ -1924,8 +1924,8 @@ class ScriptMaestroIntegrado:
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        print(f"   📏 Dimensiones del texto: {text_width}x{text_height}")
-        print(f"   📏 Dimensiones del rectángulo: {ancho}x{alto}")
+        print(f"    Dimensiones del texto: {text_width}x{text_height}")
+        print(f"    Dimensiones del rectángulo: {ancho}x{alto}")
         
         # Crear objeto de dibujo
         draw = ImageDraw.Draw(img_base)
@@ -1937,14 +1937,14 @@ class ScriptMaestroIntegrado:
         # Dibujar el texto
         draw.text((left_x, top_y), texto_letra_final2, font=font, fill=font_color)
         
-        print(f"   ✅ LETRA.FINAL2 insertado en posición ({left_x}, {top_y})")
-        print(f"   📏 Tamaño: {font_size_pt} pt, fuente: OCR-B10PitchBT Regular.otf, color: {font_color}")
+        print(f"    LETRA.FINAL2 insertado en posición ({left_x}, {top_y})")
+        print(f"    Tamaño: {font_size_pt} pt, fuente: OCR-B10PitchBT Regular.otf, color: {font_color}")
         
         return img_base
     
     def generar_gafete_integrado(self, ruta_foto, numero_pasaporte="108641398"):
         """Genera un gafete con las implementaciones integradas incluyendo firma"""
-        print("🚀 GENERANDO GAFETE CON IMPLEMENTACIONES INTEGRADAS + FIRMA")
+        print(" GENERANDO GAFETE CON IMPLEMENTACIONES INTEGRADAS + FIRMA")
         print("=" * 70)
         
         # Cargar plantilla limpia
@@ -2029,7 +2029,7 @@ class ScriptMaestroIntegrado:
     
     def crear_plantillas_integradas(self):
         """Crea plantillas con las implementaciones integradas"""
-        print("🚀 CREANDO PLANTILLAS CON IMPLEMENTACIONES INTEGRADAS")
+        print(" CREANDO PLANTILLAS CON IMPLEMENTACIONES INTEGRADAS")
         print("=" * 80)
         
         # Crear directorio de salida
@@ -2039,7 +2039,7 @@ class ScriptMaestroIntegrado:
         # Usar imágenes originales de Imagenes_OK
         imagenes_ok_dir = self.base_path / 'DATA' / 'Imagenes_OK'
         if not imagenes_ok_dir.exists():
-            print(f"❌ Error: Directorio de imágenes no encontrado: {imagenes_ok_dir}")
+            print(f" Error: Directorio de imágenes no encontrado: {imagenes_ok_dir}")
             return False
         
         # Buscar imágenes en todas las subcarpetas
@@ -2050,12 +2050,12 @@ class ScriptMaestroIntegrado:
                     imagenes.append(img_file)
         
         if not imagenes:
-            print(f"❌ Error: No se encontraron imágenes en: {imagenes_ok_dir}")
+            print(f" Error: No se encontraron imágenes en: {imagenes_ok_dir}")
             return False
         
         # Usar la primera imagen como ejemplo
         foto_ejemplo = imagenes[0]
-        print(f"📸 Usando imagen original: {foto_ejemplo.name}")
+        print(f" Usando imagen original: {foto_ejemplo.name}")
         
         # Generar gafete integrado
         gafete_integrado = self.generar_gafete_integrado(str(foto_ejemplo))
@@ -2065,8 +2065,8 @@ class ScriptMaestroIntegrado:
             output_path = output_dir / 'gafete_integrado_imagen_original.png'
             gafete_integrado.save(output_path, 'PNG', dpi=(300, 300))
             
-            print(f"\n✅ Gafete integrado con imagen original guardado: {output_path}")
-            print(f"📐 Dimensiones: {gafete_integrado.width}x{gafete_integrado.height}")
+            print(f"\n Gafete integrado con imagen original guardado: {output_path}")
+            print(f" Dimensiones: {gafete_integrado.width}x{gafete_integrado.height}")
             
             # Crear también una versión con rectángulos marcados para referencia
             img_con_rectangulos = gafete_integrado.copy()
@@ -2137,16 +2137,16 @@ class ScriptMaestroIntegrado:
             output_path_rectangulos = output_dir / 'gafete_integrado_imagen_original_con_rectangulos.png'
             img_con_rectangulos.save(output_path_rectangulos, 'PNG', dpi=(300, 300))
             
-            print(f"✅ Gafete con rectángulos guardado: {output_path_rectangulos}")
+            print(f" Gafete con rectángulos guardado: {output_path_rectangulos}")
             
-            print(f"\n🎉 ¡Plantillas integradas con imágenes originales creadas exitosamente!")
-            print("📋 Archivos generados en OUTPUT/plantillas_integradas/:")
-            print("   📄 gafete_integrado_imagen_original.png - Gafete con procesamiento completo de imagen original")
-            print("   📄 gafete_integrado_imagen_original_con_rectangulos.png - Gafete con rectángulos de referencia")
+            print(f"\n ¡Plantillas integradas con imágenes originales creadas exitosamente!")
+            print(" Archivos generados en OUTPUT/plantillas_integradas/:")
+            print("    gafete_integrado_imagen_original.png - Gafete con procesamiento completo de imagen original")
+            print("    gafete_integrado_imagen_original_con_rectangulos.png - Gafete con rectángulos de referencia")
             
             return True
         else:
-            print("❌ Error al generar gafete integrado")
+            print(" Error al generar gafete integrado")
             return False
 
     def corregir_mrz_linea2(self, mrz_original, numero_pasaporte_correcto):
@@ -2189,7 +2189,7 @@ class ScriptMaestroIntegrado:
                 return f"{numero_pasaporte_correcto}0VEN900101M0001010<<<<<<<<<<<<<<<0"
                 
         except Exception as e:
-            print(f"   ⚠️ Error corrigiendo MRZ: {e}")
+            print(f"   ️ Error corrigiendo MRZ: {e}")
             # Devolver MRZ básico con el número correcto
             return f"{numero_pasaporte_correcto}0VEN900101M0001010<<<<<<<<<<<<<<<0"
 
@@ -2212,11 +2212,11 @@ def main():
     exito = maestro.crear_plantillas_integradas()
     
     if exito:
-        print("\n🎉 ¡Script maestro integrado ejecutado exitosamente!")
-        print("📋 Revisa los archivos en OUTPUT/plantillas_integradas/")
-        print("🎯 Estas plantillas muestran el procesamiento completo: imágenes originales → IA → escala de grises → contenedores → textos → firmas")
+        print("\n ¡Script maestro integrado ejecutado exitosamente!")
+        print(" Revisa los archivos en OUTPUT/plantillas_integradas/")
+        print(" Estas plantillas muestran el procesamiento completo: imágenes originales → IA → escala de grises → contenedores → textos → firmas")
     else:
-        print("\n💥 Error al ejecutar script maestro integrado")
+        print("\n Error al ejecutar script maestro integrado")
         sys.exit(1)
 
 if __name__ == "__main__":

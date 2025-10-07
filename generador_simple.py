@@ -31,7 +31,7 @@ sys.path.append(str(Path(__file__).parent / 'SCRIPTS'))
 try:
     from script_maestro_integrado import ScriptMaestroIntegrado
 except ImportError:
-    print("⚠️ No se pudo importar script_maestro_integrado.py")
+    print("️ No se pudo importar script_maestro_integrado.py")
     ScriptMaestroIntegrado = None
 
 class GeneradorSimple:
@@ -120,10 +120,10 @@ class GeneradorSimple:
         
         try:
             df = pd.read_csv(archivo_path, dtype=str, keep_default_na=False)
-            print(f"✅ Datos cargados: {len(df)} registros")
+            print(f" Datos cargados: {len(df)} registros")
             return df
         except Exception as e:
-            print(f"❌ Error cargando CSV: {e}")
+            print(f" Error cargando CSV: {e}")
             return None
 
     def calcular_edad(self, fecha_nacimiento):
@@ -299,21 +299,21 @@ class GeneradorSimple:
             
             # Verificar que la imagen existe antes de moverla
             if not imagen_path.exists():
-                print(f"⚠️ Imagen no encontrada: {imagen_path}")
+                print(f"️ Imagen no encontrada: {imagen_path}")
                 return False
             
             destino_imagen = carpeta_usadas / imagen_path.name
             shutil.move(str(imagen_path), str(destino_imagen))
-            print(f"📁 Imagen movida: {imagen_path.name} → usadas/")
+            print(f" Imagen movida: {imagen_path.name} → usadas/")
             
             if json_path.exists():
                 destino_json = carpeta_usadas / json_path.name
                 shutil.move(str(json_path), str(destino_json))
-                print(f"📁 JSON movido: {json_path.name} → usadas/")
+                print(f" JSON movido: {json_path.name} → usadas/")
             
             return True
         except Exception as e:
-            print(f"❌ Error moviendo imagen: {e}")
+            print(f" Error moviendo imagen: {e}")
             return False
 
     def generar_pasaporte_visual(self, datos_pasaporte):
@@ -348,12 +348,12 @@ class GeneradorSimple:
             
             return None
         except Exception as e:
-            print(f"❌ Error generando pasaporte: {e}")
+            print(f" Error generando pasaporte: {e}")
             return None
 
     def procesar_registro(self, registro, idx, total):
         """Procesa un registro individual"""
-        print(f"🔄 Procesando {idx + 1}/{total}")
+        print(f" Procesando {idx + 1}/{total}")
         
         # Datos básicos
         primer_nombre = self.limpiar_texto(registro.get('PRIMER_NOMBRE', ''))
@@ -437,7 +437,7 @@ class GeneradorSimple:
 
     def generar_pasaportes_masivos(self, limite=None):
         """Genera pasaportes masivos de forma simple"""
-        print("🎯 GENERADOR SIMPLE DE PASAPORTES")
+        print(" GENERADOR SIMPLE DE PASAPORTES")
         print("=" * 50)
         
         # Cargar datos
@@ -449,7 +449,7 @@ class GeneradorSimple:
         registros_procesados = []
         total_registros = len(df) if limite is None else min(limite, len(df))
         
-        print(f"📊 Procesando {total_registros} registros...")
+        print(f" Procesando {total_registros} registros...")
         
         for idx, registro in df.iterrows():
             if limite and idx >= limite:
@@ -463,10 +463,10 @@ class GeneradorSimple:
                 if (idx + 1) % 10 == 0:
                     generados = sum(1 for r in registros_procesados if r.get('estado') == 'generado')
                     omitidos = sum(1 for r in registros_procesados if r.get('estado') == 'omitido')
-                    print(f"📊 Progreso: {idx + 1}/{total_registros} - Generados: {generados}, Omitidos: {omitidos}")
+                    print(f" Progreso: {idx + 1}/{total_registros} - Generados: {generados}, Omitidos: {omitidos}")
                 
             except Exception as e:
-                print(f"❌ Error en registro {idx + 1}: {e}")
+                print(f" Error en registro {idx + 1}: {e}")
                 continue
         
         # Guardar resultados
@@ -476,10 +476,10 @@ class GeneradorSimple:
         generados = sum(1 for r in registros_procesados if r.get('estado') == 'generado')
         omitidos = sum(1 for r in registros_procesados if r.get('estado') == 'omitido')
         
-        print(f"\n🎉 ¡PROCESO COMPLETADO!")
-        print(f"✅ Pasaportes generados: {generados}")
-        print(f"⚠️ Pasaportes omitidos: {omitidos}")
-        print(f"📁 Resultados en: {self.output_path}")
+        print(f"\n ¡PROCESO COMPLETADO!")
+        print(f" Pasaportes generados: {generados}")
+        print(f"️ Pasaportes omitidos: {omitidos}")
+        print(f" Resultados en: {self.output_path}")
         
         return True
 
@@ -493,7 +493,7 @@ class GeneradorSimple:
         if archivos_existentes:
             # Continuar con el archivo más reciente
             archivo_mas_reciente = max(archivos_existentes, key=lambda x: x.stat().st_mtime)
-            print(f"📂 Continuando con archivo existente: {archivo_mas_reciente.name}")
+            print(f" Continuando con archivo existente: {archivo_mas_reciente.name}")
             
             # Cargar datos existentes
             try:
@@ -507,22 +507,22 @@ class GeneradorSimple:
                 df_combinado = pd.DataFrame(todos_los_registros)
                 df_combinado.to_excel(archivo_mas_reciente, index=False)
                 
-                print(f"💾 Resultados actualizados: {archivo_mas_reciente.name}")
-                print(f"📊 Total registros: {len(todos_los_registros)} (existentes: {len(registros_existentes)}, nuevos: {len(registros_procesados)})")
+                print(f" Resultados actualizados: {archivo_mas_reciente.name}")
+                print(f" Total registros: {len(todos_los_registros)} (existentes: {len(registros_existentes)}, nuevos: {len(registros_procesados)})")
                 
             except Exception as e:
-                print(f"⚠️ Error cargando archivo existente: {e}")
+                print(f"️ Error cargando archivo existente: {e}")
                 # Fallback: crear nuevo archivo
                 excel_path = self.output_path / f'pasaportes_procesados_{timestamp}.xlsx'
                 df_procesados = pd.DataFrame(registros_procesados)
                 df_procesados.to_excel(excel_path, index=False)
-                print(f"💾 Nuevo archivo creado: {excel_path}")
+                print(f" Nuevo archivo creado: {excel_path}")
         else:
             # No hay archivos existentes, crear nuevo
             excel_path = self.output_path / f'pasaportes_procesados_{timestamp}.xlsx'
             df_procesados = pd.DataFrame(registros_procesados)
             df_procesados.to_excel(excel_path, index=False)
-            print(f"💾 Nuevo archivo creado: {excel_path}")
+            print(f" Nuevo archivo creado: {excel_path}")
 
 def main():
     """Función principal"""

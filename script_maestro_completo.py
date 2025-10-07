@@ -23,7 +23,7 @@ class ScriptMaestroCompleto:
         
     def ejecutar_comando(self, comando, descripcion):
         """Ejecuta un comando y maneja errores"""
-        print(f"\n🔄 {descripcion}")
+        print(f"\n {descripcion}")
         print("-" * 50)
         
         try:
@@ -36,22 +36,22 @@ class ScriptMaestroCompleto:
                 check=True
             )
             
-            print(f"✅ {descripcion} - Completado")
+            print(f" {descripcion} - Completado")
             if resultado.stdout:
-                print(f"📤 Salida: {resultado.stdout}")
+                print(f" Salida: {resultado.stdout}")
             
             return True
             
         except subprocess.CalledProcessError as e:
-            print(f"❌ Error en {descripcion}: {e}")
+            print(f" Error en {descripcion}: {e}")
             if e.stderr:
-                print(f"📤 Error: {e.stderr}")
+                print(f" Error: {e.stderr}")
             return False
     
     def paso1_procesar_datos_excel(self, limite=None):
         """Paso 1: Procesar datos del Excel y generar datos estructurados"""
         print("\n" + "="*60)
-        print("📊 PASO 1: PROCESAMIENTO DE DATOS DEL EXCEL")
+        print(" PASO 1: PROCESAMIENTO DE DATOS DEL EXCEL")
         print("="*60)
         
         comando = f"python3 generador_pasaportes_masivo.py"
@@ -63,7 +63,7 @@ class ScriptMaestroCompleto:
     def paso2_generar_pasaportes_visuales(self, limite=None):
         """Paso 2: Generar pasaportes visuales usando el script maestro"""
         print("\n" + "="*60)
-        print("🎨 PASO 2: GENERACIÓN DE PASAPORTES VISUALES")
+        print(" PASO 2: GENERACIÓN DE PASAPORTES VISUALES")
         print("="*60)
         
         comando = f"python3 generador_pasaportes_visuales.py"
@@ -75,7 +75,7 @@ class ScriptMaestroCompleto:
     def paso3_crear_pasaporte_ejemplo(self):
         """Paso 3: Crear pasaporte de ejemplo para verificar funcionamiento"""
         print("\n" + "="*60)
-        print("🔍 PASO 3: CREACIÓN DE PASAPORTE DE EJEMPLO")
+        print(" PASO 3: CREACIÓN DE PASAPORTE DE EJEMPLO")
         print("="*60)
         
         comando = "python3 generador_pasaportes_visuales.py --ejemplo"
@@ -84,7 +84,7 @@ class ScriptMaestroCompleto:
     def verificar_archivos_generados(self):
         """Verifica que se hayan generado los archivos esperados"""
         print("\n" + "="*60)
-        print("🔍 VERIFICACIÓN DE ARCHIVOS GENERADOS")
+        print(" VERIFICACIÓN DE ARCHIVOS GENERADOS")
         print("="*60)
         
         # Verificar archivos de datos procesados
@@ -92,35 +92,35 @@ class ScriptMaestroCompleto:
         if datos_path.exists():
             archivos_datos = list(datos_path.glob('pasaportes_procesados_*.json'))
             if archivos_datos:
-                print(f"✅ Archivos de datos encontrados: {len(archivos_datos)}")
+                print(f" Archivos de datos encontrados: {len(archivos_datos)}")
                 for archivo in archivos_datos:
-                    print(f"   📄 {archivo.name}")
+                    print(f"    {archivo.name}")
             else:
-                print("⚠️ No se encontraron archivos de datos procesados")
+                print("️ No se encontraron archivos de datos procesados")
         else:
-            print("❌ Directorio de datos no encontrado")
+            print(" Directorio de datos no encontrado")
         
         # Verificar pasaportes visuales
         visuales_path = self.output_path / 'pasaportes_visuales'
         if visuales_path.exists():
             archivos_visuales = list(visuales_path.glob('pasaporte_*.png'))
             if archivos_visuales:
-                print(f"✅ Pasaportes visuales encontrados: {len(archivos_visuales)}")
+                print(f" Pasaportes visuales encontrados: {len(archivos_visuales)}")
                 for archivo in archivos_visuales[:5]:  # Mostrar solo los primeros 5
-                    print(f"   🖼️ {archivo.name}")
+                    print(f"   ️ {archivo.name}")
                 if len(archivos_visuales) > 5:
                     print(f"   ... y {len(archivos_visuales) - 5} más")
             else:
-                print("⚠️ No se encontraron pasaportes visuales")
+                print("️ No se encontraron pasaportes visuales")
         else:
-            print("❌ Directorio de pasaportes visuales no encontrado")
+            print(" Directorio de pasaportes visuales no encontrado")
         
         return True
     
     def generar_reporte_final(self):
         """Genera un reporte final del proceso"""
         print("\n" + "="*60)
-        print("📋 GENERANDO REPORTE FINAL")
+        print(" GENERANDO REPORTE FINAL")
         print("="*60)
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -159,40 +159,40 @@ class ScriptMaestroCompleto:
                     if len(files) > 10:
                         f.write(f"{subindent}... y {len(files) - 10} archivos más\n")
             
-            print(f"✅ Reporte final generado: {reporte_path}")
+            print(f" Reporte final generado: {reporte_path}")
             return True
             
         except Exception as e:
-            print(f"❌ Error generando reporte final: {e}")
+            print(f" Error generando reporte final: {e}")
             return False
     
     def ejecutar_proceso_completo(self, limite=None):
         """Ejecuta el proceso completo de generación masiva"""
-        print("🚀 INICIANDO PROCESO COMPLETO DE GENERACIÓN MASIVA")
+        print(" INICIANDO PROCESO COMPLETO DE GENERACIÓN MASIVA")
         print("=" * 80)
         print("Este proceso incluye:")
-        print("1. 📊 Procesamiento de datos del Excel")
-        print("2. 🎨 Generación de pasaportes visuales")
-        print("3. 🔍 Verificación de archivos generados")
-        print("4. 📋 Generación de reporte final")
+        print("1.  Procesamiento de datos del Excel")
+        print("2.  Generación de pasaportes visuales")
+        print("3.  Verificación de archivos generados")
+        print("4.  Generación de reporte final")
         print("=" * 80)
         
         if limite:
-            print(f"⚠️ Límite de registros: {limite}")
+            print(f"️ Límite de registros: {limite}")
         
         # Paso 1: Procesar datos del Excel
         if not self.paso1_procesar_datos_excel(limite):
-            print("❌ Error en el paso 1. Abortando proceso.")
+            print(" Error en el paso 1. Abortando proceso.")
             return False
         
         # Paso 2: Generar pasaportes visuales
         if not self.paso2_generar_pasaportes_visuales(limite):
-            print("❌ Error en el paso 2. Abortando proceso.")
+            print(" Error en el paso 2. Abortando proceso.")
             return False
         
         # Paso 3: Crear pasaporte de ejemplo
         if not self.paso3_crear_pasaporte_ejemplo():
-            print("⚠️ Error en el paso 3 (ejemplo), pero continuando...")
+            print("️ Error en el paso 3 (ejemplo), pero continuando...")
         
         # Verificar archivos generados
         self.verificar_archivos_generados()
@@ -201,25 +201,25 @@ class ScriptMaestroCompleto:
         self.generar_reporte_final()
         
         print("\n" + "="*80)
-        print("🎉 ¡PROCESO COMPLETO FINALIZADO EXITOSAMENTE!")
+        print(" ¡PROCESO COMPLETO FINALIZADO EXITOSAMENTE!")
         print("="*80)
-        print("📁 Archivos generados en:")
-        print(f"   📊 Datos procesados: {self.output_path}/pasaportes_generados/")
-        print(f"   🎨 Pasaportes visuales: {self.output_path}/pasaportes_visuales/")
-        print(f"   📋 Reportes: {self.output_path}/")
+        print(" Archivos generados en:")
+        print(f"    Datos procesados: {self.output_path}/pasaportes_generados/")
+        print(f"    Pasaportes visuales: {self.output_path}/pasaportes_visuales/")
+        print(f"    Reportes: {self.output_path}/")
         
         return True
     
     def ejecutar_solo_datos(self, limite=None):
         """Ejecuta solo el procesamiento de datos"""
-        print("📊 EJECUTANDO SOLO PROCESAMIENTO DE DATOS")
+        print(" EJECUTANDO SOLO PROCESAMIENTO DE DATOS")
         print("=" * 50)
         
         return self.paso1_procesar_datos_excel(limite)
     
     def ejecutar_solo_visuales(self, limite=None):
         """Ejecuta solo la generación de pasaportes visuales"""
-        print("🎨 EJECUTANDO SOLO GENERACIÓN DE PASAPORTES VISUALES")
+        print(" EJECUTANDO SOLO GENERACIÓN DE PASAPORTES VISUALES")
         print("=" * 50)
         
         return self.paso2_generar_pasaportes_visuales(limite)
@@ -246,9 +246,9 @@ def main():
         exito = maestro.ejecutar_solo_visuales(args.limite)
     
     if exito:
-        print("\n🎉 ¡Proceso completado exitosamente!")
+        print("\n ¡Proceso completado exitosamente!")
     else:
-        print("\n💥 Error en el proceso")
+        print("\n Error en el proceso")
         sys.exit(1)
 
 if __name__ == "__main__":

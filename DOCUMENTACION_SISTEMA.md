@@ -20,32 +20,32 @@
 - El selector de archivos Excel muestra `*.xlsx` y `*.xls` y recuerda la última carpeta usada en `OUTPUT/logs/ultima_ubicacion_excel.json`.
 # Sistema de Generación Masiva de Pasaportes Venezolanos
 
-## 📋 Resumen del Sistema
+##  Resumen del Sistema
 
 Este sistema permite generar pasaportes venezolanos de forma masiva y dinámica, integrando datos del Excel con imágenes y utilizando el script maestro existente para crear pasaportes visuales completos.
 
-## 🏗️ Arquitectura del Sistema
+## ️ Arquitectura del Sistema
 
 ### Componentes Principales
 
-1. **📊 Procesador de Datos Excel** (`generador_pasaportes_masivo.py`)
+1. ** Procesador de Datos Excel** (`generador_pasaportes_masivo.py`)
    - Lee datos del archivo Excel
    - Calcula edades automáticamente
    - Limpia y normaliza textos
    - Genera datos faltantes (lugar de nacimiento, fechas, etc.)
    - Asocia imágenes por edad y género
 
-2. **🎨 Generador de Pasaportes Visuales** (`generador_pasaportes_visuales.py`)
+2. ** Generador de Pasaportes Visuales** (`generador_pasaportes_visuales.py`)
    - Integra con el script maestro existente
    - Genera pasaportes visuales completos
    - Maneja errores y validaciones
 
-3. **🚀 Script Maestro Completo** (`script_maestro_completo.py`)
+3. ** Script Maestro Completo** (`script_maestro_completo.py`)
    - Orquesta todo el proceso
    - Maneja la ejecución paso a paso
    - Genera reportes finales
 
-## 📁 Estructura de Archivos
+##  Estructura de Archivos
 
 ```
 SISTEMA_PASAPORTES_FINAL/
@@ -71,47 +71,47 @@ SISTEMA_PASAPORTES_FINAL/
 └── DOCUMENTACION_SISTEMA.md                 # Esta documentación
 ```
 
-### **📋 Documentación de Estructura**
+### ** Documentación de Estructura**
 - **`PROJECT_STRUCTURE.md`**: Documentación completa de la estructura del proyecto, función de cada archivo y sus dependencias
 - **`REGLAS_MEMORIA.md`**: Reglas de desarrollo implementadas (REGLA 16 y 17)
 
-## 🎯 **MEJORAS IMPLEMENTADAS**
+##  **MEJORAS IMPLEMENTADAS**
 
-### **✅ Configuración Centralizada**
+### ** Configuración Centralizada**
 - **Todas las configuraciones** en `CONFIG/config.json`
 - **Sin parámetros hardcodeados** en el código
 - **Firma más grande**: `font_size: 25` (antes 17)
 - **Contenedor más grande**: `ancho: 200, alto: 60` (antes 155x50)
 - **Color mejorado**: `#444549` para mejor visibilidad
 
-### **✅ Sistema de Ajuste Automático de Texto Vertical**
+### ** Sistema de Ajuste Automático de Texto Vertical**
 - **`stretch_to_fit: true`** para números de pasaporte verticales
 - **Ajuste automático** del texto al contenedor sin salirse
 - **Posición optimizada**: Y: 135 para evitar conflictos con el número "3"
 - **Escalado inteligente**: Solo cuando es necesario, máximo 80% del tamaño original
-- **Detección automática**: "✅ Texto ya cabe en el contenedor" cuando no necesita escalado
+- **Detección automática**: " Texto ya cabe en el contenedor" cuando no necesita escalado
 - **Alineación perfecta**: `bottom_center` mantenida en todas las posiciones
 
-### **✅ Sistema de Pruebas Integrado**
+### ** Sistema de Pruebas Integrado**
 - **`test_pasaportes_config.py`**: Sistema de pruebas ligado a producción
 - **3 muestras** para pruebas rápidas
 - **Versiones con y sin contenedores** para ajustes visuales
 - **Misma configuración** que el sistema de producción
 - **Números de pasaporte variados** (9 dígitos) para probar diferentes longitudes
 
-### **✅ Documentación Completa**
+### ** Documentación Completa**
 - **`PROJECT_STRUCTURE.md`**: Estructura completa del proyecto
 - **Función de cada archivo** y sus dependencias
 - **Flujos de trabajo** claramente documentados
 - **Casos de uso** comunes especificados
 
-### **✅ Reglas de Desarrollo**
+### ** Reglas de Desarrollo**
 - **REGLA 16**: Documentación de estructura de proyecto
 - **REGLA 17**: Configuraciones modulares
 - **Eliminación de duplicación** de archivos de prueba
 - **Organización** por buenas prácticas
 
-## 🔄 Flujo de Procesamiento
+##  Flujo de Procesamiento
 
 ### Paso 1: Análisis de Datos Excel
 - **Entrada**: `Datos_Crear_Pasaportes.xlsx`
@@ -144,7 +144,7 @@ SISTEMA_PASAPORTES_FINAL/
 - **Salida**: Pasaportes visuales completos en PNG
 - **Resolución**: 300 DPI
 
-## 🎯 Campos del Pasaporte Venezolano
+##  Campos del Pasaporte Venezolano
 
 ### Datos del Excel (Fuente)
 | Campo | Descripción | Procesamiento |
@@ -177,7 +177,7 @@ SISTEMA_PASAPORTES_FINAL/
 | `nacionalidad` | VENEZOLANA | Nacionalidad |
 | `firma` | Firma Digital | Texto de firma |
 
-## 🚀 Uso del Sistema
+##  Uso del Sistema
 
 ### Ejecución Completa
 ```bash
@@ -204,7 +204,7 @@ python3 generador_pasaportes_visuales.py --ejemplo
 python3 generador_pasaportes_masivo.py --listar-campos
 ```
 
-## 📊 Estados y Capitales de Venezuela
+##  Estados y Capitales de Venezuela
 
 El sistema incluye los 24 estados de Venezuela para asignación aleatoria de lugar de nacimiento:
 
@@ -235,7 +235,7 @@ El sistema incluye los 24 estados de Venezuela para asignación aleatoria de lug
 | Yaracuy | San Felipe |
 | Zulia | Maracaibo |
 
-## 🔧 Configuración y Personalización
+##  Configuración y Personalización
 
 ### Sistema de Ajuste Automático de Texto Vertical
 ```json
@@ -271,9 +271,9 @@ if abs(edad_imagen - edad) <= 3:  # ±3 años
 - **Límite de escalado**: Máximo 80% del tamaño original para evitar distorsión
 - **Posicionamiento optimizado**: Y: 135 para evitar conflictos con elementos superiores
 - **Alineación consistente**: `bottom_center` mantenida en todas las posiciones
-- **Mensajes informativos**: "✅ Texto ya cabe en el contenedor" cuando no necesita ajuste
+- **Mensajes informativos**: " Texto ya cabe en el contenedor" cuando no necesita ajuste
 
-## 📈 Estadísticas del Sistema
+##  Estadísticas del Sistema
 
 ### Datos de Entrada
 - **Total registros**: 180
@@ -288,7 +288,7 @@ if abs(edad_imagen - edad) <= 3:  # ±3 años
 - **Asociación de imágenes**: Por edad y género
 - **Generación de datos**: Aleatoria controlada
 
-## 🎯 Casos de Uso
+##  Casos de Uso
 
 ### 1. Generación Masiva Completa
 ```bash
@@ -314,7 +314,7 @@ python3 script_maestro_completo.py --modo datos --limite 10
 python3 script_maestro_completo.py --modo visuales --limite 10
 ```
 
-## 🔍 Verificación y Validación
+##  Verificación y Validación
 
 ### Archivos Generados
 - **Datos procesados**: JSON + Excel
@@ -323,13 +323,13 @@ python3 script_maestro_completo.py --modo visuales --limite 10
 - **Resúmenes**: JSON + Excel
 
 ### Validaciones Automáticas
-- ✅ Existencia de imágenes
-- ✅ Formato de fechas
-- ✅ Rango de números de pasaporte
-- ✅ Coincidencia de edad con imágenes
-- ✅ Integridad de datos
+-  Existencia de imágenes
+-  Formato de fechas
+-  Rango de números de pasaporte
+-  Coincidencia de edad con imágenes
+-  Integridad de datos
 
-## 🚨 Manejo de Errores
+##  Manejo de Errores
 
 ### Errores Comunes
 1. **Imagen no encontrada**: Se selecciona imagen aleatoria
@@ -343,7 +343,7 @@ python3 script_maestro_completo.py --modo visuales --limite 10
 - **Estadísticas finales**: Archivos de reporte
 - **Resúmenes**: JSON y Excel
 
-## 📋 Checklist de Verificación
+##  Checklist de Verificación
 
 ### Antes de Ejecutar
 - [ ] Archivo Excel existe y es válido
@@ -357,7 +357,7 @@ python3 script_maestro_completo.py --modo visuales --limite 10
 - [ ] Reportes generados
 - [ ] Sin errores críticos
 
-## 🎉 Resultados Esperados
+##  Resultados Esperados
 
 ### Archivos de Salida
 ```
@@ -378,7 +378,7 @@ OUTPUT/
 - **Resolución**: 300 DPI
 - **Formato**: PNG con transparencia
 
-## 🔧 Mantenimiento y Actualizaciones
+##  Mantenimiento y Actualizaciones
 
 ### Actualizar Lista de Estados
 Modificar `self.estados_venezuela` en `generador_pasaportes_masivo.py`
@@ -392,7 +392,7 @@ Modificar la condición `abs(edad_imagen - edad) <= 3`
 ### Personalizar Formato de Fechas
 Modificar función `formatear_fecha_pasaporte()`
 
-## 📞 Soporte y Troubleshooting
+##  Soporte y Troubleshooting
 
 ### Problemas Comunes
 1. **Error de importación**: Verificar rutas de scripts

@@ -1,10 +1,10 @@
-# 📋 BACKUP: CONFIGURACIÓN DE FECHAS - ANTES Y DESPUÉS
+#  BACKUP: CONFIGURACIÓN DE FECHAS - ANTES Y DESPUÉS
 
-## 🕐 Fecha de Backup: 2025-10-02 23:25:00
+##  Fecha de Backup: 2025-10-02 23:25:00
 
 ---
 
-## 🔴 CONFIGURACIÓN ANTERIOR (CON REDUNDANCIA)
+##  CONFIGURACIÓN ANTERIOR (CON REDUNDANCIA)
 
 ### **fecha_nacimiento (ANTES):**
 ```json
@@ -213,9 +213,9 @@
 
 ---
 
-## 📊 RESUMEN DE CAMBIOS
+##  RESUMEN DE CAMBIOS
 
-### **❌ ELIMINADOS (Redundantes):**
+### ** ELIMINADOS (Redundantes):**
 - `font_size` (nivel global)
 - `render_size_pt` (nivel global)
 - `font_color` (nivel global)
@@ -224,26 +224,26 @@
 - `stretch_to_fit` (nivel global)
 - `position` completo (nivel global)
 
-### **✅ MANTENIDOS (Necesarios):**
+### ** MANTENIDOS (Necesarios):**
 - `layer_name` - Para identificar el campo
 - `date_format` - Para el formato de fecha
 - `contenedores_individuales` - **Controles individuales completos**
 
-### **🎯 BENEFICIOS:**
-- ✅ **Sin redundancia** - Cada control tiene un solo lugar
-- ✅ **Control granular** - Cada elemento es independiente
-- ✅ **Configuración limpia** - Solo lo necesario
-- ✅ **Fácil mantenimiento** - Sin duplicación de configuraciones
+### ** BENEFICIOS:**
+-  **Sin redundancia** - Cada control tiene un solo lugar
+-  **Control granular** - Cada elemento es independiente
+-  **Configuración limpia** - Solo lo necesario
+-  **Fácil mantenimiento** - Sin duplicación de configuraciones
 
 ---
 
-## 🔄 CAMPOS AFECTADOS:
+##  CAMPOS AFECTADOS:
 - `fecha_nacimiento`
 - `fecha_emision` 
 - `fecha_vencimiento`
 
-## 📁 ARCHIVO ORIGINAL:
+##  ARCHIVO ORIGINAL:
 `/media/warcklian/DATA_500GB/CODE/SISTEMA_PASAPORTES_FINAL/CONFIG/config.json`
 
-## 🛡️ BACKUP COMPLETO:
+## ️ BACKUP COMPLETO:
 Este archivo contiene la configuración completa antes y después del cambio para poder restaurar si es necesario.

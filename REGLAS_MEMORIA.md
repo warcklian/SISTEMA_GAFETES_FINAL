@@ -1,14 +1,14 @@
-# 🧠 REGLAS DE MEMORIA - SISTEMA DE DESARROLLO
+#  REGLAS DE MEMORIA - SISTEMA DE DESARROLLO
 
 ## REGLA 16: DOCUMENTACIÓN DE ESTRUCTURA DE PROYECTO
 
-### **🧠 PRINCIPIO FUNDAMENTAL**
+### ** PRINCIPIO FUNDAMENTAL**
 - **Crear documentación completa** de la estructura del proyecto
 - **Especificar función de cada archivo** y sus dependencias
 - **Evitar duplicación** de archivos de prueba innecesarios
 - **Facilitar comprensión rápida** para nuevos desarrolladores o instancias de chat
 
-### **📋 IMPLEMENTACIÓN OBLIGATORIA**
+### ** IMPLEMENTACIÓN OBLIGATORIA**
 
 #### **1. ARCHIVO PROJECT_STRUCTURE.md**
 - **Ubicación**: Siempre en la raíz del proyecto
@@ -24,61 +24,61 @@
 
 #### **3. ESTRUCTURA DEL DOCUMENTO**
 ```markdown
-# 📁 ESTRUCTURA DEL PROYECTO - [NOMBRE_PROYECTO]
+#  ESTRUCTURA DEL PROYECTO - [NOMBRE_PROYECTO]
 
-## 🎯 **PROPÓSITO**
+##  **PROPÓSITO**
 Este documento describe la estructura completa del proyecto, la función de cada archivo y sus dependencias.
 
-## 📂 **ESTRUCTURA PRINCIPAL**
-### **🏗️ ARCHIVOS PRINCIPALES DE PRODUCCIÓN**
+##  **ESTRUCTURA PRINCIPAL**
+### **️ ARCHIVOS PRINCIPALES DE PRODUCCIÓN**
 - [Archivo principal]: Función, dependencias, características
 - [Scripts principales]: Motor de renderizado, procesamiento
 - [Configuraciones]: Archivos de configuración centralizados
 
-### **🧪 ARCHIVOS DE PRUEBA Y DESARROLLO**
+### ** ARCHIVOS DE PRUEBA Y DESARROLLO**
 - [Archivos de prueba]: Sistema de pruebas, validaciones
 - [Archivos de desarrollo]: Herramientas de desarrollo
 
-### **📊 ARCHIVOS DE DATOS**
+### ** ARCHIVOS DE DATOS**
 - [Carpetas de datos]: Fuentes, imágenes, resultados
 - [Templates]: Plantillas y recursos base
 
-### **📋 ARCHIVOS DE CONFIGURACIÓN**
+### ** ARCHIVOS DE CONFIGURACIÓN**
 - [Configs principales]: Configuración centralizada
 - [Configs específicos]: Configuraciones por módulo
 
-### **🛠️ ARCHIVOS DE UTILIDADES**
+### **️ ARCHIVOS DE UTILIDADES**
 - [Instaladores]: Scripts de instalación automática
 - [Verificadores]: Diagnóstico y pruebas del sistema
 - [Ejemplos]: Casos de uso y documentación práctica
 
-### **📚 ARCHIVOS DE DOCUMENTACIÓN**
+### ** ARCHIVOS DE DOCUMENTACIÓN**
 - [README]: Documentación principal
 - [Guías técnicas]: Documentación detallada
 - [Guías de instalación]: Pasos esenciales
 - [Guías de reparación]: Solución de problemas
 
-## 🔗 **DEPENDENCIAS PRINCIPALES**
+##  **DEPENDENCIAS PRINCIPALES**
 ### **Flujo de Producción**:
 [Archivo principal] → [Procesadores] → [Motores] → [Configs] → [Templates] → [Resultados]
 
 ### **Flujo de Pruebas**:
 [Archivos de prueba] → [Motores] → [Configs] → [Templates] → [Pruebas]
 
-## ⚠️ **ARCHIVOS CRÍTICOS**
+## ️ **ARCHIVOS CRÍTICOS**
 ### **NO ELIMINAR**:
 - [Lista de archivos críticos que no se pueden eliminar]
 
 ### **PUEDEN REGENERARSE**:
 - [Lista de archivos que se pueden regenerar]
 
-## 🎯 **CASOS DE USO COMUNES**
+##  **CASOS DE USO COMUNES**
 ### **Para [Caso específico]**:
 1. [Paso 1]
 2. [Paso 2]
 3. [Paso 3]
 
-## 📝 **NOTAS IMPORTANTES**
+##  **NOTAS IMPORTANTES**
 - [Notas críticas sobre el proyecto]
 - [Configuraciones importantes]
 - [Sistemas de recuperación]
@@ -89,24 +89,24 @@ Este documento describe la estructura completa del proyecto, la función de cada
 - **Actualizar cuando se modifique la estructura** del proyecto
 - **Mantener sincronizado** con la realidad del proyecto
 
-## 🎯 **BENEFICIOS UNIVERSALES**
+##  **BENEFICIOS UNIVERSALES**
 
 ### **PARA NUEVOS DESARROLLADORES**:
-- ✅ **Comprensión rápida** - Entender el proyecto en minutos
-- ✅ **Evitar duplicación** - Saber qué archivos ya existen
-- ✅ **Dependencias claras** - Entender qué necesita cada archivo
+-  **Comprensión rápida** - Entender el proyecto en minutos
+-  **Evitar duplicación** - Saber qué archivos ya existen
+-  **Dependencias claras** - Entender qué necesita cada archivo
 
 ### **PARA NUEVAS INSTANCIAS DE CHAT**:
-- ✅ **Contexto completo** - Entender la estructura sin análisis previo
-- ✅ **Evitar archivos de prueba** - Usar los existentes correctamente
-- ✅ **Flujos claros** - Saber cómo se relacionan los componentes
+-  **Contexto completo** - Entender la estructura sin análisis previo
+-  **Evitar archivos de prueba** - Usar los existentes correctamente
+-  **Flujos claros** - Saber cómo se relacionan los componentes
 
 ### **PARA MANTENIMIENTO**:
-- ✅ **Documentación viva** - Siempre actualizada
-- ✅ **Referencia rápida** - Encontrar archivos y funciones
-- ✅ **Estructura clara** - Organización lógica del proyecto
+-  **Documentación viva** - Siempre actualizada
+-  **Referencia rápida** - Encontrar archivos y funciones
+-  **Estructura clara** - Organización lógica del proyecto
 
-## 🔧 **IMPLEMENTACIÓN PASO A PASO**
+##  **IMPLEMENTACIÓN PASO A PASO**
 
 ### **PASO 1: Análisis Profundo del Proyecto**
 - Revisar TODOS los archivos y carpetas
@@ -132,7 +132,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 - Probar que los flujos de trabajo sean válidos
 - Mantener actualizado con cambios futuros
 
-## 🎉 **RESULTADO ESPERADO**
+##  **RESULTADO ESPERADO**
 
 - **Comprensión inmediata** del proyecto para cualquier persona
 - **Eliminación de duplicación** de archivos de prueba
@@ -140,7 +140,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 - **Mantenimiento simplificado** del proyecto
 - **Onboarding rápido** de nuevos desarrolladores
 
-## 📝 **NOTAS IMPORTANTES**
+##  **NOTAS IMPORTANTES**
 
 - **SIEMPRE** crear este archivo al analizar un proyecto
 - **NUNCA** omitir archivos importantes
@@ -320,14 +320,14 @@ Este documento describe la estructura completa del proyecto, la función de cada
 
 ## REGLA 17: CONFIGURACIONES MODULARES Y PRÁCTICAS
 
-### **🧠 PRINCIPIO FUNDAMENTAL**
+### ** PRINCIPIO FUNDAMENTAL**
 - **Organizar configuraciones** según el contexto y tipo de proyecto
 - **Seguir estándares** del lenguaje/framework cuando existan
 - **Aplicar modularidad práctica** para proyectos sin estándares
 - **Facilitar mantenimiento** y edición rápida
 - **Ser aplicable** a cualquier tipo de proyecto (IA, trading, web, etc.)
 
-### **📋 IMPLEMENTACIÓN FLEXIBLE**
+### ** IMPLEMENTACIÓN FLEXIBLE**
 
 #### **1. ENFOQUE SEGÚN TIPO DE PROYECTO Y LENGUAJE**
 
@@ -630,24 +630,24 @@ impl ConfigManager {
 ### **5. VENTAJAS SEGÚN EL ENFOQUE**
 
 #### **UN SOLO ARCHIVO (Proyectos de Renderizado/Imagen)**:
-- ✅ **Edición rápida** - Todo en un lugar, cambios inmediatos
-- ✅ **Contexto completo** - Ver todas las configuraciones relacionadas
-- ✅ **Menos referencias** - No saltar entre múltiples archivos
-- ✅ **Simplicidad** - Ideal para proyectos cohesivos
-- ✅ **Prototipado rápido** - Configuración centralizada
+-  **Edición rápida** - Todo en un lugar, cambios inmediatos
+-  **Contexto completo** - Ver todas las configuraciones relacionadas
+-  **Menos referencias** - No saltar entre múltiples archivos
+-  **Simplicidad** - Ideal para proyectos cohesivos
+-  **Prototipado rápido** - Configuración centralizada
 
 #### **MÚLTIPLES ARCHIVOS (Proyectos Web/Enterprise/IA)**:
-- ✅ **Separación de responsabilidades** - Cada archivo tiene un propósito específico
-- ✅ **Trabajo en equipo** - Diferentes desarrolladores en diferentes configs
-- ✅ **Despliegue selectivo** - Deploy solo configuraciones necesarias
-- ✅ **Escalabilidad** - Fácil agregar nuevos módulos
-- ✅ **Mantenimiento especializado** - Expertos en cada área
+-  **Separación de responsabilidades** - Cada archivo tiene un propósito específico
+-  **Trabajo en equipo** - Diferentes desarrolladores en diferentes configs
+-  **Despliegue selectivo** - Deploy solo configuraciones necesarias
+-  **Escalabilidad** - Fácil agregar nuevos módulos
+-  **Mantenimiento especializado** - Expertos en cada área
 
 #### **SEGUIR ESTÁNDARES DEL LENGUAJE**:
-- ✅ **Compatibilidad** - Integración con ecosistema del lenguaje
-- ✅ **Familiaridad** - Desarrolladores conocen la estructura
-- ✅ **Herramientas** - IDEs y herramientas reconocen la estructura
-- ✅ **Comunidad** - Soporte y documentación disponible
+-  **Compatibilidad** - Integración con ecosistema del lenguaje
+-  **Familiaridad** - Desarrolladores conocen la estructura
+-  **Herramientas** - IDEs y herramientas reconocen la estructura
+-  **Comunidad** - Soporte y documentación disponible
 
 ### **6. IMPLEMENTACIÓN PASO A PASO UNIVERSAL**
 
@@ -736,7 +736,7 @@ impl ConfigManager {
 }
 ```
 
-## 🎉 **RESULTADO ESPERADO**
+##  **RESULTADO ESPERADO**
 
 - **Configuraciones organizadas** según el contexto y tipo de proyecto
 - **Compatibilidad** con estándares del lenguaje/framework
@@ -746,7 +746,7 @@ impl ConfigManager {
 - **Escalabilidad** según las necesidades del proyecto
 - **Aplicabilidad universal** a cualquier tipo de proyecto
 
-## 📝 **NOTAS IMPORTANTES**
+##  **NOTAS IMPORTANTES**
 
 - **EVALUAR** el contexto del proyecto antes de decidir
 - **PRIORIZAR** estándares del lenguaje cuando existan

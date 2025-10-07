@@ -1,9 +1,9 @@
-# 📅 Configuración de Fechas en Pasaportes - Guía Completa
+#  Configuración de Fechas en Pasaportes - Guía Completa
 
-## 🎯 Objetivo
+##  Objetivo
 Este documento explica cómo configurar correctamente las fechas en el sistema de pasaportes para mantener la armonía visual y evitar problemas comunes.
 
-## 🚨 **PROBLEMA CRÍTICO IDENTIFICADO**
+##  **PROBLEMA CRÍTICO IDENTIFICADO**
 
 ### **Síntomas del Problema**
 - Las fechas se ven distorsionadas o estiradas
@@ -14,7 +14,7 @@ Este documento explica cómo configurar correctamente las fechas en el sistema d
 ### **Causa Raíz**
 El sistema de `stretch_to_fit` estaba estirando artificialmente el texto de las fechas, rompiendo la proporción natural y la armonía visual.
 
-## ✅ **SOLUCIÓN IMPLEMENTADA**
+##  **SOLUCIÓN IMPLEMENTADA**
 
 ### **1. Configuración JSON Corregida**
 
@@ -119,7 +119,7 @@ left_x = pos['x'] + pos.get('offset_x', 0)  # Posición fija desde JSON
 top_y = pos['y'] + pos.get('offset_y', 0)   # Posición fija desde JSON
 ```
 
-## 📋 **Parámetros Clave Explicados**
+##  **Parámetros Clave Explicados**
 
 ### **stretch_to_fit: false**
 - **Propósito:** Desactiva el estiramiento automático del texto
@@ -146,7 +146,7 @@ top_y = pos['y'] + pos.get('offset_y', 0)   # Posición fija desde JSON
 - **Efecto:** Texto bien proporcionado
 - **Importancia:** Legibilidad y armonía
 
-## 🚨 **TROUBLESHOOTING: Problemas Comunes**
+##  **TROUBLESHOOTING: Problemas Comunes**
 
 ### **Problema 1: Las fechas se ven distorsionadas o estiradas**
 **Síntomas:**
@@ -214,7 +214,7 @@ top_y = pos['y'] + pos.get('offset_y', 0)   # Posición fija desde JSON
 "letter_spacing": 0
 ```
 
-## ✅ **Verificación de Configuración Correcta**
+##  **Verificación de Configuración Correcta**
 
 ### **Checklist de Verificación**
 - [ ] `stretch_to_fit: false` en todas las fechas
@@ -228,14 +228,14 @@ top_y = pos['y'] + pos.get('offset_y', 0)   # Posición fija desde JSON
 - [ ] `alto: 17` en todas las fechas (altura uniforme)
 
 ### **Resultado Esperado**
-- ✅ **Armonía visual preservada**: Las fechas mantienen su proporción natural
-- ✅ **Alineación uniforme**: Todas las fechas empiezan en el mismo punto (x: 336)
-- ✅ **Tamaño consistente**: 12pt para todas las fechas
-- ✅ **Sin distorsión**: El texto no se estira artificialmente
-- ✅ **Legibilidad perfecta**: Texto limpio y profesional
-- ✅ **Consistencia entre pasaportes**: Mismo aspecto visual
+-  **Armonía visual preservada**: Las fechas mantienen su proporción natural
+-  **Alineación uniforme**: Todas las fechas empiezan en el mismo punto (x: 336)
+-  **Tamaño consistente**: 12pt para todas las fechas
+-  **Sin distorsión**: El texto no se estira artificialmente
+-  **Legibilidad perfecta**: Texto limpio y profesional
+-  **Consistencia entre pasaportes**: Mismo aspecto visual
 
-## 🔧 **Mantenimiento y Actualizaciones**
+##  **Mantenimiento y Actualizaciones**
 
 ### **Si se Modifica el Sistema**
 1. **NUNCA** activar `stretch_to_fit: true` para fechas
@@ -254,7 +254,7 @@ top_y = pos['y'] + pos.get('offset_y', 0)   # Posición fija desde JSON
 - Mantener ambos valores iguales
 - Aplicar el cambio a TODAS las fechas
 
-## 📝 **Notas Importantes**
+##  **Notas Importantes**
 
 1. **Esta configuración ha sido probada exhaustivamente** y funciona correctamente
 2. **NO modificar** los parámetros críticos sin justificación
@@ -264,6 +264,6 @@ top_y = pos['y'] + pos.get('offset_y', 0)   # Posición fija desde JSON
 
 ---
 
-**📅 Última actualización:** 2025-01-02  
-**🔧 Versión:** 1.0  
-**✅ Estado:** Probado y funcionando correctamente
+** Última actualización:** 2025-01-02  
+** Versión:** 1.0  
+** Estado:** Probado y funcionando correctamente

@@ -1,8 +1,8 @@
-# 📁 Carpeta DATA - Archivos de Entrada
+#  Carpeta DATA - Archivos de Entrada
 
 Esta carpeta contiene todos los archivos de entrada necesarios para el sistema de pasaportes.
 
-## 📋 Estructura Requerida
+##  Estructura Requerida
 
 ```
 DATA/
@@ -17,7 +17,7 @@ DATA/
 └── [tu_archivo.xlsx]            # Base de datos Excel
 ```
 
-## 🖼️ Imágenes Requeridas
+## ️ Imágenes Requeridas
 
 ### Para Mujeres (`Imagenes_Mujeres/`)
 - **Patrón de nombre**: `massive_venezuelan_mujer_EDAD_*.png`
@@ -31,9 +31,9 @@ DATA/
 - **Edades**: 18-60 años
 - **Formato**: PNG, JPG, JPEG
 
-## 📊 Base de Datos Excel
+##  Base de Datos Excel
 
-### 📋 Plantilla Incluida
+###  Plantilla Incluida
 - **`Datos_Crear_PLANTILLA.xlsx`** - Plantilla con la estructura correcta
 - **Usar como referencia** para crear tu base de datos
 - **Formato correcto** de columnas y datos
@@ -54,7 +54,7 @@ F      | MARIA         | JOSEFINA       | GONZALEZ        | RODRIGUEZ        | 1
 M      | CARLOS        |                | MARTINEZ        | LOPEZ            | 1988-07-22       | carlos@email.com
 ```
 
-## 🎯 Cómo Usar
+##  Cómo Usar
 
 1. **Abre la plantilla**: `Datos_Crear_PLANTILLA.xlsx` para ver el formato correcto
 2. **Crea tu base de datos** siguiendo la estructura de la plantilla
@@ -62,14 +62,14 @@ M      | CARLOS        |                | MARTINEZ        | LOPEZ            | 1
 4. **Agrega imágenes** en las carpetas correspondientes
 5. **Ejecuta el sistema**: `python3 generador_pasaportes_masivo.py`
 
-## ⚠️ Notas Importantes
+## ️ Notas Importantes
 
 - **Patrón de imágenes**: El nombre debe contener la edad para que el sistema pueda hacer la correspondencia
 - **Edades**: El sistema busca coincidencia exacta o por rango de edad
 - **Género**: Las imágenes deben estar en la carpeta correcta según el género
 - **Formato de fechas**: Debe ser YYYY-MM-DD para que el sistema calcule la edad correctamente
 
-## 🔧 Solución de Problemas
+##  Solución de Problemas
 
 ### Error: "No se encontraron imágenes"
 - Verifica que las imágenes estén en la carpeta correcta

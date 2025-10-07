@@ -1,13 +1,13 @@
-# 📋 Resumen de Ajustes para Producción - Sistema de Pasaportes
+#  Resumen de Ajustes para Producción - Sistema de Pasaportes
 
-## 🎯 Objetivo
+##  Objetivo
 Este documento contiene todos los ajustes realizados en el sistema de pasaportes para replicar exactamente la configuración que funciona correctamente.
 
-## 📁 Archivos Modificados
+##  Archivos Modificados
 
 ### 1. `script_maestro_integrado.py`
 
-#### 🔧 **Ajustes de Zoom y Posicionamiento de Imagen**
+####  **Ajustes de Zoom y Posicionamiento de Imagen**
 
 **Ubicación:** Línea 444
 ```python
@@ -36,13 +36,13 @@ target_x = target_width // 2  # CENTRO horizontal del contenedor
 target_x = target_width // 2 - 15  # CENTRO horizontal del contenedor (ajustado para centrado visual)
 ```
 
-#### 🖼️ **Marco Semi-transparente**
+#### ️ **Marco Semi-transparente**
 
 **Ubicación:** Líneas 306-328 (método `crear_marco_semitransparente`)
 ```python
 def crear_marco_semitransparente(self, img, target_width, target_height):
     """Crea un marco semi-transparente DENTRO de las dimensiones existentes"""
-    print("   🖼️ Creando marco semi-transparente dentro del contenedor...")
+    print("   ️ Creando marco semi-transparente dentro del contenedor...")
     
     # Crear una copia de la imagen para trabajar
     img_con_marco = img.copy()
@@ -61,7 +61,7 @@ def crear_marco_semitransparente(self, img, target_width, target_height):
     draw.rectangle([2, 2, target_width-3, target_height-3], 
                   outline=marco_color_interior, width=1)
     
-    print("   ✅ Marco semi-transparente creado dentro del contenedor")
+    print("    Marco semi-transparente creado dentro del contenedor")
     return img_con_marco
 ```
 
@@ -71,13 +71,13 @@ def crear_marco_semitransparente(self, img, target_width, target_height):
 img_con_marco = self.crear_marco_semitransparente(img_recortada, target_width, target_height)
 ```
 
-#### 🎨 **Escala de Grises Tono 217**
+####  **Escala de Grises Tono 217**
 
 **Ubicación:** Líneas 257-304 (método `aplicar_efectos_imagen`)
 ```python
 def aplicar_efectos_imagen(self, img):
     """Aplica efectos de integración con el fondo a la imagen con escala de grises tono 217"""
-    print("   🎨 Aplicando efectos de integración con fondo y escala de grises tono 217...")
+    print("    Aplicando efectos de integración con fondo y escala de grises tono 217...")
     
     # Asegurar que la imagen esté en RGBA para preservar transparencia
     if img.mode != 'RGBA':
@@ -121,13 +121,13 @@ def aplicar_efectos_imagen(self, img):
     # Aplicar blur sutil
     img_final = img_final.filter(ImageFilter.GaussianBlur(radius=0.5))
     
-    print("   ✅ Efectos aplicados: escala de grises tono 217, transparencia gradual, blur sutil")
+    print("    Efectos aplicados: escala de grises tono 217, transparencia gradual, blur sutil")
     return img_final
 ```
 
 ### 2. `config.json`
 
-#### 📐 **Configuración del Contenedor de Imagen**
+####  **Configuración del Contenedor de Imagen**
 
 **Ubicación:** Líneas 222-233
 ```json
@@ -145,7 +145,7 @@ def aplicar_efectos_imagen(self, img):
 }
 ```
 
-## 🔧 **Pasos para Implementar en Producción**
+##  **Pasos para Implementar en Producción**
 
 ### 1. **Modificar `script_maestro_integrado.py`**
 
@@ -201,7 +201,7 @@ target_x = target_width // 2 - 15  # CENTRO horizontal del contenedor (ajustado 
 }
 ```
 
-## 📊 **Resumen de Cambios**
+##  **Resumen de Cambios**
 
 | Parámetro | Valor Anterior | Valor Nuevo | Efecto |
 |-----------|----------------|--------------|---------|
@@ -212,7 +212,7 @@ target_x = target_width // 2 - 15  # CENTRO horizontal del contenedor (ajustado 
 | `marco_color_interior` | - | `(250, 250, 250, 60)` | Marco interior sutil |
 | `factor_ajuste` | - | `217.0 / 255.0` | Escala de grises tono 217 |
 
-## 🚨 **PROBLEMA CRÍTICO RESUELTO: Configuración de Fechas**
+##  **PROBLEMA CRÍTICO RESUELTO: Configuración de Fechas**
 
 ### **Problema Identificado**
 El sistema de `stretch_to_fit` para las fechas estaba rompiendo la armonía visual del pasaporte al estirar artificialmente el texto.
@@ -243,11 +243,11 @@ El sistema de `stretch_to_fit` para las fechas estaba rompiendo la armonía visu
 ```
 
 #### **Cambios Aplicados a las 3 Fechas**
-- ✅ `stretch_to_fit: false` (desactivado)
-- ✅ `offset_x: 0` (estandarizado para alineación uniforme)
-- ✅ `font_size: 12` y `render_size_pt: 12` (tamaño consistente)
-- ✅ `bold_thickness: 0` (sin negritas)
-- ✅ `letter_spacing: 0` (espaciado natural)
+-  `stretch_to_fit: false` (desactivado)
+-  `offset_x: 0` (estandarizado para alineación uniforme)
+-  `font_size: 12` y `render_size_pt: 12` (tamaño consistente)
+-  `bold_thickness: 0` (sin negritas)
+-  `letter_spacing: 0` (espaciado natural)
 
 ### **Código Python Actualizado**
 **Ubicación:** `SCRIPTS/script_maestro_integrado.py` - función `insertar_texto_alineado_izquierda`
@@ -259,12 +259,12 @@ top_y = pos['y'] + pos.get('offset_y', 0)   # Posición fija desde JSON
 ```
 
 ### **Resultado**
-- ✅ **Armonía visual preservada**: Las fechas mantienen su proporción natural
-- ✅ **Alineación uniforme**: Todas las fechas empiezan en el mismo punto (x: 336)
-- ✅ **Tamaño consistente**: 12pt para todas las fechas
-- ✅ **Sin distorsión**: El texto no se estira artificialmente
+-  **Armonía visual preservada**: Las fechas mantienen su proporción natural
+-  **Alineación uniforme**: Todas las fechas empiezan en el mismo punto (x: 336)
+-  **Tamaño consistente**: 12pt para todas las fechas
+-  **Sin distorsión**: El texto no se estira artificialmente
 
-## ✅ **Verificación Final**
+##  **Verificación Final**
 
 Después de implementar estos cambios, verificar que:
 
@@ -275,17 +275,17 @@ Después de implementar estos cambios, verificar que:
 5. **Fechas:** Mantienen armonía visual sin estiramiento artificial
 6. **Alineación:** Todas las fechas empiezan en el mismo punto izquierdo
 
-## 🎯 **Resultado Esperado**
+##  **Resultado Esperado**
 
-- ✅ Imagen con zoom reducido (más torso visible)
-- ✅ Centrado visual perfecto
-- ✅ Marco semi-transparente como pasaporte real
-- ✅ Escala de grises tono 217 (gris claro y suave)
-- ✅ Integración perfecta con el fondo del documento
-- ✅ **Fechas con armonía visual preservada**
-- ✅ **Alineación uniforme de fechas**
+-  Imagen con zoom reducido (más torso visible)
+-  Centrado visual perfecto
+-  Marco semi-transparente como pasaporte real
+-  Escala de grises tono 217 (gris claro y suave)
+-  Integración perfecta con el fondo del documento
+-  **Fechas con armonía visual preservada**
+-  **Alineación uniforme de fechas**
 
-## 🚨 **TROUBLESHOOTING: Problemas Comunes**
+##  **TROUBLESHOOTING: Problemas Comunes**
 
 ### **Problema: Las fechas se ven distorsionadas o estiradas**
 **Causa:** `stretch_to_fit: true` está activado
@@ -305,4 +305,4 @@ Después de implementar estos cambios, verificar que:
 
 ---
 
-**📝 Nota:** Estos ajustes han sido probados y funcionan correctamente. Implementar exactamente como se especifica para obtener el resultado deseado.
+** Nota:** Estos ajustes han sido probados y funcionan correctamente. Implementar exactamente como se especifica para obtener el resultado deseado.

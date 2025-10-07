@@ -96,7 +96,7 @@ class ProgresoSimple:
         self.total_count = total
         if total > 0:
             porcentaje = (completados / total) * 100
-            print(f"📊 Progreso: {completados}/{total} ({porcentaje:.1f}%)")
+            print(f" Progreso: {completados}/{total} ({porcentaje:.1f}%)")
 
 # OPTIMIZACIÓN: Configuración GPU con OpenCV (más estable que onnxruntime)
 def configurar_gpu_entorno():
@@ -109,10 +109,10 @@ def configurar_gpu_entorno():
                 # Múltiples GPUs disponibles - usar todas
                 gpu_ids = ','.join(str(i) for i in range(num_gpus))
                 os.environ.setdefault('CUDA_VISIBLE_DEVICES', gpu_ids)
-                print(f"🎮 Detectadas {num_gpus} GPUs: {gpu_ids}")
+                print(f" Detectadas {num_gpus} GPUs: {gpu_ids}")
             else:
                 os.environ.setdefault('CUDA_VISIBLE_DEVICES', '0')
-                print("🎮 GPU única detectada")
+                print(" GPU única detectada")
         else:
             os.environ.setdefault('CUDA_VISIBLE_DEVICES', '0')
     except ImportError:
@@ -122,11 +122,11 @@ def configurar_gpu_entorno():
     try:
         import cv2
         if cv2.cuda.getCudaEnabledDeviceCount() > 0:
-            print("🎮 OpenCV CUDA detectado")
+            print(" OpenCV CUDA detectado")
         else:
-            print("⚠️ OpenCV sin soporte CUDA")
+            print("️ OpenCV sin soporte CUDA")
     except ImportError:
-        print("⚠️ OpenCV no instalado")
+        print("️ OpenCV no instalado")
     
     # Configuración base
     os.environ.setdefault('__NV_PRIME_RENDER_OFFLOAD', '1')
@@ -144,7 +144,7 @@ sys.path.append(str(Path(__file__).parent / 'SCRIPTS'))
 try:
     from script_maestro_integrado import ScriptMaestroIntegrado
 except Exception as e:
-    print("⚠️ No se pudo importar script_maestro_integrado.py:", e)
+    print("️ No se pudo importar script_maestro_integrado.py:", e)
     ScriptMaestroIntegrado = None
 
 class ValidadorFuentes:
@@ -186,7 +186,7 @@ class ValidadorFuentes:
     
     def verificar_fuentes(self):
         """Verifica si todas las fuentes requeridas están disponibles (sistema o locales)."""
-        print("🔍 Verificando fuentes disponibles...")
+        print(" Verificando fuentes disponibles...")
         # Limpiar estado previo por reusabilidad
         self.fuentes_disponibles = []
         self.fuentes_faltantes = []
@@ -207,7 +207,7 @@ class ValidadorFuentes:
         # 1) Intentar cargar desde el sistema por nombre
         try:
             ImageFont.truetype(nombre_fuente, 12)
-            print(f"   ✅ {nombre_fuente}")
+            print(f"    {nombre_fuente}")
             return True
         except Exception:
             pass
@@ -217,7 +217,7 @@ class ValidadorFuentes:
             ruta_local = self._resolver_ruta_local_fuente(nombre_fuente)
             if ruta_local and ruta_local.exists():
                 ImageFont.truetype(str(ruta_local), 12)
-                print(f"   ✅ {nombre_fuente} (local: {ruta_local.name})")
+                print(f"    {nombre_fuente} (local: {ruta_local.name})")
                 return True
         except Exception:
             pass
@@ -232,12 +232,12 @@ class ValidadorFuentes:
                 ruta_completa = os.path.join(ruta, nombre_fuente)
                 if os.path.exists(ruta_completa):
                     ImageFont.truetype(ruta_completa, 12)
-                    print(f"   ✅ {nombre_fuente} (compat: {ruta})")
+                    print(f"    {nombre_fuente} (compat: {ruta})")
                     return True
         except Exception:
             pass
         
-        print(f"   ❌ {nombre_fuente}")
+        print(f"    {nombre_fuente}")
         return False
 
     def _construir_indice_local_si_hace_falta(self):
@@ -261,17 +261,17 @@ class ValidadorFuentes:
     
     def mostrar_estado_fuentes(self):
         """Muestra el estado de las fuentes"""
-        print(f"\n📊 ESTADO DE FUENTES:")
-        print(f"   ✅ Disponibles: {len(self.fuentes_disponibles)}")
-        print(f"   ❌ Faltantes: {len(self.fuentes_faltantes)}")
+        print(f"\n ESTADO DE FUENTES:")
+        print(f"    Disponibles: {len(self.fuentes_disponibles)}")
+        print(f"    Faltantes: {len(self.fuentes_faltantes)}")
         
         if self.fuentes_faltantes:
-            print(f"\n⚠️ FUENTES FALTANTES:")
+            print(f"\n️ FUENTES FALTANTES:")
             for fuente in self.fuentes_faltantes:
                 print(f"   • {fuente}")
             return False
         else:
-            print(f"\n✅ Todas las fuentes están disponibles")
+            print(f"\n Todas las fuentes están disponibles")
             return True
     
     def obtener_fuentes_disponibles_por_categoria(self):
@@ -509,7 +509,7 @@ class GeneradorPasaportesMasivo:
                         registros_procesados.append(resultado)
                         self.progress_manager.complete_passport(passport_id, success=True)
                     except Exception as e:
-                        print(f"\n❌ Error en pasaporte {passport_id}: {e}")
+                        print(f"\n Error en pasaporte {passport_id}: {e}")
                         self.progress_manager.complete_passport(passport_id, success=False)
             
             # OPTIMIZACIÓN: Limpieza GPU más frecuente para 20K+ registros
@@ -561,7 +561,7 @@ class GeneradorPasaportesMasivo:
             return datos_pasaporte
             
         except Exception as e:
-            print(f"❌ Error en registro {idx + 1}: {e}")
+            print(f" Error en registro {idx + 1}: {e}")
             return None
 
     def _limpieza_previa(self):
@@ -591,7 +591,7 @@ class GeneradorPasaportesMasivo:
     def _crear_directorios_robustos(self):
         """Crea todos los directorios necesarios de forma robusta"""
         if LOGGING_DETALLADO:
-            print("📁 Creando estructura de directorios...")
+            print(" Creando estructura de directorios...")
         
         directorios_requeridos = [
             self.pasaportes_visuales_path,
@@ -608,19 +608,19 @@ class GeneradorPasaportesMasivo:
             try:
                 directorio.mkdir(parents=True, exist_ok=True)
                 if LOGGING_DETALLADO:
-                    print(f"   ✅ {directorio}")
+                    print(f"    {directorio}")
             except Exception as e:
                 if LOGGING_DETALLADO:
-                    print(f"   ❌ Error creando {directorio}: {e}")
+                    print(f"    Error creando {directorio}: {e}")
                 raise Exception(f"No se pudo crear el directorio {directorio}")
         
         if LOGGING_DETALLADO:
-            print("✅ Todos los directorios creados correctamente")
+            print(" Todos los directorios creados correctamente")
     
     def _inicializar_gpu_optimizaciones(self):
         """Inicializa optimizaciones GPU con soporte para múltiples GPUs"""
         if LOGGING_DETALLADO:
-            print("🎮 Inicializando optimizaciones GPU...")
+            print(" Inicializando optimizaciones GPU...")
         
         self.gpu_disponible = False
         self.device = None
@@ -654,13 +654,13 @@ class GeneradorPasaportesMasivo:
                 
                 if LOGGING_DETALLADO:
                     if self.num_gpus > 1:
-                        print(f"   ✅ {self.num_gpus} GPUs NVIDIA detectadas:")
+                        print(f"    {self.num_gpus} GPUs NVIDIA detectadas:")
                         for gpu in self.gpu_devices:
                             print(f"      GPU {gpu['id']}: {gpu['name']} ({gpu['memory_mb']} MB)")
-                        print(f"   🚀 Usando todas las GPUs para procesamiento paralelo")
+                        print(f"    Usando todas las GPUs para procesamiento paralelo")
                     else:
-                        print(f"   ✅ GPU NVIDIA detectada: {self.gpu_name}")
-                        print(f"   📦 VRAM: {self.gpu_total_mb} MB")
+                        print(f"    GPU NVIDIA detectada: {self.gpu_name}")
+                        print(f"    VRAM: {self.gpu_total_mb} MB")
                 
                 # Optimizaciones CUDA para múltiples GPUs
                 torch.backends.cudnn.benchmark = True
@@ -669,14 +669,14 @@ class GeneradorPasaportesMasivo:
                 
                 # Configurar balanceo de carga para múltiples GPUs
                 if self.num_gpus > 1 and LOGGING_DETALLADO:
-                    print(f"   ⚖️ Balanceo de carga habilitado para {self.num_gpus} GPUs")
+                    print(f"   ️ Balanceo de carga habilitado para {self.num_gpus} GPUs")
                 
         except ImportError:
             if LOGGING_DETALLADO:
-                print("   ⚠️ PyTorch no instalado")
+                print("   ️ PyTorch no instalado")
         except Exception as e:
             if LOGGING_DETALLADO:
-                print(f"   ⚠️ Error con CUDA: {e}")
+                print(f"   ️ Error con CUDA: {e}")
         
         # 2. Verificar OpenCL (AMD/Intel/otros)
         if not self.gpu_disponible:
@@ -689,14 +689,14 @@ class GeneradorPasaportesMasivo:
                     gpu_info = platforms[0].get_devices()[0].name
                     self.gpu_name = gpu_info
                     if LOGGING_DETALLADO:
-                        print(f"   ✅ GPU OpenCL detectada: {gpu_info}")
-                        print(f"   🚀 Usando OpenCL para aceleración")
+                        print(f"    GPU OpenCL detectada: {gpu_info}")
+                        print(f"    Usando OpenCL para aceleración")
             except ImportError:
                 if LOGGING_DETALLADO:
-                    print("   ⚠️ PyOpenCL no instalado")
+                    print("   ️ PyOpenCL no instalado")
             except Exception as e:
                 if LOGGING_DETALLADO:
-                    print(f"   ⚠️ Error con OpenCL: {e}")
+                    print(f"   ️ Error con OpenCL: {e}")
         
         # 3. Verificar Metal (macOS)
         if not self.gpu_disponible:
@@ -707,11 +707,11 @@ class GeneradorPasaportesMasivo:
                     self.device = torch.device('mps')
                     self.gpu_name = "Metal Performance Shaders"
                     if LOGGING_DETALLADO:
-                        print(f"   ✅ GPU Metal detectada: {self.gpu_name}")
-                        print(f"   🚀 Usando Metal para aceleración")
+                        print(f"    GPU Metal detectada: {self.gpu_name}")
+                        print(f"    Usando Metal para aceleración")
             except Exception as e:
                 if LOGGING_DETALLADO:
-                    print(f"   ⚠️ Error con Metal: {e}")
+                    print(f"   ️ Error con Metal: {e}")
         
         # 4. Verificar DirectML (Windows)
         if not self.gpu_disponible:
@@ -722,17 +722,17 @@ class GeneradorPasaportesMasivo:
                     self.device = torch.device('dml')
                     self.gpu_name = "DirectML"
                     if LOGGING_DETALLADO:
-                        print(f"   ✅ GPU DirectML detectada: {self.gpu_name}")
-                        print(f"   🚀 Usando DirectML para aceleración")
+                        print(f"    GPU DirectML detectada: {self.gpu_name}")
+                        print(f"    Usando DirectML para aceleración")
             except Exception as e:
                 if LOGGING_DETALLADO:
-                    print(f"   ⚠️ Error con DirectML: {e}")
+                    print(f"   ️ Error con DirectML: {e}")
         
         # 5. Fallback a CPU optimizado
         if not self.gpu_disponible:
             self.device = "cpu"
             if LOGGING_DETALLADO:
-                print("   ⚠️ No se detectó GPU compatible, usando CPU optimizado")
+                print("   ️ No se detectó GPU compatible, usando CPU optimizado")
         
         # Configurar variables de entorno para optimización universal
         os.environ['OMP_NUM_THREADS'] = '4'
@@ -745,13 +745,13 @@ class GeneradorPasaportesMasivo:
         os.environ['GLOG_minloglevel'] = '3'  # Solo errores críticos
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Solo errores críticos de TensorFlow
         if LOGGING_DETALLADO:
-            print("   ⚠️ MediaPipe deshabilitado (causa segmentation faults)")
-            print("✅ Optimizaciones universales configuradas")
+            print("   ️ MediaPipe deshabilitado (causa segmentation faults)")
+            print(" Optimizaciones universales configuradas")
 
     def _inicializar_recursos_reservados(self):
         """OPTIMIZACIÓN: Inicializa recursos reservados reutilizables para procesamiento masivo"""
         if LOGGING_DETALLADO:
-            print("🔄 Inicializando recursos reservados reutilizables...")
+            print("Inicializando recursos reservados reutilizables...")
         
         # 1. Cache de plantilla base (se carga una sola vez)
         self.plantilla_cache = None
@@ -786,16 +786,16 @@ class GeneradorPasaportesMasivo:
         self._inicializar_modelos_opencv_basicos()
         
         if LOGGING_DETALLADO:
-            print("✅ Recursos reservados reutilizables inicializados")
+            print(" Recursos reservados reutilizables inicializados")
 
     def _cargar_script_maestro_lazy(self):
         """OPTIMIZACIÓN: Carga ScriptMaestroIntegrado solo cuando se necesite"""
         if self.script_maestro_cache is None:
             try:
                 self.script_maestro_cache = ScriptMaestroIntegrado()
-                print("   🎯 Script maestro cargado bajo demanda")
+                print("    Script maestro cargado bajo demanda")
             except Exception as e:
-                print(f"   ❌ Error cargando script maestro: {e}")
+                print(f"    Error cargando script maestro: {e}")
                 return None
         return self.script_maestro_cache
 
@@ -810,10 +810,10 @@ class GeneradorPasaportesMasivo:
             # Solo inicializar cache, cargar modelos bajo demanda
             self.opencv_models_cache = {}
             
-            print("   ✅ Modelos OpenCV preparados para carga bajo demanda")
+            print("    Modelos OpenCV preparados para carga bajo demanda")
             
         except Exception as e:
-            print(f"   ⚠️ Error preparando OpenCV: {e}")
+            print(f"   ️ Error preparando OpenCV: {e}")
     
     def _cargar_modelo_opencv_bajo_demanda(self, modelo_name):
         """Carga modelos OpenCV solo cuando se necesiten"""
@@ -825,10 +825,10 @@ class GeneradorPasaportesMasivo:
                     face_cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
                     if Path(face_cascade_path).exists():
                         self.opencv_models_cache[modelo_name] = cv2.CascadeClassifier(face_cascade_path)
-                        print(f"   🔧 {modelo_name} cargado bajo demanda")
+                        print(f"    {modelo_name} cargado bajo demanda")
                 
             except Exception as e:
-                print(f"   ⚠️ Error cargando {modelo_name}: {e}")
+                print(f"   ️ Error cargando {modelo_name}: {e}")
                 return None
         
         return self.opencv_models_cache.get(modelo_name)
@@ -840,9 +840,9 @@ class GeneradorPasaportesMasivo:
                 from PIL import Image
                 self.plantilla_cache = Image.open(plantilla_path).copy()
                 self.plantilla_path = plantilla_path
-                print(f"   📄 Plantilla base cargada: {plantilla_path}")
+                print(f"    Plantilla base cargada: {plantilla_path}")
             except Exception as e:
-                print(f"   ❌ Error cargando plantilla: {e}")
+                print(f"    Error cargando plantilla: {e}")
                 return None
         return self.plantilla_cache
 
@@ -865,9 +865,9 @@ class GeneradorPasaportesMasivo:
                         min_detection_confidence=0.5
                     )
                 }
-                print("   🧠 Modelos MediaPipe inicializados")
+                print("    Modelos MediaPipe inicializados")
             except Exception as e:
-                print(f"   ⚠️ Error inicializando MediaPipe: {e}")
+                print(f"   ️ Error inicializando MediaPipe: {e}")
                 self.mediapipe_cache = None
         
         if not self.opencv_models_cache:
@@ -878,9 +878,9 @@ class GeneradorPasaportesMasivo:
                     'face_cascade': cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'),
                     'eye_cascade': cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
                 }
-                print("   🔍 Modelos OpenCV inicializados")
+                print("    Modelos OpenCV inicializados")
             except Exception as e:
-                print(f"   ⚠️ Error inicializando OpenCV: {e}")
+                print(f"   ️ Error inicializando OpenCV: {e}")
 
     def _procesar_imagen_optimizada(self, ruta_imagen):
         """OPTIMIZACIÓN: Procesa imagen usando recursos reservados reutilizables"""
@@ -935,7 +935,7 @@ class GeneradorPasaportesMasivo:
             return None
             
         except Exception as e:
-            print(f"⚠️ Error procesando imagen: {e}")
+            print(f"️ Error procesando imagen: {e}")
             return None
 
     def _limpiar_buffers_temporales(self):
@@ -958,7 +958,7 @@ class GeneradorPasaportesMasivo:
 
     def _liberar_recursos_reservados(self):
         """OPTIMIZACIÓN: Libera todos los recursos reservados al final del procesamiento"""
-        print("🧹 Liberando recursos reservados...")
+        print(" Liberando recursos reservados...")
         
         # Limpiar plantilla
         if self.plantilla_cache:
@@ -998,7 +998,7 @@ class GeneradorPasaportesMasivo:
         except:
             pass
         
-        print("✅ Recursos reservados liberados")
+        print(" Recursos reservados liberados")
 
     def _append_jsonl(self, registros):
         """Añade un lote de registros al archivo JSONL"""
@@ -1008,9 +1008,9 @@ class GeneradorPasaportesMasivo:
             with open(self.jsonl_path, 'a', encoding='utf-8') as fout:
                 for r in registros:
                     fout.write(json.dumps(r, ensure_ascii=False, default=str) + "\n")
-            print(f"💾 Lote guardado en JSONL: +{len(registros)} líneas → {self.jsonl_path.name}")
+            print(f" Lote guardado en JSONL: +{len(registros)} líneas → {self.jsonl_path.name}")
         except Exception as e:
-            print(f"⚠️ Error guardando JSONL por lotes: {e}")
+            print(f"️ Error guardando JSONL por lotes: {e}")
 
     def _cleanup_temporales(self):
         """Elimina archivos temporales del directorio temp para liberar espacio"""
@@ -1026,9 +1026,9 @@ class GeneradorPasaportesMasivo:
                 except Exception:
                     continue
             if eliminados:
-                print(f"🧽 Temporales eliminados: {eliminados}")
+                print(f" Temporales eliminados: {eliminados}")
         except Exception as e:
-            print(f"⚠️ Error limpiando temporales: {e}")
+            print(f"️ Error limpiando temporales: {e}")
     
     def _crear_sistema_recuperacion(self):
         """Crea sistema de recuperación para evitar pérdida de progreso"""
@@ -1055,10 +1055,10 @@ class GeneradorPasaportesMasivo:
                     data = json.load(f)
                     self.ultima_ubicacion_csv = data.get('ultima_ubicacion')
                     if LOGGING_DETALLADO:
-                        print(f"📂 Última ubicación CSV: {self.ultima_ubicacion_csv}")
+                        print(f" Última ubicación CSV: {self.ultima_ubicacion_csv}")
         except Exception as e:
             if LOGGING_DETALLADO:
-                print(f"⚠️ Error cargando última ubicación: {e}")
+                print(f"️ Error cargando última ubicación: {e}")
             self.ultima_ubicacion_csv = None
     
     def _guardar_ultima_ubicacion_csv(self, ubicacion):
@@ -1072,10 +1072,10 @@ class GeneradorPasaportesMasivo:
                 json.dump(data, f, indent=2)
             self.ultima_ubicacion_csv = str(ubicacion)
             if LOGGING_DETALLADO:
-                print(f"💾 Ubicación CSV guardada: {ubicacion}")
+                print(f" Ubicación CSV guardada: {ubicacion}")
         except Exception as e:
             if LOGGING_DETALLADO:
-                print(f"⚠️ Error guardando ubicación: {e}")
+                print(f"️ Error guardando ubicación: {e}")
     
     def _establecer_carpeta_salida(self, archivo_csv):
         """Establece la carpeta de salida en una subcarpeta de la misma ruta del CSV"""
@@ -1112,7 +1112,7 @@ class GeneradorPasaportesMasivo:
                 json.dump(progreso, f, indent=2)
                 
         except Exception as e:
-            print(f"⚠️ Error guardando progreso: {e}")
+            print(f"️ Error guardando progreso: {e}")
     
     def _cargar_progreso(self):
         """Carga el progreso guardado para recuperación"""
@@ -1120,10 +1120,10 @@ class GeneradorPasaportesMasivo:
             if self.archivo_progreso.exists():
                 with open(self.archivo_progreso, 'r') as f:
                     progreso = json.load(f)
-                print(f"📂 Progreso encontrado: {progreso['registro_actual']}/{progreso['total_registros']}")
+                print(f" Progreso encontrado: {progreso['registro_actual']}/{progreso['total_registros']}")
                 return progreso
         except Exception as e:
-            print(f"⚠️ Error cargando progreso: {e}")
+            print(f"️ Error cargando progreso: {e}")
         return None
     
     def _hay_imagenes_disponibles(self) -> bool:
@@ -1179,10 +1179,10 @@ class GeneradorPasaportesMasivo:
             csv_path = archivo_xlsx.with_name(f"{archivo_xlsx.stem}_{ts}.csv")
             # Guardar en UTF-8 sin index
             df.to_csv(csv_path, index=False, encoding='utf-8')
-            print(f"💾 Convertido XLSX→CSV: {csv_path.name}")
+            print(f" Convertido XLSX→CSV: {csv_path.name}")
             return csv_path
         except Exception as e:
-            print(f"⚠️ Error convirtiendo XLSX a CSV: {e}")
+            print(f"️ Error convirtiendo XLSX a CSV: {e}")
             # Fallback: devolver original para intentar lectura directa
             return archivo_xlsx
 
@@ -1204,14 +1204,14 @@ class GeneradorPasaportesMasivo:
 
     def cargar_datos_csv(self, archivo_path=None):
         """Carga datos desde archivo CSV optimizado (generado por procesador_xlsx.py)"""
-        print("📊 Cargando datos desde CSV optimizado...")
+        print(" Cargando datos desde CSV optimizado...")
         
         if archivo_path is None:
             # SIEMPRE solicitar selección manual del archivo CSV
-            print("📂 Seleccionando archivo CSV...")
+            print(" Seleccionando archivo CSV...")
             archivo_path = self.seleccionar_archivo_csv()
             if not archivo_path:
-                print("❌ No se seleccionó archivo CSV")
+                print(" No se seleccionó archivo CSV")
                 return None
         
         # Convertir a Path si es string
@@ -1228,13 +1228,13 @@ class GeneradorPasaportesMasivo:
                 self._guardar_ultima_ubicacion_csv(archivo_path)
                 # Cargar CSV optimizado (ya procesado por procesador_xlsx.py)
                 df = pd.read_csv(archivo_path, dtype=str, keep_default_na=False)
-                print(f"✅ Datos cargados (CSV optimizado): {len(df)} registros")
+                print(f" Datos cargados (CSV optimizado): {len(df)} registros")
                 return df
             else:
-                print(f"❌ Archivo CSV no encontrado: {archivo_path}")
+                print(f" Archivo CSV no encontrado: {archivo_path}")
                 return None
         except Exception as e:
-            print(f"❌ Error al cargar CSV: {e}")
+            print(f" Error al cargar CSV: {e}")
             return None
     
     def calcular_edad(self, fecha_nacimiento):
@@ -1311,10 +1311,10 @@ class GeneradorPasaportesMasivo:
                 # Convertir date a datetime
                 fecha = datetime.combine(fecha, datetime.min.time())
             else:
-                print(f"⚠️ Tipo de fecha no reconocido: {type(fecha)}")
+                print(f"️ Tipo de fecha no reconocido: {type(fecha)}")
                 return "01/Ene/Jan/2000"
         except Exception as e:
-            print(f"⚠️ Error procesando fecha: {e}")
+            print(f"️ Error procesando fecha: {e}")
             return "01/Ene/Jan/2000"
         
         # Meses en español (primera letra mayúscula, resto minúsculas)
@@ -1383,7 +1383,7 @@ class GeneradorPasaportesMasivo:
         
         # Si no hay rango válido, usar fecha por defecto
         if fecha_inicio_emision >= fecha_fin_emision:
-            print(f"⚠️ Rango de fechas inválido. Inicio: {fecha_inicio_emision}, Fin: {fecha_fin_emision}")
+            print(f"️ Rango de fechas inválido. Inicio: {fecha_inicio_emision}, Fin: {fecha_fin_emision}")
             fecha_emision = date(hoy.year - 2, 1, 1)  # 2 años atrás como fallback
         else:
             dias_diferencia = (fecha_fin_emision - fecha_inicio_emision).days
@@ -1593,7 +1593,7 @@ class GeneradorPasaportesMasivo:
         imagenes_disponibles = list(carpeta_imagenes.glob('*.png'))
         
         if not imagenes_disponibles:
-            print(f"⚠️ No se encontraron imágenes en {self.imagenes_mujeres_path}")
+            print(f"️ No se encontraron imágenes en {self.imagenes_mujeres_path}")
             return None
         
         # 1. Buscar coincidencia exacta de edad
@@ -1677,7 +1677,7 @@ class GeneradorPasaportesMasivo:
             return None
             
         except Exception as e:
-            print(f"⚠️ Error procesando imagen: {e}")
+            print(f"️ Error procesando imagen: {e}")
             return None
     
     def mover_imagen_usada(self, ruta_imagen):
@@ -1693,24 +1693,24 @@ class GeneradorPasaportesMasivo:
             
             # Verificar que la imagen existe antes de moverla
             if not imagen_path.exists():
-                print(f"⚠️ Imagen no encontrada: {imagen_path}")
+                print(f"️ Imagen no encontrada: {imagen_path}")
                 return False
             
             # Mover imagen
             destino_imagen = carpeta_usadas / imagen_path.name
             shutil.move(str(imagen_path), str(destino_imagen))
-            print(f"📁 Imagen movida: {imagen_path.name} → usadas/")
+            print(f" Imagen movida: {imagen_path.name} → usadas/")
             
             # Mover JSON si existe
             if json_path.exists():
                 destino_json = carpeta_usadas / json_path.name
                 shutil.move(str(json_path), str(destino_json))
-                print(f"📁 JSON movido: {json_path.name} → usadas/")
+                print(f" JSON movido: {json_path.name} → usadas/")
             
             return True
             
         except Exception as e:
-            print(f"❌ Error moviendo imagen: {e}")
+            print(f" Error moviendo imagen: {e}")
             return False
     
     def generar_firma_personalizada(self, nombre, apellido):
@@ -2138,11 +2138,11 @@ class GeneradorPasaportesMasivo:
         # Último recurso: escoger cualquiera disponible (evita Arial para firmas)
         if disponibles:
             candidato = sorted(disponibles)[0]
-            print(f"   ⚠️ Sin coincidencias en preferencias, usando {candidato}")
+            print(f"   ️ Sin coincidencias en preferencias, usando {candidato}")
             return candidato
 
         # Si no hay ninguna disponible, retornar Brittany para que el otro módulo intente fallback
-        print("   ❌ No hay fuentes disponibles detectadas, devolviendo BrittanySignature.ttf como marcador")
+        print("    No hay fuentes disponibles detectadas, devolviendo BrittanySignature.ttf como marcador")
         return "BrittanySignature.ttf"
     
     def generar_cedula_venezolana(self):
@@ -2235,7 +2235,7 @@ class GeneradorPasaportesMasivo:
                 return None
                 
         except Exception as e:
-            print(f"❌ Error en generación de pasaporte visual: {e}")
+            print(f" Error en generación de pasaporte visual: {e}")
             return None
 
     def generar_pasaporte_visual(self, datos_pasaporte):
@@ -2348,7 +2348,7 @@ class GeneradorPasaportesMasivo:
     
     def generar_pasaportes_masivos(self, limite=None, archivo_csv=None):
         """Genera pasaportes masivos de forma simple y estable"""
-        print("🎯 GENERADOR MASIVO DE PASAPORTES VENEZOLANOS")
+        print(" GENERADOR MASIVO DE PASAPORTES VENEZOLANOS")
         print("=" * 50)
         
         # Limpieza previa
@@ -2356,7 +2356,7 @@ class GeneradorPasaportesMasivo:
         
         # Validar fuentes
         if not self.validador_fuentes.verificar_fuentes():
-            print("❌ ERROR: Faltan fuentes requeridas")
+            print(" ERROR: Faltan fuentes requeridas")
             self.validador_fuentes.mostrar_estado_fuentes()
             return False
         
@@ -2372,7 +2372,7 @@ class GeneradorPasaportesMasivo:
         registros_procesados = []
         total_registros = len(df) if limite is None else min(limite, len(df))
         
-        print(f"📊 Procesando {total_registros} registros...")
+        print(f" Procesando {total_registros} registros...")
         
         for idx, registro in df.iterrows():
             if limite and idx >= limite:
@@ -2388,10 +2388,10 @@ class GeneradorPasaportesMasivo:
                 if (idx + 1) % 10 == 0:
                     generados = sum(1 for r in registros_procesados if r.get('estado') == 'generado')
                     omitidos = sum(1 for r in registros_procesados if r.get('estado') == 'omitido')
-                    print(f"📊 Progreso: {idx + 1}/{total_registros} - Generados: {generados}, Omitidos: {omitidos}")
+                    print(f" Progreso: {idx + 1}/{total_registros} - Generados: {generados}, Omitidos: {omitidos}")
                 
             except Exception as e:
-                print(f"❌ Error en registro {idx + 1}: {e}")
+                print(f" Error en registro {idx + 1}: {e}")
                 continue
         
         # Guardar resultados
@@ -2404,10 +2404,10 @@ class GeneradorPasaportesMasivo:
         generados = sum(1 for r in registros_procesados if r.get('estado') == 'generado')
         omitidos = sum(1 for r in registros_procesados if r.get('estado') == 'omitido')
         
-        print(f"\n🎉 PROCESAMIENTO COMPLETADO")
-        print(f"📊 Total procesados: {len(registros_procesados)}")
-        print(f"✅ Pasaportes generados: {generados}")
-        print(f"⚠️ Registros omitidos: {omitidos}")
+        print(f"\n PROCESAMIENTO COMPLETADO")
+        print(f" Total procesados: {len(registros_procesados)}")
+        print(f" Pasaportes generados: {generados}")
+        print(f"️ Registros omitidos: {omitidos}")
         
         return True
     
@@ -2461,13 +2461,13 @@ class GeneradorPasaportesMasivo:
                 # Escribir un CSV resultado en carpeta separada para evitar confusión
                 csv_result = self.output_path / f"{Path(self.csv_path_used).stem}_RESULT_{timestamp}.csv"
                 final_df.to_csv(csv_result, index=False, encoding='utf-8')
-                print(f"💾 Resultados por registro guardados en: {csv_result.name}")
+                print(f" Resultados por registro guardados en: {csv_result.name}")
         except Exception as e:
-            print(f"⚠️ No se pudo anexar resultados al CSV: {e}")
+            print(f"️ No se pudo anexar resultados al CSV: {e}")
         
-        print(f"💾 Datos guardados:")
-        print(f"   📄 JSON: {json_path}")
-        print(f"   📊 Excel: {excel_path}")
+        print(f" Datos guardados:")
+        print(f"    JSON: {json_path}")
+        print(f"    Excel: {excel_path}")
     
     def eliminar_csv_procesado(self):
         """Elimina el archivo CSV después de procesarlo para evitar confusión"""
@@ -2476,130 +2476,130 @@ class GeneradorPasaportesMasivo:
                 # Crear backup antes de eliminar
                 backup_path = self.csv_path_used.with_suffix('.csv.backup')
                 shutil.copy2(self.csv_path_used, backup_path)
-                print(f"💾 Backup creado: {backup_path.name}")
+                print(f" Backup creado: {backup_path.name}")
                 
                 # Eliminar archivo CSV original
                 Path(self.csv_path_used).unlink()
-                print(f"🗑️ CSV eliminado: {Path(self.csv_path_used).name}")
-                print("✅ Archivo CSV eliminado para evitar confusión")
+                print(f"️ CSV eliminado: {Path(self.csv_path_used).name}")
+                print(" Archivo CSV eliminado para evitar confusión")
                 
                 return True
             except Exception as e:
-                print(f"⚠️ Error eliminando CSV: {e}")
+                print(f"️ Error eliminando CSV: {e}")
                 return False
         return True
     
     def mostrar_archivos_generados(self):
         """Muestra qué archivos se van a generar durante el proceso"""
-        print("📋 ARCHIVOS QUE SE GENERARÁN:")
+        print(" ARCHIVOS QUE SE GENERARÁN:")
         print("=" * 50)
         
         # Archivos principales (pasaportes)
-        print("🎯 ARCHIVOS PRINCIPALES (PASAPORTES):")
-        print(f"   📁 Carpeta: {self.pasaportes_visuales_path}")
-        print(f"   🖼️ Archivos: pasaporte_[correo].png (uno por registro)")
-        print(f"   📝 Ejemplo: pasaporte_juan.perez@email.com.png")
+        print(" ARCHIVOS PRINCIPALES (PASAPORTES):")
+        print(f"    Carpeta: {self.pasaportes_visuales_path}")
+        print(f"   ️ Archivos: pasaporte_[correo].png (uno por registro)")
+        print(f"    Ejemplo: pasaporte_juan.perez@email.com.png")
         
         # Archivos de datos
-        print(f"\n📊 ARCHIVOS DE DATOS:")
-        print(f"   📁 Carpeta: [ruta_csv]/resultados_pasaportes/")
-        print(f"   📄 JSON: pasaportes_procesados_[timestamp].json")
-        print(f"   📊 Excel: pasaportes_procesados_[timestamp].xlsx")
-        print(f"   📋 CSV Resultado: [nombre_csv]_RESULT_[timestamp].csv")
+        print(f"\n ARCHIVOS DE DATOS:")
+        print(f"    Carpeta: [ruta_csv]/resultados_pasaportes/")
+        print(f"    JSON: pasaportes_procesados_[timestamp].json")
+        print(f"    Excel: pasaportes_procesados_[timestamp].xlsx")
+        print(f"    CSV Resultado: [nombre_csv]_RESULT_[timestamp].csv")
         
         # Archivos de logs (si están habilitados)
         if GUARDAR_LOGS_ERRORES:
-            print(f"\n📝 ARCHIVOS DE LOGS:")
-            print(f"   📁 Carpeta: {self.base_path / 'OUTPUT' / 'logs'}")
-            print(f"   📄 Progreso: progreso_actual.json")
-            print(f"   📄 Errores: errores.log")
-            print(f"   📄 Ubicación CSV: ultima_ubicacion_csv.json")
+            print(f"\n ARCHIVOS DE LOGS:")
+            print(f"    Carpeta: {self.base_path / 'OUTPUT' / 'logs'}")
+            print(f"    Progreso: progreso_actual.json")
+            print(f"    Errores: errores.log")
+            print(f"    Ubicación CSV: ultima_ubicacion_csv.json")
         
         # Archivos temporales
-        print(f"\n🗂️ ARCHIVOS TEMPORALES:")
-        print(f"   📁 Carpeta: {self.base_path / 'OUTPUT' / 'temp'}")
-        print(f"   🧹 Se limpian automáticamente")
+        print(f"\n️ ARCHIVOS TEMPORALES:")
+        print(f"    Carpeta: {self.base_path / 'OUTPUT' / 'temp'}")
+        print(f"    Se limpian automáticamente")
         
         # Imágenes movidas
-        print(f"\n📁 IMÁGENES PROCESADAS:")
-        print(f"   📁 Carpeta: {self.imagenes_mujeres_path / 'usadas'}")
-        print(f"   🖼️ Imágenes usadas se mueven aquí para evitar reutilización")
+        print(f"\n IMÁGENES PROCESADAS:")
+        print(f"    Carpeta: {self.imagenes_mujeres_path / 'usadas'}")
+        print(f"   ️ Imágenes usadas se mueven aquí para evitar reutilización")
         
-        print(f"\n✅ RESUMEN:")
-        print(f"   🎯 Archivos importantes: Pasaportes PNG en {self.pasaportes_visuales_path}")
-        print(f"   📊 Datos procesados: JSON, Excel, CSV en [ruta_csv]/resultados_pasaportes/")
-        print(f"   🧹 Archivos temporales: Se limpian automáticamente")
-        print(f"   📁 Carpeta CSV original: Se crea subcarpeta 'resultados_pasaportes' para archivos de salida")
+        print(f"\n RESUMEN:")
+        print(f"    Archivos importantes: Pasaportes PNG en {self.pasaportes_visuales_path}")
+        print(f"    Datos procesados: JSON, Excel, CSV en [ruta_csv]/resultados_pasaportes/")
+        print(f"    Archivos temporales: Se limpian automáticamente")
+        print(f"    Carpeta CSV original: Se crea subcarpeta 'resultados_pasaportes' para archivos de salida")
 
     def verificar_preparacion_produccion(self):
         """Verifica que el sistema esté listo para producción"""
-        print("🔍 VERIFICANDO PREPARACIÓN PARA PRODUCCIÓN")
+        print(" VERIFICANDO PREPARACIÓN PARA PRODUCCIÓN")
         print("=" * 50)
         
         verificaciones = []
         
         # 1. Verificar configuración de límite de registros
         if LIMITE_REGISTROS is None:
-            verificaciones.append(("✅ Límite de registros", "Configurado para procesar todos los registros"))
+            verificaciones.append((" Límite de registros", "Configurado para procesar todos los registros"))
         else:
-            verificaciones.append(("⚠️ Límite de registros", f"Limitado a {LIMITE_REGISTROS} registros (modo prueba)"))
+            verificaciones.append(("️ Límite de registros", f"Limitado a {LIMITE_REGISTROS} registros (modo prueba)"))
         
         # 2. Verificar modo de producción
         if MODO_PRODUCCION:
-            verificaciones.append(("✅ Modo de producción", "Activado"))
+            verificaciones.append((" Modo de producción", "Activado"))
         else:
-            verificaciones.append(("⚠️ Modo de producción", "Desactivado (modo desarrollo)"))
+            verificaciones.append(("️ Modo de producción", "Desactivado (modo desarrollo)"))
         
         # 3. Verificar configuración de memoria
-        verificaciones.append(("✅ Configuración de memoria", f"Límite RAM: {MEMORIA_LIMITE_PORCENTAJE}%, VRAM: {VRAM_LIMITE_PORCENTAJE}%"))
+        verificaciones.append((" Configuración de memoria", f"Límite RAM: {MEMORIA_LIMITE_PORCENTAJE}%, VRAM: {VRAM_LIMITE_PORCENTAJE}%"))
         
         # 4. Verificar configuración de lotes
-        verificaciones.append(("✅ Configuración de lotes", f"Tamaño: {TAMANO_LOTE_PRODUCCION}, Workers: {MAX_WORKERS_PARALELO}"))
+        verificaciones.append((" Configuración de lotes", f"Tamaño: {TAMANO_LOTE_PRODUCCION}, Workers: {MAX_WORKERS_PARALELO}"))
         
         # 5. Verificar logging
         if LOGGING_DETALLADO:
-            verificaciones.append(("⚠️ Logging", "Detallado activado (puede afectar rendimiento)"))
+            verificaciones.append(("️ Logging", "Detallado activado (puede afectar rendimiento)"))
         else:
-            verificaciones.append(("✅ Logging", "Mínimo (optimizado para rendimiento)"))
+            verificaciones.append((" Logging", "Mínimo (optimizado para rendimiento)"))
         
         # 6. Verificar fuentes
         if self.validador_fuentes.verificar_fuentes():
-            verificaciones.append(("✅ Fuentes", "Todas las fuentes requeridas están disponibles"))
+            verificaciones.append((" Fuentes", "Todas las fuentes requeridas están disponibles"))
         else:
-            verificaciones.append(("❌ Fuentes", "Faltan fuentes requeridas"))
+            verificaciones.append((" Fuentes", "Faltan fuentes requeridas"))
         
         # 7. Verificar GPU
         if self.gpu_disponible:
-            verificaciones.append(("✅ GPU", f"Detectada: {self.gpu_name}"))
+            verificaciones.append((" GPU", f"Detectada: {self.gpu_name}"))
         else:
-            verificaciones.append(("⚠️ GPU", "No detectada, usando CPU"))
+            verificaciones.append(("️ GPU", "No detectada, usando CPU"))
         
         # Mostrar resultados
         for estado, descripcion in verificaciones:
             print(f"   {estado}: {descripcion}")
         
         # Determinar si está listo para producción
-        errores_criticos = sum(1 for estado, _ in verificaciones if estado.startswith("❌"))
-        advertencias = sum(1 for estado, _ in verificaciones if estado.startswith("⚠️"))
+        errores_criticos = sum(1 for estado, _ in verificaciones if estado.startswith(""))
+        advertencias = sum(1 for estado, _ in verificaciones if estado.startswith("️"))
         
-        print(f"\n📊 RESUMEN:")
-        print(f"   ✅ Verificaciones exitosas: {len(verificaciones) - errores_criticos - advertencias}")
-        print(f"   ⚠️ Advertencias: {advertencias}")
-        print(f"   ❌ Errores críticos: {errores_criticos}")
+        print(f"\n RESUMEN:")
+        print(f"    Verificaciones exitosas: {len(verificaciones) - errores_criticos - advertencias}")
+        print(f"   ️ Advertencias: {advertencias}")
+        print(f"    Errores críticos: {errores_criticos}")
         
         if errores_criticos == 0:
-            print(f"\n🎉 SISTEMA LISTO PARA PRODUCCIÓN")
+            print(f"\n SISTEMA LISTO PARA PRODUCCIÓN")
             if advertencias > 0:
-                print(f"⚠️ Se recomienda revisar las advertencias antes de proceder")
+                print(f"️ Se recomienda revisar las advertencias antes de proceder")
             return True
         else:
-            print(f"\n❌ SISTEMA NO LISTO PARA PRODUCCIÓN")
-            print(f"🔧 Corrija los errores críticos antes de continuar")
+            print(f"\n SISTEMA NO LISTO PARA PRODUCCIÓN")
+            print(f" Corrija los errores críticos antes de continuar")
             return False
     
     def crear_lista_campos_requeridos(self):
         """Crea una lista detallada de todos los campos requeridos para el pasaporte"""
-        print("\n📋 CAMPOS REQUERIDOS PARA EL PASAPORTE VENEZOLANO")
+        print("\n CAMPOS REQUERIDOS PARA EL PASAPORTE VENEZOLANO")
         print("=" * 60)
         
         campos_info = {
@@ -2635,7 +2635,7 @@ class GeneradorPasaportesMasivo:
         }
         
         for categoria, campos in campos_info.items():
-            print(f"\n📂 {categoria}:")
+            print(f"\n {categoria}:")
             for campo, descripcion in campos.items():
                 print(f"   • {campo}: {descripcion}")
         
@@ -2668,25 +2668,25 @@ def main():
         return
     
     # Mostrar configuración actual
-    print("⚙️ CONFIGURACIÓN ACTUAL:")
+    print("️ CONFIGURACIÓN ACTUAL:")
     print(f"   • Archivo CSV: {ARCHIVO_CSV if ARCHIVO_CSV else 'Selección automática'}")
     print(f"   • Límite registros: {LIMITE_REGISTROS if LIMITE_REGISTROS else 'Todos'}")
     print()
     
     # Mostrar mensaje de bienvenida mínimo
-    print("🎯 GENERADOR MASIVO DE PASAPORTES VENEZOLANOS")
+    print(" GENERADOR MASIVO DE PASAPORTES VENEZOLANOS")
     
     # Generar pasaportes masivos usando configuración global
     exito = generador.generar_pasaportes_masivos(LIMITE_REGISTROS, ARCHIVO_CSV)
     
     if exito:
-        print("\n🎉 ¡Generación masiva de pasaportes completada exitosamente!")
-        print("📋 Revisa los archivos generados:")
-        print("   📄 Datos procesados: OUTPUT/pasaportes_generados/")
-        print("   🖼️ Pasaportes visuales: OUTPUT/pasaportes_visuales/")
-        print("📁 Las imágenes usadas se movieron a Imagenes_Mujeres/usadas/")
+        print("\n ¡Generación masiva de pasaportes completada exitosamente!")
+        print(" Revisa los archivos generados:")
+        print("    Datos procesados: OUTPUT/pasaportes_generados/")
+        print("   ️ Pasaportes visuales: OUTPUT/pasaportes_visuales/")
+        print(" Las imágenes usadas se movieron a Imagenes_Mujeres/usadas/")
     else:
-        print("\n💥 Error en la generación masiva de pasaportes")
+        print("\n Error en la generación masiva de pasaportes")
         sys.exit(1)
 
 if __name__ == "__main__":

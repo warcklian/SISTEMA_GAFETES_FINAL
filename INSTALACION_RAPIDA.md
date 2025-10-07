@@ -1,6 +1,6 @@
-# 🚀 Instalación Rápida - Sistema de Pasaportes
+#  Instalación Rápida - Sistema de Pasaportes
 
-## ⚡ Instalación en 3 Pasos
+##  Instalación en 3 Pasos
 
 ### 1. Descargar el Proyecto
 ```bash
@@ -18,18 +18,18 @@ python3 instalar_completo.py
 python3 generador_pasaportes_masivo.py
 ```
 
-## 🎯 ¡Listo! El sistema está funcionando
+##  ¡Listo! El sistema está funcionando
 
 ---
 
-## 📋 Requisitos Mínimos
+##  Requisitos Mínimos
 
 - **Python 3.8+** (recomendado 3.9+)
 - **RAM**: 8GB mínimo, 16GB recomendado
 - **GPU**: Opcional pero recomendada (RTX 2060+)
 - **Sistema**: Linux (recomendado), Windows, macOS
 
-## 🔧 Instalación Manual (si la automática falla)
+##  Instalación Manual (si la automática falla)
 
 ### Linux/Ubuntu
 ```bash
@@ -64,7 +64,7 @@ brew install python3
 pip install -r requirements.txt
 ```
 
-## 🎮 Configuración GPU (Opcional)
+##  Configuración GPU (Opcional)
 
 ### NVIDIA (Recomendado)
 ```bash
@@ -84,7 +84,7 @@ if torch.cuda.is_available():
     print(f"GPU: {torch.cuda.get_device_name(0)}")
 ```
 
-## 📁 Estructura de Archivos
+##  Estructura de Archivos
 
 Después de la instalación, tu proyecto debe verse así:
 
@@ -103,7 +103,7 @@ SISTEMA_GAFETES_FINAL/
 └── TEMPLATE/                     # ← Fuentes y plantillas
 ```
 
-## 🎯 Uso Básico
+##  Uso Básico
 
 ### 1. Preparar Datos
 - Coloca tu archivo Excel en `DATA/`
@@ -118,7 +118,7 @@ python3 generador_pasaportes_masivo.py
 - Pasaportes PNG en `OUTPUT/pasaportes_visuales/`
 - Datos procesados en `OUTPUT/pasaportes_generados/`
 
-## 🐛 Solución de Problemas
+##  Solución de Problemas
 
 ### Error: "Python no encontrado"
 ```bash
@@ -153,7 +153,7 @@ sudo cp TEMPLATE/Fuentes_Base/*.otf /usr/share/fonts/opentype/
 sudo fc-cache -fv
 ```
 
-## 📞 Soporte
+##  Soporte
 
 Si tienes problemas:
 
@@ -178,7 +178,7 @@ rm -rf OUTPUT/logs/*
 python3 instalar_completo.py
 ```
 
-## 📚 Documentación Completa
+##  Documentación Completa
 
 Para más detalles, lee `README.md` que incluye:
 - Configuración avanzada
@@ -188,4 +188,4 @@ Para más detalles, lee `README.md` que incluye:
 
 ---
 
-**🎉 ¡El sistema está listo para usar!**
+** ¡El sistema está listo para usar!**

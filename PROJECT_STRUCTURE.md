@@ -1,13 +1,13 @@
-# 📁 ESTRUCTURA DEL PROYECTO - SISTEMA DE PASAPORTES
+#  ESTRUCTURA DEL PROYECTO - SISTEMA DE PASAPORTES
 
-## 🎯 **PROPÓSITO**
+##  **PROPÓSITO**
 Este documento describe la estructura completa del proyecto, la función de cada archivo y sus dependencias. Esencial para nuevos desarrolladores o instancias de chat que necesiten entender rápidamente el proyecto.
 
 ---
 
-## 📂 **ESTRUCTURA PRINCIPAL**
+##  **ESTRUCTURA PRINCIPAL**
 
-### **🏗️ ARCHIVOS PRINCIPALES DE PRODUCCIÓN**
+### **️ ARCHIVOS PRINCIPALES DE PRODUCCIÓN**
 
 #### **`generador_pasaportes_masivo.py`**
 - **Función**: Sistema principal de producción para generación masiva de pasaportes
@@ -52,7 +52,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 - El validador de fuentes prioriza `TEMPLATE/Fuentes_Base` y realiza búsqueda case-insensitive.
 ---
 
-### **🧪 ARCHIVOS DE PRUEBA Y DESARROLLO**
+### ** ARCHIVOS DE PRUEBA Y DESARROLLO**
 
 #### **`test_pasaportes_config.py`** (435 líneas)
 - **Función**: Sistema de pruebas para ajustes visuales
@@ -75,7 +75,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 
 ---
 
-### **📊 ARCHIVOS DE DATOS**
+### ** ARCHIVOS DE DATOS**
 
 #### **`DATA/`**
 - **`Datos_Crear.xlsx`**: Archivo fuente principal con datos de personas
@@ -93,7 +93,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 
 ---
 
-### **📋 ARCHIVOS DE CONFIGURACIÓN**
+### ** ARCHIVOS DE CONFIGURACIÓN**
 
 #### **`config_ejemplo_personalizado.json`**
 - **Función**: Plantilla de configuración personalizada
@@ -107,7 +107,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 
 ---
 
-### **🛠️ ARCHIVOS DE UTILIDADES**
+### **️ ARCHIVOS DE UTILIDADES**
 
 #### **`instalar.py`**
 - **Función**: Instalador automático del sistema
@@ -135,7 +135,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 
 ---
 
-### **📚 ARCHIVOS DE DOCUMENTACIÓN**
+### ** ARCHIVOS DE DOCUMENTACIÓN**
 
 #### **`README.md`**
 - **Función**: Documentación principal del proyecto
@@ -159,7 +159,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 
 ---
 
-### **📈 ARCHIVOS DE ANÁLISIS Y REPORTES**
+### ** ARCHIVOS DE ANÁLISIS Y REPORTES**
 
 #### **`analisis_fuentes_tamaños.md`**
 - **Función**: Análisis de fuentes y tamaños
@@ -179,7 +179,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 
 ---
 
-### **🗂️ ARCHIVOS DE SALIDA**
+### **️ ARCHIVOS DE SALIDA**
 
 #### **`OUTPUT/`**
 - **`pasaportes_generados/`**: Datos procesados (JSON/Excel)
@@ -190,7 +190,7 @@ Este documento describe la estructura completa del proyecto, la función de cada
 
 ---
 
-## 🔗 **DEPENDENCIAS PRINCIPALES**
+##  **DEPENDENCIAS PRINCIPALES**
 
 ### **Flujo de Producción**:
 ```
@@ -222,7 +222,7 @@ OUTPUT/plantillas_integradas/ (pruebas)
 
 ---
 
-## ⚠️ **ARCHIVOS CRÍTICOS**
+## ️ **ARCHIVOS CRÍTICOS**
 
 ### **NO ELIMINAR**:
 - `CONFIG/config.json` - Configuración central
@@ -237,7 +237,7 @@ OUTPUT/plantillas_integradas/ (pruebas)
 
 ---
 
-## 🎯 **CASOS DE USO COMUNES**
+##  **CASOS DE USO COMUNES**
 
 ### **Para Ajustes Visuales**:
 1. Usar `test_pasaportes_config.py`
@@ -256,7 +256,7 @@ OUTPUT/plantillas_integradas/ (pruebas)
 
 ---
 
-## 📝 **NOTAS IMPORTANTES**
+##  **NOTAS IMPORTANTES**
 
 - **Configuración centralizada**: Todo está en `CONFIG/config.json`
 - **Sin parámetros hardcodeados**: Todo configurable desde JSON

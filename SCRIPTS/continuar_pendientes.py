@@ -57,7 +57,7 @@ def main():
         raise SystemExit("No se encontró RESULT CSV. Genera primero un RESULT ejecutando el generador principal.")
 
     pend_csv = crear_csv_pendientes(result_csv)
-    print(f"📄 CSV de pendientes creado: {pend_csv}")
+    print(f" CSV de pendientes creado: {pend_csv}")
 
     if not args.solo_csv:
         ejecutar_generador(pend_csv, base)

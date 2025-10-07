@@ -18,8 +18,8 @@ sys.path.append('/media/warcklian/DATA_500GB/CODE/SISTEMA_PASAPORTES_FINAL/SCRIP
 try:
     from script_maestro_integrado import ScriptMaestroIntegrado
 except ImportError as e:
-    print(f"❌ Error importando script maestro: {e}")
-    print("⚠️ Asegúrate de que el script maestro esté en la ruta correcta")
+    print(f" Error importando script maestro: {e}")
+    print("️ Asegúrate de que el script maestro esté en la ruta correcta")
     sys.exit(1)
 
 class GeneradorPasaportesVisuales:
@@ -43,31 +43,31 @@ class GeneradorPasaportesVisuales:
             # Buscar el archivo más reciente
             archivos_json = list(self.datos_path.glob('pasaportes_procesados_*.json'))
             if not archivos_json:
-                print(f"❌ No se encontraron archivos de datos procesados en {self.datos_path}")
+                print(f" No se encontraron archivos de datos procesados en {self.datos_path}")
                 return None
             
             archivo_path = max(archivos_json, key=lambda x: x.stat().st_mtime)
         
-        print(f"📊 Cargando datos desde: {archivo_path}")
+        print(f" Cargando datos desde: {archivo_path}")
         
         try:
             with open(archivo_path, 'r', encoding='utf-8') as f:
                 datos = json.load(f)
-            print(f"✅ Datos cargados: {len(datos)} registros")
+            print(f" Datos cargados: {len(datos)} registros")
             return datos
         except Exception as e:
-            print(f"❌ Error cargando datos: {e}")
+            print(f" Error cargando datos: {e}")
             return None
     
     def generar_pasaporte_individual(self, datos_pasaporte, indice):
         """Genera un pasaporte individual usando el script maestro"""
-        print(f"\n🔄 Generando pasaporte {indice + 1}: {datos_pasaporte.get('nombre_completo', 'N/A')} {datos_pasaporte.get('apellido_completo', 'N/A')}")
+        print(f"\n Generando pasaporte {indice + 1}: {datos_pasaporte.get('nombre_completo', 'N/A')} {datos_pasaporte.get('apellido_completo', 'N/A')}")
         
         try:
             # Verificar que existe la imagen
             ruta_imagen = datos_pasaporte.get('ruta_foto')
             if not ruta_imagen or not Path(ruta_imagen).exists():
-                print(f"⚠️ Imagen no encontrada: {ruta_imagen}")
+                print(f"️ Imagen no encontrada: {ruta_imagen}")
                 return None
             
             # Generar gafete usando el script maestro
@@ -77,7 +77,7 @@ class GeneradorPasaportesVisuales:
             )
             
             if gafete is None:
-                print(f"❌ Error generando gafete para registro {indice + 1}")
+                print(f" Error generando gafete para registro {indice + 1}")
                 return None
             
             # Guardar pasaporte generado
@@ -86,18 +86,18 @@ class GeneradorPasaportesVisuales:
             
             gafete.save(ruta_salida, 'PNG', dpi=(300, 300))
             
-            print(f"✅ Pasaporte guardado: {nombre_archivo}")
-            print(f"📐 Dimensiones: {gafete.width}x{gafete.height}")
+            print(f" Pasaporte guardado: {nombre_archivo}")
+            print(f" Dimensiones: {gafete.width}x{gafete.height}")
             
             return ruta_salida
             
         except Exception as e:
-            print(f"❌ Error generando pasaporte {indice + 1}: {e}")
+            print(f" Error generando pasaporte {indice + 1}: {e}")
             return None
     
     def generar_pasaportes_visuales(self, archivo_datos=None, limite=None):
         """Genera pasaportes visuales masivos"""
-        print("🎨 INICIANDO GENERACIÓN DE PASAPORTES VISUALES")
+        print(" INICIANDO GENERACIÓN DE PASAPORTES VISUALES")
         print("=" * 60)
         
         # Cargar datos procesados
@@ -109,7 +109,7 @@ class GeneradorPasaportesVisuales:
         pasaportes_generados = []
         total_registros = len(datos) if limite is None else min(limite, len(datos))
         
-        print(f"🎨 Generando {total_registros} pasaportes visuales...")
+        print(f" Generando {total_registros} pasaportes visuales...")
         
         for idx, datos_pasaporte in enumerate(datos):
             if limite and idx >= limite:
@@ -129,9 +129,9 @@ class GeneradorPasaportesVisuales:
         # Guardar resumen
         self.guardar_resumen_generacion(pasaportes_generados)
         
-        print(f"\n🎉 ¡Generación de pasaportes visuales completada!")
-        print(f"📊 Total de pasaportes generados: {len(pasaportes_generados)}")
-        print(f"📁 Pasaportes guardados en: {self.output_path}")
+        print(f"\n ¡Generación de pasaportes visuales completada!")
+        print(f" Total de pasaportes generados: {len(pasaportes_generados)}")
+        print(f" Pasaportes guardados en: {self.output_path}")
         
         return True
     
@@ -149,13 +149,13 @@ class GeneradorPasaportesVisuales:
         df_resumen = pd.DataFrame(pasaportes_generados)
         df_resumen.to_excel(excel_path, index=False)
         
-        print(f"📋 Resumen guardado:")
-        print(f"   📄 JSON: {resumen_path}")
-        print(f"   📊 Excel: {excel_path}")
+        print(f" Resumen guardado:")
+        print(f"    JSON: {resumen_path}")
+        print(f"    Excel: {excel_path}")
     
     def crear_pasaporte_ejemplo(self):
         """Crea un pasaporte de ejemplo para verificar que todo funciona"""
-        print("🔍 CREANDO PASAPORTE DE EJEMPLO")
+        print(" CREANDO PASAPORTE DE EJEMPLO")
         print("=" * 40)
         
         # Datos de ejemplo
@@ -179,17 +179,17 @@ class GeneradorPasaportesVisuales:
         
         # Verificar que existe la imagen de ejemplo
         if not Path(datos_ejemplo['ruta_foto']).exists():
-            print(f"⚠️ Imagen de ejemplo no encontrada: {datos_ejemplo['ruta_foto']}")
+            print(f"️ Imagen de ejemplo no encontrada: {datos_ejemplo['ruta_foto']}")
             return False
         
         # Generar pasaporte de ejemplo
         ruta_pasaporte = self.generar_pasaporte_individual(datos_ejemplo, 0)
         
         if ruta_pasaporte:
-            print(f"✅ Pasaporte de ejemplo creado: {ruta_pasaporte}")
+            print(f" Pasaporte de ejemplo creado: {ruta_pasaporte}")
             return True
         else:
-            print("❌ Error creando pasaporte de ejemplo")
+            print(" Error creando pasaporte de ejemplo")
             return False
 
 def main():
@@ -213,10 +213,10 @@ def main():
         exito = generador.generar_pasaportes_visuales(args.archivo_datos, args.limite)
     
     if exito:
-        print("\n🎉 ¡Generación de pasaportes visuales completada exitosamente!")
-        print("📋 Revisa los archivos generados en OUTPUT/pasaportes_visuales/")
+        print("\n ¡Generación de pasaportes visuales completada exitosamente!")
+        print(" Revisa los archivos generados en OUTPUT/pasaportes_visuales/")
     else:
-        print("\n💥 Error en la generación de pasaportes visuales")
+        print("\n Error en la generación de pasaportes visuales")
         sys.exit(1)
 
 if __name__ == "__main__":

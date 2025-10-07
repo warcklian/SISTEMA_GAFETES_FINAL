@@ -13,7 +13,7 @@ sys.path.append(str(Path(__file__).parent / "SCRIPTS"))
 
 def ejemplo_basico():
     """Ejemplo básico de uso del sistema"""
-    print("🚀 EJEMPLO DE USO DEL SISTEMA DE PASAPORTES")
+    print(" EJEMPLO DE USO DEL SISTEMA DE PASAPORTES")
     print("=" * 60)
     
     try:
@@ -27,8 +27,8 @@ def ejemplo_basico():
         # Verificar que hay imágenes disponibles
         imagenes_dir = Path("DATA/Imagenes_OK")
         if not imagenes_dir.exists():
-            print("❌ Error: Directorio DATA/Imagenes_OK no encontrado")
-            print("📋 Solución: Crear el directorio y colocar imágenes originales")
+            print(" Error: Directorio DATA/Imagenes_OK no encontrado")
+            print(" Solución: Crear el directorio y colocar imágenes originales")
             return False
         
         # Buscar imágenes
@@ -39,35 +39,35 @@ def ejemplo_basico():
                     imagenes.append(img_file)
         
         if not imagenes:
-            print("❌ Error: No se encontraron imágenes en DATA/Imagenes_OK/")
-            print("📋 Solución: Colocar imágenes originales en el directorio")
+            print(" Error: No se encontraron imágenes en DATA/Imagenes_OK/")
+            print(" Solución: Colocar imágenes originales en el directorio")
             return False
         
-        print(f"✅ Encontradas {len(imagenes)} imágenes")
+        print(f" Encontradas {len(imagenes)} imágenes")
         
         # Ejecutar el sistema
         print("2️⃣ Ejecutando sistema de generación de pasaportes...")
         exito = maestro.crear_plantillas_integradas()
         
         if exito:
-            print("✅ ¡Sistema ejecutado exitosamente!")
-            print("📁 Revisar resultados en OUTPUT/plantillas_integradas/")
+            print(" ¡Sistema ejecutado exitosamente!")
+            print(" Revisar resultados en OUTPUT/plantillas_integradas/")
             return True
         else:
-            print("❌ Error ejecutando el sistema")
+            print(" Error ejecutando el sistema")
             return False
             
     except ImportError as e:
-        print(f"❌ Error importando módulos: {e}")
-        print("📋 Solución: Ejecutar 'python3 instalar.py' primero")
+        print(f" Error importando módulos: {e}")
+        print(" Solución: Ejecutar 'python3 instalar.py' primero")
         return False
     except Exception as e:
-        print(f"❌ Error inesperado: {e}")
+        print(f" Error inesperado: {e}")
         return False
 
 def ejemplo_con_imagen_especifica():
     """Ejemplo usando una imagen específica"""
-    print("\n🎯 EJEMPLO CON IMAGEN ESPECÍFICA")
+    print("\n EJEMPLO CON IMAGEN ESPECÍFICA")
     print("=" * 40)
     
     try:
@@ -89,10 +89,10 @@ def ejemplo_con_imagen_especifica():
                 break
         
         if not imagen_ejemplo:
-            print("❌ No se encontró imagen de ejemplo")
+            print(" No se encontró imagen de ejemplo")
             return False
         
-        print(f"📸 Usando imagen: {imagen_ejemplo.name}")
+        print(f" Usando imagen: {imagen_ejemplo.name}")
         
         # Generar pasaporte específico
         gafete = maestro.generar_gafete_integrado(str(imagen_ejemplo), "123456789")
@@ -105,19 +105,19 @@ def ejemplo_con_imagen_especifica():
             output_path = output_dir / "ejemplo_pasaporte_especifico.png"
             gafete.save(output_path, 'PNG', dpi=(300, 300))
             
-            print(f"✅ Pasaporte generado: {output_path}")
+            print(f" Pasaporte generado: {output_path}")
             return True
         else:
-            print("❌ Error generando pasaporte")
+            print(" Error generando pasaporte")
             return False
             
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")
         return False
 
 def verificar_estructura():
     """Verifica que la estructura del sistema esté completa"""
-    print("🔍 VERIFICANDO ESTRUCTURA DEL SISTEMA")
+    print(" VERIFICANDO ESTRUCTURA DEL SISTEMA")
     print("=" * 45)
     
     archivos_requeridos = [
@@ -134,21 +134,21 @@ def verificar_estructura():
     
     for archivo in archivos_requeridos:
         if Path(archivo).exists():
-            print(f"✅ {archivo}")
+            print(f" {archivo}")
         else:
-            print(f"❌ {archivo} - FALTANTE")
+            print(f" {archivo} - FALTANTE")
             todos_ok = False
     
     if todos_ok:
-        print("✅ Estructura completa")
+        print(" Estructura completa")
     else:
-        print("❌ Estructura incompleta")
+        print(" Estructura incompleta")
     
     return todos_ok
 
 def main():
     """Función principal"""
-    print("📚 EJEMPLOS DE USO DEL SISTEMA DE PASAPORTES")
+    print(" EJEMPLOS DE USO DEL SISTEMA DE PASAPORTES")
     print("=" * 60)
     
     # Cambiar al directorio del script
@@ -157,21 +157,21 @@ def main():
     
     # 1. Verificar estructura
     if not verificar_estructura():
-        print("\n❌ Sistema incompleto. Ejecutar 'python3 instalar.py' primero")
+        print("\n Sistema incompleto. Ejecutar 'python3 instalar.py' primero")
         return False
     
     # 2. Ejemplo básico
     if not ejemplo_basico():
-        print("\n❌ Error en ejemplo básico")
+        print("\n Error en ejemplo básico")
         return False
     
     # 3. Ejemplo con imagen específica
     if not ejemplo_con_imagen_especifica():
-        print("\n❌ Error en ejemplo específico")
+        print("\n Error en ejemplo específico")
         return False
     
-    print("\n🎉 ¡TODOS LOS EJEMPLOS EJECUTADOS EXITOSAMENTE!")
-    print("📁 Revisar resultados en OUTPUT/plantillas_integradas/")
+    print("\n ¡TODOS LOS EJEMPLOS EJECUTADOS EXITOSAMENTE!")
+    print(" Revisar resultados en OUTPUT/plantillas_integradas/")
     
     return True
 
@@ -180,8 +180,8 @@ if __name__ == "__main__":
         exito = main()
         sys.exit(0 if exito else 1)
     except KeyboardInterrupt:
-        print("\n⚠️  Ejecución cancelada por el usuario")
+        print("\n️  Ejecución cancelada por el usuario")
         sys.exit(1)
     except Exception as e:
-        print(f"\n❌ Error inesperado: {e}")
+        print(f"\n Error inesperado: {e}")
         sys.exit(1)

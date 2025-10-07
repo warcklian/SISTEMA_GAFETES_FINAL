@@ -1,6 +1,6 @@
-# 🚨 GUÍA DE REPARACIÓN RÁPIDA
+#  GUÍA DE REPARACIÓN RÁPIDA
 
-## 🔧 Comandos de Emergencia
+##  Comandos de Emergencia
 
 ### **1. Verificar Estado del Sistema**
 ```bash
@@ -34,7 +34,7 @@ nvidia-smi
 python3 -c "import torch; print(f'CUDA: {torch.cuda.is_available()}, GPUs: {torch.cuda.device_count()}')"
 ```
 
-## 🚨 Problemas Comunes y Soluciones
+##  Problemas Comunes y Soluciones
 
 ### **Error: "CUDA no disponible"**
 ```bash
@@ -135,7 +135,7 @@ rm -rf OUTPUT/temp/*
 rm -rf /tmp/*
 ```
 
-## 🔍 Diagnóstico Avanzado
+##  Diagnóstico Avanzado
 
 ### **Script de Diagnóstico Completo**
 ```bash
@@ -144,7 +144,7 @@ cat > diagnostico.py << 'EOF'
 #!/usr/bin/env python3
 import sys, os, torch, psutil
 
-print("🔍 DIAGNÓSTICO DEL SISTEMA")
+print(" DIAGNÓSTICO DEL SISTEMA")
 print("=" * 50)
 
 # Python
@@ -152,12 +152,12 @@ print(f"Python: {sys.version}")
 
 # GPU
 if torch.cuda.is_available():
-    print(f"CUDA: ✅ {torch.cuda.device_count()} GPU(s)")
+    print(f"CUDA:  {torch.cuda.device_count()} GPU(s)")
     for i in range(torch.cuda.device_count()):
         print(f"  GPU {i}: {torch.cuda.get_device_name(i)}")
         print(f"  VRAM: {torch.cuda.get_device_properties(i).total_memory / (1024**3):.1f} GB")
 else:
-    print("CUDA: ❌ No disponible")
+    print("CUDA:  No disponible")
 
 # Memoria
 mem = psutil.virtual_memory()
@@ -170,28 +170,28 @@ print(f"MEDIAPIPE_GPU: {os.environ.get('MEDIAPIPE_GPU', 'No definido')}")
 # Dependencias
 try:
     import mediapipe
-    print("MediaPipe: ✅")
+    print("MediaPipe: ")
 except ImportError:
-    print("MediaPipe: ❌")
+    print("MediaPipe: ")
 
 try:
     import rembg
-    print("rembg: ✅")
+    print("rembg: ")
 except ImportError:
-    print("rembg: ❌")
+    print("rembg: ")
 
 try:
     import onnxruntime
-    print("onnxruntime: ✅")
+    print("onnxruntime: ")
 except ImportError:
-    print("onnxruntime: ❌")
+    print("onnxruntime: ")
 EOF
 
 python3 diagnostico.py
 rm diagnostico.py
 ```
 
-## 🚀 Comandos de Recuperación
+##  Comandos de Recuperación
 
 ### **Reinstalar Dependencias**
 ```bash
@@ -219,7 +219,7 @@ python3 generador_pasaportes_masivo.py
 python3 -c "from generador_pasaportes_masivo import GeneradorPasaportesMasivo; g = GeneradorPasaportesMasivo(); print('Sistema OK')"
 ```
 
-## 📞 Soporte de Emergencia
+##  Soporte de Emergencia
 
 ### **Si nada funciona:**
 1. **Ejecutar diagnóstico completo** (script arriba)
@@ -241,5 +241,5 @@ python3 -c "from generador_pasaportes_masivo import GeneradorPasaportesMasivo; g
 
 ---
 
-**📋 Esta guía cubre los problemas más comunes y sus soluciones rápidas.**
+** Esta guía cubre los problemas más comunes y sus soluciones rápidas.**
 **Para problemas específicos, consultar la documentación completa en `README.md`.**

@@ -57,7 +57,7 @@ class ProcesadorXLSX:
             self.data_path.mkdir(parents=True, exist_ok=True)
             self.logs_path.mkdir(parents=True, exist_ok=True)
         except Exception as e:
-            print(f"❌ Error creando directorios: {e}")
+            print(f" Error creando directorios: {e}")
             raise
     
     def seleccionar_archivo_excel(self):
@@ -176,7 +176,7 @@ class ProcesadorXLSX:
                 columnas_faltantes.append(col)
         
         if columnas_faltantes:
-            print(f"❌ ERROR: Faltan columnas requeridas:")
+            print(f" ERROR: Faltan columnas requeridas:")
             for col in columnas_faltantes:
                 print(f"   • {col}")
             return False
@@ -198,7 +198,7 @@ class ProcesadorXLSX:
             
             return df
         except Exception as e:
-            print(f"⚠️ Error limpiando datos: {e}")
+            print(f"️ Error limpiando datos: {e}")
             return df
     
     def procesar_xlsx_a_csv_dividido(self, archivo_xlsx=None, registros_por_archivo=None):
@@ -207,45 +207,45 @@ class ProcesadorXLSX:
         if registros_por_archivo is None:
             registros_por_archivo = REGISTROS_POR_ARCHIVO
             
-        print("🔄 PROCESADOR DE ARCHIVOS EXCEL A CSV DIVIDIDO")
+        print(" PROCESADOR DE ARCHIVOS EXCEL A CSV DIVIDIDO")
         print("=" * 60)
-        print(f"📊 Dividiendo en archivos de {registros_por_archivo} registros cada uno")
+        print(f" Dividiendo en archivos de {registros_por_archivo} registros cada uno")
         
         # Seleccionar archivo Excel si no se proporciona
         if archivo_xlsx is None:
             archivo_xlsx = self.seleccionar_archivo_excel()
             if not archivo_xlsx:
-                print("❌ No se seleccionó archivo Excel")
+                print(" No se seleccionó archivo Excel")
                 return None
         
         archivo_path = Path(archivo_xlsx)
         if not archivo_path.exists():
-            print(f"❌ Archivo no encontrado: {archivo_path}")
+            print(f" Archivo no encontrado: {archivo_path}")
             return None
         
         try:
-            print(f"📊 Cargando archivo Excel: {archivo_path.name}")
+            print(f" Cargando archivo Excel: {archivo_path.name}")
             
             # Cargar Excel con dtype=str para evitar cambios de formato
             df = pd.read_excel(archivo_path, dtype=str, keep_default_na=False)
-            print(f"✅ Datos cargados: {len(df)} registros")
+            print(f" Datos cargados: {len(df)} registros")
             
             # Validar columnas requeridas
             if not self._validar_columnas_requeridas(df):
-                print("\n💡 SOLUCIÓN:")
+                print("\n SOLUCIÓN:")
                 print("   1. Verificar que el archivo Excel tenga las columnas requeridas")
                 print("   2. Usar nombres de columnas exactos: GENERO, PRIMER_NOMBRE, etc.")
                 return None
             
             # Limpiar datos
-            print("🧹 Limpiando y normalizando datos...")
+            print(" Limpiando y normalizando datos...")
             df = self._limpiar_datos(df)
             
             # Calcular número de archivos necesarios
             total_registros = len(df)
             num_archivos = (total_registros + registros_por_archivo - 1) // registros_por_archivo
             
-            print(f"📊 División calculada:")
+            print(f" División calculada:")
             print(f"   • Total registros: {total_registros}")
             print(f"   • Registros por archivo: {registros_por_archivo}")
             print(f"   • Número de archivos: {num_archivos}")
@@ -268,16 +268,16 @@ class ProcesadorXLSX:
                 csv_path = archivo_path.parent / csv_filename
                 
                 # Guardar CSV del lote
-                print(f"💾 Guardando lote {i+1}/{num_archivos}: {csv_filename}")
+                print(f" Guardando lote {i+1}/{num_archivos}: {csv_filename}")
                 df_lote.to_csv(csv_path, index=False, encoding='utf-8')
                 
                 # Verificar archivo generado
                 if csv_path.exists():
                     file_size = csv_path.stat().st_size / 1024  # KB
-                    print(f"   ✅ Lote {i+1}: {len(df_lote)} registros, {file_size:.1f} KB")
+                    print(f"    Lote {i+1}: {len(df_lote)} registros, {file_size:.1f} KB")
                     archivos_generados.append(str(csv_path))
                 else:
-                    print(f"   ❌ Error creando lote {i+1}")
+                    print(f"    Error creando lote {i+1}")
                 
                 # Liberar memoria del lote
                 del df_lote
@@ -288,13 +288,13 @@ class ProcesadorXLSX:
             gc.collect()
             
             # Resumen final
-            print(f"\n🎉 DIVISIÓN COMPLETADA:")
-            print(f"   📄 Archivos generados: {len(archivos_generados)}")
-            print(f"   📊 Total registros procesados: {total_registros}")
-            print(f"   📍 Ubicación: {archivo_path.parent}")
+            print(f"\n DIVISIÓN COMPLETADA:")
+            print(f"    Archivos generados: {len(archivos_generados)}")
+            print(f"    Total registros procesados: {total_registros}")
+            print(f"    Ubicación: {archivo_path.parent}")
             
             # Mostrar lista de archivos generados
-            print(f"\n📋 ARCHIVOS GENERADOS:")
+            print(f"\n ARCHIVOS GENERADOS:")
             for i, archivo in enumerate(archivos_generados, 1):
                 archivo_path_obj = Path(archivo)
                 file_size = archivo_path_obj.stat().st_size / 1024  # KB
@@ -303,42 +303,42 @@ class ProcesadorXLSX:
             return archivos_generados
                 
         except Exception as e:
-            print(f"❌ Error procesando archivo Excel: {e}")
+            print(f" Error procesando archivo Excel: {e}")
             return None
     
     def procesar_xlsx_a_csv(self, archivo_xlsx=None):
         """Procesa archivo Excel y lo convierte a CSV optimizado (método original)"""
-        print("🔄 PROCESADOR DE ARCHIVOS EXCEL A CSV")
+        print(" PROCESADOR DE ARCHIVOS EXCEL A CSV")
         print("=" * 50)
         
         # Seleccionar archivo Excel si no se proporciona
         if archivo_xlsx is None:
             archivo_xlsx = self.seleccionar_archivo_excel()
             if not archivo_xlsx:
-                print("❌ No se seleccionó archivo Excel")
+                print(" No se seleccionó archivo Excel")
                 return None
         
         archivo_path = Path(archivo_xlsx)
         if not archivo_path.exists():
-            print(f"❌ Archivo no encontrado: {archivo_path}")
+            print(f" Archivo no encontrado: {archivo_path}")
             return None
         
         try:
-            print(f"📊 Cargando archivo Excel: {archivo_path.name}")
+            print(f" Cargando archivo Excel: {archivo_path.name}")
             
             # Cargar Excel con dtype=str para evitar cambios de formato
             df = pd.read_excel(archivo_path, dtype=str, keep_default_na=False)
-            print(f"✅ Datos cargados: {len(df)} registros")
+            print(f" Datos cargados: {len(df)} registros")
             
             # Validar columnas requeridas
             if not self._validar_columnas_requeridas(df):
-                print("\n💡 SOLUCIÓN:")
+                print("\n SOLUCIÓN:")
                 print("   1. Verificar que el archivo Excel tenga las columnas requeridas")
                 print("   2. Usar nombres de columnas exactos: GENERO, PRIMER_NOMBRE, etc.")
                 return None
             
             # Limpiar datos
-            print("🧹 Limpiando y normalizando datos...")
+            print(" Limpiando y normalizando datos...")
             df = self._limpiar_datos(df)
             
             # Generar nombre de archivo CSV con timestamp en la misma carpeta del XLSX
@@ -347,17 +347,17 @@ class ProcesadorXLSX:
             csv_path = archivo_path.parent / csv_filename
             
             # Guardar CSV optimizado
-            print(f"💾 Guardando CSV optimizado: {csv_filename}")
+            print(f" Guardando CSV optimizado: {csv_filename}")
             df.to_csv(csv_path, index=False, encoding='utf-8')
             
             # Verificar archivo generado
             if csv_path.exists():
                 file_size = csv_path.stat().st_size / 1024  # KB
-                print(f"✅ CSV generado exitosamente:")
-                print(f"   📄 Archivo: {csv_filename}")
-                print(f"   📊 Registros: {len(df)}")
-                print(f"   💾 Tamaño: {file_size:.1f} KB")
-                print(f"   📍 Ubicación: {csv_path}")
+                print(f" CSV generado exitosamente:")
+                print(f"    Archivo: {csv_filename}")
+                print(f"    Registros: {len(df)}")
+                print(f"    Tamaño: {file_size:.1f} KB")
+                print(f"    Ubicación: {csv_path}")
                 
                 # Liberar memoria
                 del df
@@ -365,18 +365,18 @@ class ProcesadorXLSX:
                 
                 return str(csv_path)
             else:
-                print("❌ Error: No se pudo crear el archivo CSV")
+                print(" Error: No se pudo crear el archivo CSV")
                 return None
                 
         except Exception as e:
-            print(f"❌ Error procesando archivo Excel: {e}")
+            print(f" Error procesando archivo Excel: {e}")
             return None
     
     def mostrar_ayuda(self):
         """Muestra información de ayuda sobre el procesador"""
-        print("\n🔄 PROCESADOR DE ARCHIVOS EXCEL A CSV")
+        print("\n PROCESADOR DE ARCHIVOS EXCEL A CSV")
         print("=" * 50)
-        print("📋 COLUMNAS REQUERIDAS:")
+        print(" COLUMNAS REQUERIDAS:")
         print("   • GENERO: Género (F/M)")
         print("   • PRIMER_NOMBRE: Primer nombre")
         print("   • SEGUNDO_NOMBRE: Segundo nombre (opcional)")
@@ -384,14 +384,14 @@ class ProcesadorXLSX:
         print("   • SEGUNDO_APELLIDO: Segundo apellido (opcional)")
         print("   • FECHA_NACIMIENTO: Fecha de nacimiento (YYYY-MM-DD)")
         print("   • CORREO: Correo electrónico")
-        print("\n💡 USO:")
+        print("\n USO:")
         print("   python3 procesador_xlsx.py                    # Seleccionar archivo")
         print("   python3 procesador_xlsx.py --archivo ruta.xlsx # Archivo específico")
-        print("\n⚙️ CONFIGURACIÓN:")
+        print("\n️ CONFIGURACIÓN:")
         print("   • Modificar variables globales en el código:")
         print("     - REGISTROS_POR_ARCHIVO = 50  # Número de registros por archivo")
         print("     - MODO_DIVISION = True        # Activar/desactivar división")
-        print("\n✅ RESULTADO:")
+        print("\n RESULTADO:")
         print("   • Modo división: Genera múltiples CSV con terminación 001, 002, 003...")
         print("   • CSV listo para usar con generador_pasaportes_masivo.py")
 
@@ -413,7 +413,7 @@ def main():
     procesador = ProcesadorXLSX(args.base_path)
     
     # Mostrar configuración actual
-    print(f"⚙️ CONFIGURACIÓN ACTUAL:")
+    print(f"️ CONFIGURACIÓN ACTUAL:")
     print(f"   • Registros por archivo: {REGISTROS_POR_ARCHIVO}")
     print(f"   • Modo división: {'Activado' if MODO_DIVISION else 'Desactivado'}")
     print()
@@ -424,25 +424,25 @@ def main():
         archivos_generados = procesador.procesar_xlsx_a_csv_dividido(args.archivo)
         
         if archivos_generados:
-            print(f"\n🎉 ¡DIVISIÓN COMPLETADA!")
-            print(f"📄 Archivos generados: {len(archivos_generados)}")
-            print(f"🚀 Ahora puedes procesar cada archivo por separado:")
+            print(f"\n ¡DIVISIÓN COMPLETADA!")
+            print(f" Archivos generados: {len(archivos_generados)}")
+            print(f" Ahora puedes procesar cada archivo por separado:")
             for i, archivo in enumerate(archivos_generados, 1):
                 print(f"   python3 generador_pasaportes_masivo.py --archivo-csv {archivo}")
         else:
-            print("\n💥 Error en la división del archivo Excel")
+            print("\n Error en la división del archivo Excel")
             sys.exit(1)
     else:
         # Modo normal (un solo archivo)
         csv_path = procesador.procesar_xlsx_a_csv(args.archivo)
         
         if csv_path:
-            print(f"\n🎉 ¡PROCESAMIENTO COMPLETADO!")
-            print(f"📄 CSV generado: {Path(csv_path).name}")
-            print(f"🚀 Ahora puedes ejecutar:")
+            print(f"\n ¡PROCESAMIENTO COMPLETADO!")
+            print(f" CSV generado: {Path(csv_path).name}")
+            print(f" Ahora puedes ejecutar:")
             print(f"   python3 generador_pasaportes_masivo.py --archivo-csv {csv_path}")
         else:
-            print("\n💥 Error en el procesamiento del archivo Excel")
+            print("\n Error en el procesamiento del archivo Excel")
             sys.exit(1)
 
 if __name__ == "__main__":
