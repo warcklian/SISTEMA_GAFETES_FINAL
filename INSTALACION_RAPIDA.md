@@ -1,122 +1,191 @@
-# 🚀 Instalación Rápida del Sistema de Pasaportes
+# 🚀 Instalación Rápida - Sistema de Pasaportes
 
 ## ⚡ Instalación en 3 Pasos
 
-### 1️⃣ Instalar Dependencias
+### 1. Descargar el Proyecto
 ```bash
-python3 instalar.py
+git clone https://github.com/tu-usuario/SISTEMA_GAFETES_FINAL.git
+cd SISTEMA_GAFETES_FINAL
 ```
 
-### 2️⃣ Colocar Imágenes
-Colocar imágenes originales en:
-```
-DATA/Imagenes_OK/
-```
-
-### 3️⃣ Ejecutar Sistema
+### 2. Instalación Automática
 ```bash
-python3 SCRIPTS/script_maestro_integrado.py
+python3 instalar_completo.py
 ```
 
-## 📁 Resultados
-Los pasaportes se generan en:
+### 3. Usar el Sistema
+```bash
+python3 generador_pasaportes_masivo.py
 ```
-OUTPUT/plantillas_integradas/
-```
+
+## 🎯 ¡Listo! El sistema está funcionando
 
 ---
 
-## 🔧 Instalación Manual (Si la automática falla)
+## 📋 Requisitos Mínimos
 
-### 1. Instalar Python 3.8+
-- **Windows:** Descargar de python.org
-- **Linux:** `sudo apt install python3 python3-pip`
-- **macOS:** `brew install python3`
+- **Python 3.8+** (recomendado 3.9+)
+- **RAM**: 8GB mínimo, 16GB recomendado
+- **GPU**: Opcional pero recomendada (RTX 2060+)
+- **Sistema**: Linux (recomendado), Windows, macOS
 
-### 2. Instalar Dependencias
+## 🔧 Instalación Manual (si la automática falla)
+
+### Linux/Ubuntu
 ```bash
+# Dependencias del sistema
+sudo apt update
+sudo apt install python3-pip python3-venv python3-dev build-essential
+
+# Dependencias de Python
 pip install -r requirements.txt
-```
 
-### 3. Instalar Fuentes
-**Windows:**
-- Copiar archivos de `TEMPLATE/Fuentes Extras/` a `C:\Windows\Fonts\`
-
-**Linux:**
-```bash
-sudo cp TEMPLATE/Fuentes\ Extras/*.ttf /usr/share/fonts/truetype/
-sudo cp TEMPLATE/Fuentes\ Extras/*.otf /usr/share/fonts/opentype/
+# Fuentes (opcional)
+sudo cp TEMPLATE/Fuentes_Base/*.ttf /usr/share/fonts/truetype/
+sudo cp TEMPLATE/Fuentes_Base/*.otf /usr/share/fonts/opentype/
 sudo fc-cache -fv
 ```
 
-**macOS:**
-- Doble clic en cada archivo de fuente y hacer clic en "Instalar"
-
-### 4. Verificar Instalación
-```bash
-python3 probar_sistema.py
+### Windows
+1. Instalar Python 3.8+ desde python.org
+2. Abrir PowerShell como administrador
+3. Ejecutar:
+```powershell
+pip install -r requirements.txt
 ```
 
----
-
-## 🎯 Uso Rápido
-
-### Generar Pasaportes
+### macOS
 ```bash
-# Usar todas las imágenes en DATA/Imagenes_OK/
-python3 SCRIPTS/script_maestro_integrado.py
+# Instalar Homebrew si no lo tienes
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Usar imagen específica
-python3 SCRIPTS/script_maestro_integrado.py --foto ruta/imagen.png
-
-# Usar número específico
-python3 SCRIPTS/script_maestro_integrado.py --numero 123456789
+# Dependencias
+brew install python3
+pip install -r requirements.txt
 ```
 
-### Ver Ejemplos
+## 🎮 Configuración GPU (Opcional)
+
+### NVIDIA (Recomendado)
 ```bash
-python3 ejemplo_uso.py
+# Verificar GPU
+nvidia-smi
+
+# Si no aparece, instalar drivers
+sudo apt install nvidia-driver-525
+sudo reboot
 ```
 
----
+### Verificar GPU en Python
+```python
+import torch
+print(f"CUDA disponible: {torch.cuda.is_available()}")
+if torch.cuda.is_available():
+    print(f"GPU: {torch.cuda.get_device_name(0)}")
+```
+
+## 📁 Estructura de Archivos
+
+Después de la instalación, tu proyecto debe verse así:
+
+```
+SISTEMA_GAFETES_FINAL/
+├── instalar_completo.py          # ← Script de instalación
+├── generador_pasaportes_masivo.py # ← Generador principal
+├── procesador_xlsx.py            # ← Procesador Excel
+├── requirements.txt              # ← Dependencias
+├── README.md                     # ← Documentación completa
+├── DATA/                         # ← Coloca aquí tus archivos
+│   ├── tu_archivo.xlsx          # ← Tu base de datos
+│   ├── Imagenes_Mujeres/         # ← Imágenes para mujeres
+│   └── Imagenes_Hombres/         # ← Imágenes para hombres
+├── OUTPUT/                       # ← Resultados generados
+└── TEMPLATE/                     # ← Fuentes y plantillas
+```
+
+## 🎯 Uso Básico
+
+### 1. Preparar Datos
+- Coloca tu archivo Excel en `DATA/`
+- Coloca imágenes en `DATA/Imagenes_Mujeres/` y `DATA/Imagenes_Hombres/`
+
+### 2. Ejecutar
+```bash
+python3 generador_pasaportes_masivo.py
+```
+
+### 3. Resultados
+- Pasaportes PNG en `OUTPUT/pasaportes_visuales/`
+- Datos procesados en `OUTPUT/pasaportes_generados/`
 
 ## 🐛 Solución de Problemas
 
-### Error: "No se encontró la fuente"
-- Instalar fuentes manualmente
-- Verificar que estén en el sistema
-
-### Error: "No se encontraron imágenes"
-- Colocar imágenes en `DATA/Imagenes_OK/`
-- Verificar formatos (PNG, JPG, JPEG)
-
-### Error de dependencias
+### Error: "Python no encontrado"
 ```bash
+# Verificar Python
+python3 --version
+
+# Si no está instalado (Ubuntu)
+sudo apt install python3 python3-pip
+```
+
+### Error: "Módulo no encontrado"
+```bash
+# Reinstalar dependencias
 pip install --upgrade -r requirements.txt
 ```
 
-### Error de MediaPipe
+### Error: "GPU no detectada"
 ```bash
-pip install --upgrade mediapipe
+# Verificar drivers NVIDIA
+nvidia-smi
+
+# Si no aparece, instalar drivers
+sudo apt install nvidia-driver-525
+sudo reboot
 ```
 
----
-
-## 📋 Checklist de Instalación
-
-- [ ] Python 3.8+ instalado
-- [ ] Dependencias instaladas (`pip install -r requirements.txt`)
-- [ ] Fuentes instaladas en el sistema
-- [ ] Estructura de directorios creada
-- [ ] Imágenes colocadas en `DATA/Imagenes_OK/`
-- [ ] Sistema probado (`python3 probar_sistema.py`)
-
----
+### Error: "Fuentes no encontradas"
+```bash
+# Instalar fuentes manualmente
+sudo cp TEMPLATE/Fuentes_Base/*.ttf /usr/share/fonts/truetype/
+sudo cp TEMPLATE/Fuentes_Base/*.otf /usr/share/fonts/opentype/
+sudo fc-cache -fv
+```
 
 ## 📞 Soporte
 
 Si tienes problemas:
-1. Ejecutar `python3 probar_sistema.py`
-2. Revisar mensajes de error
-3. Verificar que todos los archivos estén presentes
-4. Consultar `README.md` para información detallada
+
+1. **Ejecuta el diagnóstico:**
+```bash
+python3 -c "
+import sys, torch, cv2
+print(f'Python: {sys.version}')
+print(f'CUDA: {torch.cuda.is_available()}')
+print(f'OpenCV: {cv2.__version__}')
+"
+```
+
+2. **Revisa los logs:**
+```bash
+cat OUTPUT/logs/errores.log
+```
+
+3. **Reinstala completamente:**
+```bash
+rm -rf OUTPUT/logs/*
+python3 instalar_completo.py
+```
+
+## 📚 Documentación Completa
+
+Para más detalles, lee `README.md` que incluye:
+- Configuración avanzada
+- Optimización de rendimiento
+- Solución de problemas detallada
+- Ejemplos de uso
+
+---
+
+**🎉 ¡El sistema está listo para usar!**

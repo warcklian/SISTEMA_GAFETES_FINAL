@@ -370,6 +370,7 @@ class GeneradorPasaportesMasivo:
         self.output_path = None  # Se establecerá cuando se cargue el CSV
         self.pasaportes_visuales_path = self.base_path / 'OUTPUT' / 'pasaportes_visuales'
         self.imagenes_mujeres_path = self.data_path / 'Imagenes_Mujeres'
+        self.imagenes_hombres_path = self.data_path / 'Imagenes_Hombres'
         
         # Crear directorios de salida de forma robusta
         self._crear_directorios_robustos()
@@ -1569,20 +1570,27 @@ class GeneradorPasaportesMasivo:
         else:
             return (51, 60)
     
-    def buscar_imagen_por_edad(self, edad, genero='mujer'):
+    def buscar_imagen_por_edad(self, edad, genero='F'):
         """
         Busca una imagen que coincida exactamente con la edad, si no existe usa rangos
         
         Verifica:
         1. Coincidencia exacta de edad
         2. Rango de edad apropiado
-        3. Selección aleatoria como último recurso
+        3. Si no hay coincidencia exacta ni por rango: OMITIR registro (no usar aleatoria)
         """
-        if genero.upper() != 'F':
+        genero_upper = (genero or 'F').upper()
+        if genero_upper == 'F':
+            carpeta_imagenes = self.imagenes_mujeres_path
+            etiqueta_genero = 'mujer'
+        elif genero_upper == 'M':
+            carpeta_imagenes = self.imagenes_hombres_path
+            etiqueta_genero = 'hombre'
+        else:
             return None
-        
-        # Buscar imágenes de mujeres
-        imagenes_disponibles = list(self.imagenes_mujeres_path.glob('*.png'))
+
+        # Buscar imágenes según género
+        imagenes_disponibles = list(carpeta_imagenes.glob('*.png'))
         
         if not imagenes_disponibles:
             print(f"⚠️ No se encontraron imágenes en {self.imagenes_mujeres_path}")
@@ -1592,7 +1600,7 @@ class GeneradorPasaportesMasivo:
         imagenes_exactas = []
         for img_path in imagenes_disponibles:
             nombre_archivo = img_path.stem
-            match = re.search(r'massive_venezuelan_mujer_(\d+)_', nombre_archivo)
+            match = re.search(rf'massive_venezuelan_{etiqueta_genero}_(\d+)_', nombre_archivo)
             
             if match:
                 edad_imagen = int(match.group(1))
@@ -1609,7 +1617,7 @@ class GeneradorPasaportesMasivo:
         imagenes_rango = []
         for img_path in imagenes_disponibles:
             nombre_archivo = img_path.stem
-            match = re.search(r'massive_venezuelan_mujer_(\d+)_', nombre_archivo)
+            match = re.search(rf'massive_venezuelan_{etiqueta_genero}_(\d+)_', nombre_archivo)
             
             if match:
                 edad_imagen = int(match.group(1))
@@ -1620,10 +1628,7 @@ class GeneradorPasaportesMasivo:
             imagen_seleccionada, edad_imagen = random.choice(imagenes_rango)
             return imagen_seleccionada
         
-        # 3. Si no hay coincidencias en rango, usar selección aleatoria como fallback
-        if imagenes_disponibles:
-            return random.choice(imagenes_disponibles)
-        
+        # 3. Si no hay coincidencias en rango, omitir (no usar aleatoria)
         return None
     
     def procesar_imagen_optimizada(self, ruta_imagen):
@@ -1678,12 +1683,12 @@ class GeneradorPasaportesMasivo:
     def mover_imagen_usada(self, ruta_imagen):
         """Mueve la imagen usada a una subcarpeta para evitar reutilización"""
         try:
-            # Crear subcarpeta para imágenes usadas
-            carpeta_usadas = self.imagenes_mujeres_path / 'usadas'
+            # Determinar carpeta de origen (mujeres u hombres) y su subcarpeta 'usadas'
+            imagen_path = Path(ruta_imagen)
+            carpeta_usadas = imagen_path.parent / 'usadas'
             carpeta_usadas.mkdir(exist_ok=True)
             
             # Mover imagen y su archivo JSON correspondiente
-            imagen_path = Path(ruta_imagen)
             json_path = imagen_path.with_suffix('.json')
             
             # Verificar que la imagen existe antes de moverla
