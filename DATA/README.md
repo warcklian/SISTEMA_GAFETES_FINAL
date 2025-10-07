@@ -7,6 +7,7 @@ Esta carpeta contiene todos los archivos de entrada necesarios para el sistema d
 ```
 DATA/
 ├── README.md                    # Este archivo
+├── Datos_Crear_PLANTILLA.xlsx   # Plantilla de estructura de datos
 ├── Imagenes_Mujeres/            # Imágenes para mujeres
 │   ├── .gitkeep                 # Mantiene la carpeta en Git
 │   └── [imágenes con patrón: massive_venezuelan_mujer_EDAD_*.png]
@@ -32,6 +33,11 @@ DATA/
 
 ## 📊 Base de Datos Excel
 
+### 📋 Plantilla Incluida
+- **`Datos_Crear_PLANTILLA.xlsx`** - Plantilla con la estructura correcta
+- **Usar como referencia** para crear tu base de datos
+- **Formato correcto** de columnas y datos
+
 ### Columnas Requeridas:
 - `GENERO` - F (Femenino) o M (Masculino)
 - `PRIMER_NOMBRE` - Primer nombre
@@ -50,9 +56,11 @@ M      | CARLOS        |                | MARTINEZ        | LOPEZ            | 1
 
 ## 🎯 Cómo Usar
 
-1. **Coloca tu archivo Excel** en esta carpeta
-2. **Agrega imágenes** en las carpetas correspondientes
-3. **Ejecuta el sistema**: `python3 generador_pasaportes_masivo.py`
+1. **Abre la plantilla**: `Datos_Crear_PLANTILLA.xlsx` para ver el formato correcto
+2. **Crea tu base de datos** siguiendo la estructura de la plantilla
+3. **Coloca tu archivo Excel** en esta carpeta
+4. **Agrega imágenes** en las carpetas correspondientes
+5. **Ejecuta el sistema**: `python3 generador_pasaportes_masivo.py`
 
 ## ⚠️ Notas Importantes
 
