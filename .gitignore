@@ -57,12 +57,20 @@ DATA/Imagenes_Mujeres/*.jpeg
 DATA/Imagenes_Hombres/*.png
 DATA/Imagenes_Hombres/*.jpg
 DATA/Imagenes_Hombres/*.jpeg
+# Permitir archivos .gitkeep para mantener estructura
+!DATA/Imagenes_Mujeres/.gitkeep
+!DATA/Imagenes_Hombres/.gitkeep
 
 # Resultados generados (no subir al repo)
 OUTPUT/pasaportes_visuales/*.png
 OUTPUT/pasaportes_generados/*.xlsx
 OUTPUT/pasaportes_generados/*.csv
 OUTPUT/pasaportes_generados/*.json
+# Permitir archivos .gitkeep para mantener estructura
+!OUTPUT/pasaportes_visuales/.gitkeep
+!OUTPUT/pasaportes_generados/.gitkeep
+!OUTPUT/logs/.gitkeep
+!OUTPUT/temp/.gitkeep
 
 # Mantener estructura de carpetas pero ignorar contenido específico
 !DATA/Imagenes_Mujeres/
