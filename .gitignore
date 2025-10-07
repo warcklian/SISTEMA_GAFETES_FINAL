@@ -45,6 +45,7 @@ OUTPUT/logs/
 OUTPUT/temp/
 
 # Archivos de datos grandes (no subir al repo)
+# Solo ignorar archivos específicos, no toda la carpeta
 DATA/*.xlsx
 DATA/*.xls
 DATA/*.csv
@@ -60,6 +61,16 @@ OUTPUT/pasaportes_visuales/*.png
 OUTPUT/pasaportes_generados/*.xlsx
 OUTPUT/pasaportes_generados/*.csv
 OUTPUT/pasaportes_generados/*.json
+
+# Mantener estructura de carpetas pero ignorar contenido específico
+!DATA/Imagenes_Mujeres/
+!DATA/Imagenes_Hombres/
+!OUTPUT/pasaportes_visuales/
+!OUTPUT/pasaportes_generados/
+!TEMPLATE/
+!TEMPLATE/Fuentes_Base/
+!CONFIG/
+!SCRIPTS/
 
 # Archivos de backup
 *.backup
