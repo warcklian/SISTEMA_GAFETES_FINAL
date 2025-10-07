@@ -84,6 +84,20 @@ def instalar_python_deps():
         print("    No se encontró requirements.txt")
         return False
     
+    # Instalar PyTorch CPU automáticamente en Windows si no está presente
+    try:
+        import platform
+        if platform.system().lower() == "windows":
+            try:
+                import torch  # noqa: F401
+            except ImportError:
+                ejecutar_comando(
+                    "python3 -m pip install torch --index-url https://download.pytorch.org/whl/cpu",
+                    "Instalando PyTorch (CPU) para Windows"
+                )
+    except Exception as e:
+        print(f"    Error verificando/instalando PyTorch: {e}")
+
     return True
 
 def verificar_gpu():

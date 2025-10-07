@@ -1,23 +1,21 @@
 # Dependencias del Sistema de Automatización de Pasaportes - OPTIMIZADO
 # Instalar con: pip install -r requirements.txt
 
-# Procesamiento de imágenes (versiones compatibles entre sí)
-Pillow==11.3.0
-opencv-python==4.8.1.78
+# Procesamiento de imágenes (versiones compatibles y estables en Windows/Linux)
+Pillow==10.3.0
+opencv-python==4.9.0.80
 numpy==1.26.4
 
 # Procesamiento de datos
-pandas==2.3.3
+pandas==2.2.2
 
 # Utilidades del sistema
-pathlib2>=2.3.0
-psutil==7.1.0
+psutil==5.9.8
 
-# PyTorch para GPU (detectado y funcionando)
-torch==2.8.0
+# PyTorch se instala condicionalmente en el instalador (CPU en Windows)
 
-# MediaPipe para detección facial (configurado para estabilidad)
-mediapipe==0.10.21
+# MediaPipe para detección facial (opcional)
+mediapipe==0.10.14
 
 # OPTIMIZACIÓN: Dependencias eliminadas por problemas de compatibilidad
 # - rembg (causaba conflictos de memoria)
