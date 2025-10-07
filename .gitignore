@@ -46,9 +46,11 @@ OUTPUT/temp/
 
 # Archivos de datos grandes (no subir al repo)
 # Solo ignorar archivos específicos, no toda la carpeta
+# EXCEPTO: Plantilla de datos (debe subirse)
 DATA/*.xlsx
 DATA/*.xls
 DATA/*.csv
+!DATA/Datos_Crear_PLANTILLA.xlsx
 DATA/Imagenes_Mujeres/*.png
 DATA/Imagenes_Mujeres/*.jpg
 DATA/Imagenes_Mujeres/*.jpeg
